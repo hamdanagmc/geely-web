@@ -1,0 +1,80 @@
+{
+  "Error": {
+    "description": "<p>Es ist leider ein Problem aufgetreten.</p><p>Du kannst versuchen <retry>diese Seite neu zu laden</retry>.</p>",
+    "title": "Etwas ist schief gelaufen!"
+  },
+  "IndexPage": {
+    "description": "Dies ist ein Beispiel, das die Verwendung von <code>next-intl</code> mit dem Next.js App Router demonstriert. Bei Ändern der Sprache rechts oben ändert sich der Inhalt dieser Seite.",
+    "title": "next-intl Beispiel"
+  },
+  "LocaleLayout": {
+    "title": "next-intl Beispiel"
+  },
+  "LocaleSwitcher": {
+    "label": "Sprache ändern",
+    "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unbekannt}}"
+  },
+  "Manifest": {
+    "name": ""
+  },
+  "Navigation": {
+    "home": "Start",
+    "pathnames": "Pfadnamen"
+  },
+  "NotFoundPage": {
+    "description": "Bitte überprüfe die Addressleiste deines Browsers oder verwende die Navigation um zu einer bekannten Seite zu wechseln.",
+    "title": "Seite nicht gefunden"
+  },
+  "PageLayout": {
+    "links": {
+      "docs": {
+        "description": "Erfahre mehr über next-intl in der offiziellen Dokumentation.",
+        "href": "https://next-intl.dev",
+        "title": "Dokumentation"
+      },
+      "source": {
+        "description": "Sieh dir den Quellcode dieses Beispiels auf GitHub an.",
+        "href": "https://github.com/amannn/next-intl/tree/main/examples/example-app-router",
+        "title": "Quellcode"
+      }
+    }
+  },
+  "PathnamesPage": {
+    "description": "<p>Auch die Pfadnamen sind internationalisiert.</p><p>Wenn du die Standardsprache Englisch verwendest, siehst du <code>/en/pathnames</code> in der Adressleiste des Browsers auf dieser Seite.</p><p>Wenn du die Sprache auf Deutsch änderst, wird die URL entsprechend lokalisiert (<code>/de/pfadnamen</code>).</p>",
+    "title": "Pfadnamen"
+  },
+  "stickyLinks" : {
+    "testDrive": "تجربة قيادة ",
+    "getQuote": "عرض أسعار",
+    "contactNow" : "اتصل بنا"
+  },
+  "cookieBanner": {
+    "content": "نستخدم ملفات تعريف الارتباط لنمنحك أفضل تجربة على موقعنا.",
+    "settingButton": "إعدادات",
+    "privacyOverviewContent":"يستخدم هذا الموقع ملفات تعريف الارتباط (الكوكيز) ليمنحك أفضل تجربة ممكنة. تُخزن معلومات ملفات تعريف الارتباط في متصفحك وتؤدي وظائف مثل التعرف عليك عند العودة إلى موقعنا ومساعدة فريقنا على فهم الأقسام الأكثر اهتماماً واستخداماً في الموقع.",
+    "privacyOverviewHdg":"نظرة عامة على الخصوصية",
+    "strictlyNecessaryCookies" :"ملفات تعريف الارتباط الضرورية",
+    "strictlyNecessaryCookiesContent":"يجب تفعيل ملفات تعريف الارتباط الضرورية دائماً لضمان حفظ تفضيلاتك المتعلقة بإعدادات ملفات تعريف الارتباط.",
+    "thirdPartyCookiesHdg":"ملفات تعريف الارتباط التابعة لطرف ثالث",
+    "thirdPartyCookiesContent":"يستخدم هذا الموقع Google Analytics والبكسلات لجمع معلومات مجهولة الهوية مثل عدد زوار الموقع والصفحات الأكثر شعبية. يساعدنا تمكين هذه الملفات على تحسين أداء موقعنا.",
+    "enableAll" : "تفعيل الكل",
+    "saveSettings" : "حفظ الإعدادات"
+  },
+  "offerForm": {
+    "carModels": "أمجراند,جيومتري سي,توجيلا,ستار راي,كولراي,مونجارو,أوكافانجو",
+  "carModelsPlaceholder": "حدد نوع المركبة*",
+  "titleOptions": "السيد,الأنسة,السيدة,أفضل عدم التوضيح",
+  "titlePlaceholder": "حدد العنوان",
+  "location": "جيلي - الشارقة,جيلي - ديرة دبي,جيلي - أبوظبي - طريق المطار,جيلي - رأس الخيمة,جيلي – أبوظبي - مصفح,جيلي – العين",
+    "firstName": "الاسم الأول",
+    "lastName": "الاسم الأخير",
+    "email": "البريد الالكتروني",
+    "locationPlaceholder": "حدد الموقع",
+    "phoneNo" : "رقم الهاتف",
+    "comments": "تعليقات",
+    "readText" : ".لقد",
+    "privacyPolicyText" : " قرأت سياسة",
+    "readText2" : " الخصوصية ووافق",
+    "submit": " إرسال"
+  }
+}

@@ -1,0 +1,61 @@
+type ContactForm = {
+    fname: string;
+    lname: string;
+    title: string;
+    email: string;
+    phone: string;
+    type: string;
+    comments: string;
+    location: string;
+    countrymobileNoCode: string;
+  };
+
+  type RequestQuoteForm = {
+    carTypes: string[];
+    selectedFilter: string;
+    selectedModel: string;
+    selectedModelTitle: string;
+    title: string;
+    fname: string;
+    lname: string;
+    email: string;
+    phone: string;
+    agreed: boolean;
+    location: string;
+    countrymobileNoCode: string;
+  };
+
+  type ServiceBookingFormPayload = {
+    fname: string;
+    lname: string;
+    title: string;
+    email: string;
+    phone: string;
+    vehicleType: string;
+    modelYear: number;
+    serviceCenter: string;
+    agreed: boolean;
+    countrymobileNoCode: string;
+  };
+
+  type FleetSalesFormPayload = {
+    fname: string;
+    lname: string;
+    title: string;
+    email: string;
+    phone: string;
+    fleetSize: string;
+    comments: string;
+    companyName: string;
+    countrymobileNoCode: string;
+  };
+
+  type InboundEnquiryResponse = {
+    status: string;
+    desc: string;
+  };
+
+  type KeyloopResponse = {
+    InboundEnquiryResponse: InboundEnquiryResponse;
+  }
+  

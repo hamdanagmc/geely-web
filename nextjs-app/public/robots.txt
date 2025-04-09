@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Disallow: /studio
+
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.geely.ae
+
+# Sitemaps
+Sitemap: https://www.geely.ae/sitemap.xml

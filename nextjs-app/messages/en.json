@@ -1,0 +1,80 @@
+{
+  "Error": {
+    "description": "<p>We've unfortunately encountered an error.</p><p>You can try to <retry>reload the page</retry> you were visiting.</p>",
+    "title": "Something went wrong!"
+  },
+  "IndexPage": {
+    "description": "This is a basic example that demonstrates the usage of <code>next-intl</code> with the Next.js App Router. Try changing the locale in the top right corner and see how the content changes.",
+    "title": "next-intl example"
+  },
+  "LocaleLayout": {
+    "title": "next-intl example"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unknown}}"
+  },
+  "Manifest": {
+    "name": "next-intl example"
+  },
+  "Navigation": {
+    "home": "Home",
+    "pathnames": "Pathnames"
+  },
+  "NotFoundPage": {
+    "description": "Please double-check the browser address bar or use the navigation to go to a known page.",
+    "title": "Page not found"
+  },
+  "PageLayout": {
+    "links": {
+      "docs": {
+        "description": "Learn more about next-intl in the official docs.",
+        "href": "https://next-intl.dev",
+        "title": "Docs"
+      },
+      "source": {
+        "description": "Browse the source code of this example on GitHub.",
+        "href": "https://github.com/amannn/next-intl/tree/main/examples/example-app-router",
+        "title": "Source code"
+      }
+    }
+  },
+  "PathnamesPage": {
+    "description": "<p>The pathnames are internationalized too.</p><p>If you're using the default language English, you'll see <code>/en/pathnames</code> in the browser address bar on this page.</p><p>If you change the locale to German, the URL is localized accordingly (<code>/de/pfadnamen</code>).</p>",
+    "title": "Pathnames"
+  },
+  "stickyLinks" : {
+    "testDrive": "Test Drive",
+    "getQuote": "Get Quote",
+    "contactNow" : "Contact Now"
+  },
+  "cookieBanner": {
+    "content": "We are using cookies to give you the best experience on our website.",
+    "settingButton": "Settings",
+    "privacyOverviewContent":"This website uses cookies so that we can provide you with the best user experience possible. Cookie information is stored in your browser and performs functions such as recognising you when you return to our website and helping our team to understand which sections of the website you find most interesting and useful.",
+    "privacyOverviewHdg":"Privacy Overview",
+    "strictlyNecessaryCookies" :"Strictly Necessary Cookies",
+    "strictlyNecessaryCookiesContent":"Strictly Necessary Cookie should be enabled at all times so that we can save your preferences for cookie settings.",
+    "thirdPartyCookiesHdg":"3rd Party Cookies",
+    "thirdPartyCookiesContent":"This website uses Google Analytics,pixels to collect anonymous information such as the number of visitors to the site, and the most popular pages. Keeping this cookie enabled helps us to improve our website.",
+    "enableAll" : "Enable All",
+    "saveSettings" : "Save Settings"
+  },
+  "offerForm": {
+    "carModels": "Emgrand,Coolray,Monjaro,GEOMETRY C,Okavango,Starray,Preface",
+    "carModelsPlaceholder": "Select Vehicle *",
+    "titleOptions": "Mr,Ms,Mrs,Miss,Prefer not to say",
+    "titlePlaceholder": "Select Title *",
+    "location": "Geely - Sharjah,Geely - Deira Dubai,Geely - Abu Dhabi - Airport Road,Geely - Ras Al-Khaimah,Geely – Abu Dhabi – Musaffah,Geely – Al Ain",
+    "firstName": "First Name *",
+    "lastName": "Last Name *",
+    "email": "Email *",
+    "locationPlaceholder": "Select the Location *",
+    "phoneNo" : "Phone Number *",
+    "comments": "Comments",
+    "readText" : "I have read the",
+    "privacyPolicyText" : "privacy policy",
+    "readText2" : "and agree",
+    "submit": "Send"
+  }
+}
