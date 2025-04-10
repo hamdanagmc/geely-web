@@ -47,7 +47,7 @@ const nextConfig: NextConfig = {
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob: https://www.googletagmanager.com ;
               style-src 'self' 'unsafe-inline' https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com;
               font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com data:;
-              frame-src 'self' https://*.vimeo.com/ https://vimeo.com/ https://vercel.live/ https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.google.com/ https://*.cookiebot.com/ https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://www.youtube.com https://www.youtube-nocookie.com;
+              frame-src 'self' https://*.vimeo.com/ https://vimeo.com/ https://vercel.live/ https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.google.com/ https://*.cookiebot.com/ https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://www.youtube.com https://www.youtube-nocookie.com https://geely-ae.vercel.app/;
             `.replace(/\s{2,}/g, " "), // Remove extra spaces
           },
           { key: "X-XSS-Protection", value: "1; mode=block" },
@@ -61,7 +61,7 @@ const nextConfig: NextConfig = {
           { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://geely-uae.vercel.app", // Replace with allowed domains
+            value: "https://geely-ae.vercel.app", // Replace with allowed domains
           },
         ],
       },
