@@ -76,6 +76,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
       window.location.href = `/${currentLocale}/${slug}`;
       setSubmitting(false);
       resetForm();
+      
     },
   });
   return (
