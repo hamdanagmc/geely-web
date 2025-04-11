@@ -60,7 +60,7 @@ export async function saveOfferDetailForm(data: OfferDetailFormPayload, csrfToke
                 "model": "",
                 "stocknumber": "",
                 "regnumber": "",
-                "notes": `VehicleType : ${data.vehicle}, Location : ${data.location}`
+                "notes": `VehicleType : ${data.vehicle}, pageUrl : ${data.pageUrl}, Location : ${data.location}`
             },
             "tradein": {
                 "registration": "",

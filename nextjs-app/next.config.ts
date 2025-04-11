@@ -1583,13 +1583,12 @@ const nextConfig: NextConfig = {
                 https://tr.snapchat.com;
               
               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
-                https://app-uae.freshmarketer.com https://www.google-analytics.com/
+                https://app-uae.freshmarketer.com https://www.google-analytics.com
                 https://*.cookiebot.com https://cdn.cookielaw.org https://*.freshmarketer.ae
-                https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
+                https://www.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
                 https://px.ads.linkedin.com https://tr.snapchat.com
                 https://analytics.tiktok.com
-                https://*.ads.linkedin.com https://*.snapchat.com
-                https://analytics.tiktok.com;
+                https://*.ads.linkedin.com https://*.snapchat.com;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com

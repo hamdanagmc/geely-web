@@ -14,6 +14,7 @@ import { saveOfferDetailForm } from "@/app/actions/keyloop/offerDetail";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import axios from "axios";
 import Script from "next/script";
+import { usePathname } from "next/navigation";
 
 type OfferListProps = {
   offer: Offer;
@@ -29,6 +30,7 @@ interface FormValues {
   phoneNo: string;
   comment: string;
   privacyPolicy: boolean;
+  pageUrl: string;
 }
 
 const validationSchema = Yup.object().shape({
@@ -54,26 +56,27 @@ export default function OfferDetail({ offer }: OfferListProps) {
   const locations = t("location").split(",") || [];
   const { currentLocale } = useDeviceDetection();
   const [isSubmitting, setSubmitting] = useState(false);
+  const pathname = usePathname();
 
   const vehicleTypeOptions = carModels.map((option) => ({ value: option, label: option }));
   const titleOptions = title.map((option) => ({ value: option, label: option }));
   const locationOption = locations.map((option) => ({ value: option, label: option }));
-  
 
-   //generate and set csrf token
-    const [csrfToken, setCsrfToken] = useState<string | null>(null);
-    useEffect(() => {
-      const fetchCsrfToken = async () => {
-        try {
-          const response = await axios.get("/api/csrf");
-          setCsrfToken(response.data.csrfToken);
-        } catch (error) {
-          console.error("Failed to fetch CSRF token:", error);
-        }
-      };
-  
-      fetchCsrfToken();
-    }, []);
+
+  //generate and set csrf token
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await axios.get("/api/csrf");
+        setCsrfToken(response.data.csrfToken);
+      } catch (error) {
+        console.error("Failed to fetch CSRF token:", error);
+      }
+    };
+
+    fetchCsrfToken();
+  }, []);
 
 
   const formik = useFormik<FormValues>({
@@ -87,11 +90,12 @@ export default function OfferDetail({ offer }: OfferListProps) {
       phoneNo: '',
       comment: "",
       privacyPolicy: false,
+      pageUrl: pathname
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       setSubmitting(true);
-
+ 
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
       if (!siteKey) {
         console.log("Recpatcha site key not found!");
@@ -112,25 +116,23 @@ export default function OfferDetail({ offer }: OfferListProps) {
       const response = await saveOfferDetailForm(values, csrfToken, token, currentLocale);
       console.log(response);
       const responseData = response.data as KeyloopResponse;
-            if (responseData.InboundEnquiryResponse.status === "1") {
-              //email logic
-              await sendContactCustomerEmail(values.firstName, values.email, currentLocale, "offerBooking");
-              setSubmitting(false);
-              const slug = (offer?.link as any)?._ref || "";
-             window.location.href = `/${currentLocale}/${slug}`;
-            }
-
-      
+      if (responseData.InboundEnquiryResponse.status === "1") {
+        //email logic
+        await sendContactCustomerEmail(values.firstName, values.email, currentLocale, "offerBooking");
+        setSubmitting(false);
+        const slug = (offer?.link as any)?._ref || "";
+        window.location.href = `/${currentLocale}/${slug}`;
+      }
       setSubmitting(false);
       resetForm();
     },
   });
   return (
     <>
-    <Script
-            src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-            strategy="lazyOnload"
-          />
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+        strategy="lazyOnload"
+      />
       <div className="offer-details__hero pt-[6rem]">
         {offer?.mainImage?.altText && (
           <ImageComp
