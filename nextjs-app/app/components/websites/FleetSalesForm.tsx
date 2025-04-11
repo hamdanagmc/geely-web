@@ -154,7 +154,7 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, "fleetSales");
         setSubmitting(false);
         const slug = (block?.form?.link as any)?.slug || "";
-        window.location.href = `/${currentLocale}/fleet-sales-thank-you`;
+        window.location.href = `/${currentLocale}/fleet-thank-you`;
       }
 
       resetForm();
