@@ -6,6 +6,7 @@ import type { ServiceBookingForm } from "@/sanity.types";
 import axios from "axios";
 import { useFormik } from "formik";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { useEffect, useState } from "react";
@@ -73,6 +74,7 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
   const pathname = usePathname();
   const pathSegments = pathname.split("/");
   const currentLocale = pathSegments[1] || "en";
+  const [isSubmitting, setSubmitting] = useState(false);
 
   //generate and set csrf token
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
@@ -131,9 +133,11 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
       console.log(response);
       const responseData = response.data as KeyloopResponse;
       if (responseData.InboundEnquiryResponse.status === "1") {
-        alert("Form submitted successfully");
         //email logic
-        await sendContactCustomerEmail(values.fname,values.email, currentLocale, "serviceBooking");
+        await sendContactCustomerEmail(values.fname, values.email, currentLocale, "serviceBooking");
+        setSubmitting(false);
+        const slug = (block?.link as any)?.slug || "";
+        window.location.href = `/${currentLocale}/${slug}`;
       }
 
       resetForm();
@@ -463,8 +467,17 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
             ) : null}
 
             {/* Submit Button */}
-            <button type="submit" className="w-32 bg-black hover:bg-black/90 text-white py-2 px-4 rounded-sm">
+            <button type="submit" className={`${isSubmitting ? "cursor-not-allowed opacity-65" : ""} w-32 bg-black hover:bg-black/90 text-white py-2 px-4 rounded-sm`}>
               {block?.submitLabel || "Submit"}
+              {isSubmitting && (
+                <Image
+                  src="/images/infinite-spinner.svg"
+                  alt="arrow right"
+                  width={30}
+                  height={15}
+                  className="loaderImage inline-block"
+                />
+              )}
             </button>
           </div>
         </form>

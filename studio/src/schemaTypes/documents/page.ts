@@ -98,7 +98,9 @@ export const page = defineType({
         { type: 'fleetVehicleList' },
         { type: 'fleetContactFormSection' },
         { type: 'heroBrochureDownload' },
-        { type: 'brochureDownloadFormSection' }
+        { type: 'brochureDownloadFormSection' },
+        { type: 'thankyouRichText' },
+        { type: 'thankyouBanner' }
       ],
 
       options: {

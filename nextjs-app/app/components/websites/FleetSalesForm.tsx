@@ -10,6 +10,8 @@ import axios from "axios";
 import { saveFleetSalesForm } from "@/app/actions/keyloop/fleetSales";
 import Script from "next/script";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
+import Image from "next/image";
+
 
 type FleetContactFormSectionProps = {
   block: FleetContactFormSection;
@@ -84,6 +86,8 @@ const customStyles = {
 export default function FleetSalesForm({ block }: FleetContactFormSectionProps) {
   const [phone, setPhone] = useState("");
   const [isMounted, setIsMounted] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
+  console.log(block,"block")
 
   useEffect(() => {
     setIsMounted(true);
@@ -124,7 +128,7 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       // Handle form submission
-      console.log(values);
+      setSubmitting(true);
 
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
       if (!siteKey) {
@@ -146,9 +150,11 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
       console.log(response);
       const responseData = response.data as KeyloopResponse;
       if (responseData.InboundEnquiryResponse.status === "1") {
-        alert("Form submitted successfully");
         //email logic
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, "fleetSales");
+        setSubmitting(false);
+        const slug = (block?.form?.link as any)?.slug || "";
+        window.location.href = `/${currentLocale}/fleet-sales-thank-you`;
       }
 
       resetForm();
@@ -514,9 +520,18 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-32 bg-black hover:bg-black/90 text-white py-2 px-4 rounded-sm"
+                className={`${isSubmitting ? "cursor-not-allowed opacity-65" : ""} w-32 bg-black hover:bg-black/90 text-white py-2 px-4 rounded-sm`}
               >
                 {block?.form?.submitButtonLabel || 'Submit'}
+                {isSubmitting && (
+                                  <Image
+                                    src="/images/infinite-spinner.svg"
+                                    alt="arrow right"
+                                    width={30}
+                                    height={15}
+                                    className="loaderImage inline-block"
+                                  />
+                                )}
               </button>
             </div>
           </form>

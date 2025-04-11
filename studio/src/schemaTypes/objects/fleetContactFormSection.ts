@@ -122,6 +122,12 @@ export const fleetContactFormSection = defineType({
           type: "string",
           title: "Submit Button Label",
         }),
+        defineField({
+          name : 'link',
+          type : 'reference',
+          title : 'Select thankyou Page',
+          to : [{type : 'page'}]
+        }),
       ]
     })
   ],
