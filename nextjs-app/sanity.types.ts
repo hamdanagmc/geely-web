@@ -46,6 +46,62 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type ThankyouBanner = {
+  _type: "thankyouBanner";
+  backgroundImage?: CustomImage;
+  mobileImage?: CustomImage;
+};
+
+export type ThankyouRichText = {
+  _type: "thankyouRichText";
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      linkType?: "href" | "page" | "car";
+      href?: string;
+      page?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      post?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "post";
+      };
+      openInNewTab?: boolean;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  callToActionButton?: CallToAction;
+};
+
 export type BrochureDownloadFormSection = {
   _type: "brochureDownloadFormSection";
   heading?: string;
@@ -172,6 +228,12 @@ export type FleetContactFormSection = {
       _key: string;
     }>;
     submitButtonLabel?: string;
+    link?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
   };
 };
 
@@ -590,6 +652,12 @@ export type ServiceBookingForm = {
   termsAndConditionsLinkText?: string;
   termsAndConditionsLink?: string;
   submitLabel?: string;
+  link?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
 };
 
 export type RequestQuoteForm = {
@@ -635,6 +703,12 @@ export type RequestQuoteForm = {
     link?: string;
   };
   submitLabel?: string;
+  link?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
 };
 
 export type NetworkListSection = {
@@ -728,6 +802,12 @@ export type ContactFormSection = {
     commentsLabel?: string;
     commentsPlaceholder?: string;
     submitButtonLabel?: string;
+    link?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
   };
 };
 
@@ -2182,6 +2262,12 @@ export type Offer = {
   thumbnail?: CustomImage;
   mainImage?: CustomImage;
   content?: BlockContent;
+  link?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
   language?: "en" | "ar";
 };
 
@@ -2376,7 +2462,11 @@ export type Page = {
     _key: string;
   } & HeroBrochureDownload | {
     _key: string;
-  } & BrochureDownloadFormSection>;
+  } & BrochureDownloadFormSection | {
+    _key: string;
+  } & ThankyouRichText | {
+    _key: string;
+  } & ThankyouBanner>;
   seo?: SeoMetaFields;
   language?: "en" | "ar";
 };
@@ -2601,7 +2691,7 @@ export type InternationalizedArrayReference = Array<{
   _key: string;
 } & InternationalizedArrayReferenceValue>;
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleText | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | NavItem | Navigation | LinkList | LinkItem | CallToAction | Link | InfoSection | BlockContent | GeelyNetwork | LocaleBlockContent | LocaleString | Vehicle | Color | Showrooms | Model | Settings | MetaTag | MetaAttribute | Twitter | OpenGraph | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReferenceValue | Offer | News | Fragment | SideKickSection | Footer | Header | Page | RichText | Car | SeoMetaFields | SanityFileAsset | CustomImage | Post | Person | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | InternationalizedArrayReference;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleText | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | NavItem | Navigation | LinkList | LinkItem | CallToAction | Link | InfoSection | BlockContent | GeelyNetwork | LocaleBlockContent | LocaleString | Vehicle | Color | Showrooms | Model | Settings | MetaTag | MetaAttribute | Twitter | OpenGraph | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReferenceValue | Offer | News | Fragment | SideKickSection | Footer | Header | Page | RichText | Car | SeoMetaFields | SanityFileAsset | CustomImage | Post | Person | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | InternationalizedArrayReference;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -2906,6 +2996,12 @@ export type GetPageQueryResult = {
       commentsLabel?: string;
       commentsPlaceholder?: string;
       submitButtonLabel?: string;
+      link?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
     };
   } | {
     _key: string;
@@ -3063,6 +3159,12 @@ export type GetPageQueryResult = {
         _key: string;
       }>;
       submitButtonLabel?: string;
+      link?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
     };
   } | {
     _key: string;
@@ -3730,6 +3832,12 @@ export type GetPageQueryResult = {
       link?: string;
     };
     submitLabel?: string;
+    link?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
   } | {
     _key: string;
     _type: "richText";
@@ -3786,6 +3894,12 @@ export type GetPageQueryResult = {
     termsAndConditionsLinkText?: string;
     termsAndConditionsLink?: string;
     submitLabel?: string;
+    link?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
   } | {
     _key: string;
     _type: "shoppingTools";
@@ -3956,6 +4070,60 @@ export type GetPageQueryResult = {
       _type: "image";
       _key: string;
     }>;
+  } | {
+    _key: string;
+    _type: "thankyouBanner";
+    backgroundImage?: CustomImage;
+    mobileImage?: CustomImage;
+  } | {
+    _key: string;
+    _type: "thankyouRichText";
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        linkType?: "car" | "href" | "page";
+        href?: string;
+        page?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "page";
+        };
+        post?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "post";
+        };
+        openInNewTab?: boolean;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    callToActionButton?: CallToAction;
   } | {
     _key: string;
     _type: "vehicleListSection";
@@ -4240,6 +4408,12 @@ export type GetOfferDetailQueryResult = {
   thumbnail?: CustomImage;
   mainImage?: CustomImage;
   content?: BlockContent;
+  link?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
   language?: "ar" | "en";
 } | null;
 // Variable: sitemapData
