@@ -1,6 +1,6 @@
 "use client";
 import { Offer } from "@/sanity.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImageComp from "../CustomImage";
 import Link from "next/link";
 import { type PortableTextBlock } from "next-sanity";
@@ -10,6 +10,10 @@ import * as Yup from "yup";
 import { useTranslations } from "next-intl";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
 import Image from "next/image";
+import { saveOfferDetailForm } from "@/app/actions/keyloop/offerDetail";
+import { sendContactCustomerEmail } from "@/app/services/email/contact";
+import axios from "axios";
+import Script from "next/script";
 
 type OfferListProps = {
   offer: Offer;
@@ -22,7 +26,7 @@ interface FormValues {
   email: string;
   location: string;
   vehicle: string;
-  numberOfVehicles: string;
+  phoneNo: string;
   comment: string;
   privacyPolicy: boolean;
 }
@@ -34,7 +38,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   location: Yup.string().required("Location is required"),
   vehicle: Yup.string().required("Vehicle is required"),
-  numberOfVehicles: Yup.string()
+  phoneNo: Yup.string()
     .required("Phone No is required"),
   comment: Yup.string(),
   privacyPolicy: Yup.boolean().oneOf(
@@ -54,7 +58,23 @@ export default function OfferDetail({ offer }: OfferListProps) {
   const vehicleTypeOptions = carModels.map((option) => ({ value: option, label: option }));
   const titleOptions = title.map((option) => ({ value: option, label: option }));
   const locationOption = locations.map((option) => ({ value: option, label: option }));
-  console.log(offer);
+  
+
+   //generate and set csrf token
+    const [csrfToken, setCsrfToken] = useState<string | null>(null);
+    useEffect(() => {
+      const fetchCsrfToken = async () => {
+        try {
+          const response = await axios.get("/api/csrf");
+          setCsrfToken(response.data.csrfToken);
+        } catch (error) {
+          console.error("Failed to fetch CSRF token:", error);
+        }
+      };
+  
+      fetchCsrfToken();
+    }, []);
+
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -64,22 +84,53 @@ export default function OfferDetail({ offer }: OfferListProps) {
       email: "",
       location: "",
       vehicle: "",
-      numberOfVehicles: '',
+      phoneNo: '',
       comment: "",
       privacyPolicy: false,
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       setSubmitting(true);
-      console.log(values);
-      const slug = (offer?.link as any)?._ref || "";
-      window.location.href = `/${currentLocale}/${slug}`;
+
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+      if (!siteKey) {
+        console.log("Recpatcha site key not found!");
+        return;
+      }
+      const token = await grecaptcha.execute(siteKey, {
+        action: "geelyTestDriveForm",
+      });
+      if (!token) {
+        console.log("Recpatch failed");
+        return;
+      }
+      if (!csrfToken) {
+        console.log("CSRF token not found");
+        return;
+      }
+
+      const response = await saveOfferDetailForm(values, csrfToken, token, currentLocale);
+      console.log(response);
+      const responseData = response.data as KeyloopResponse;
+            if (responseData.InboundEnquiryResponse.status === "1") {
+              //email logic
+              await sendContactCustomerEmail(values.firstName, values.email, currentLocale, "offerBooking");
+              setSubmitting(false);
+              const slug = (offer?.link as any)?._ref || "";
+             window.location.href = `/${currentLocale}/${slug}`;
+            }
+
+      
       setSubmitting(false);
       resetForm();
     },
   });
   return (
     <>
+    <Script
+            src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+            strategy="lazyOnload"
+          />
       <div className="offer-details__hero pt-[6rem]">
         {offer?.mainImage?.altText && (
           <ImageComp
@@ -241,18 +292,18 @@ export default function OfferDetail({ offer }: OfferListProps) {
                   <div>
                     <input
                       type="text"
-                      name="numberOfVehicles"
+                      name="phoneNo"
                       placeholder={t("phoneNo")}
-                      value={formik.values.numberOfVehicles}
+                      value={formik.values.phoneNo}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       className="w-full neoSansArabic bg-white border-none h-10 rounded-md px-4 py-[13px]"
                       min="1"
                     />
-                    {formik.touched.numberOfVehicles &&
-                      formik.errors.numberOfVehicles && (
+                    {formik.touched.phoneNo &&
+                      formik.errors.phoneNo && (
                         <div className="text-red-500 text-sm">
-                          {formik.errors.numberOfVehicles}
+                          {formik.errors.phoneNo}
                         </div>
                       )}
                   </div>
