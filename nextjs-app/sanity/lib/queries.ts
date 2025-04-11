@@ -56,6 +56,44 @@ export const getPageQuery = defineQuery(`
           }
         }
       },
+       _type == "contactFormSection" => {
+          ...,
+          form{
+          ...,
+          link -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
+          }
+      },
+      _type == "requestQuoteForm" => {
+          ...,
+          link -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
+      },
+      _type == "fleetContactFormSection" => {
+          ...,
+          form{
+          ...,
+          link -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
+          }
+      },
+      _type == "serviceBookingForm" => {
+          ...,
+          link -> {
+              _id,
+              title,
+              "slug": slug.current
+          }
+      },
       _type == "bannerCarousel" => {
         ...,
         link -> {
@@ -64,6 +102,15 @@ export const getPageQuery = defineQuery(`
               "slug": slug.current
             }
       },
+      _type == "thankyouRichText" => {
+        ...,
+        callToActionButton{
+        ...,
+        link { _type, linkType, openInNewTab, href, path, "page": page->{ _id, title, "slug": slug.current } },
+         }
+      },
+
+      
       _type == "infoSection" => {
         content[]{
           ...,
@@ -322,7 +369,12 @@ export const getCarsQuery = defineQuery(`
 `);
 
 export const getOfferDetailQuery = defineQuery(`
-  *[_type == 'offer' && slug.current == $slug][0]
+  *[_type == 'offer' && slug.current == $slug][0]{
+     ...,
+     link -> {
+              "slug": slug.current
+          }
+  }
 `);
 
 
