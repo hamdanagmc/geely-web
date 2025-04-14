@@ -136,7 +136,13 @@ export const serviceBookingForm = defineType({
         defineField({
             name: 'submitLabel',
             type: 'string',
-        })
+        }),
+        defineField({
+            name : 'link',
+            type : 'reference',
+            title : 'Select thankyou Page',
+            to : [{type : 'page'}]
+          }),
     ],
     preview: {
         prepare() {

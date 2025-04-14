@@ -1,5 +1,6 @@
 "use client";
 import { Offer } from "@/sanity.types";
+import { useEffect, useState } from "react";
 import ImageComp from "../CustomImage";
 import Link from "next/link";
 import { type PortableTextBlock } from "next-sanity";
@@ -8,6 +9,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useTranslations } from "next-intl";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
+import Image from "next/image";
+import { saveOfferDetailForm } from "@/app/actions/keyloop/offerDetail";
+import { sendContactCustomerEmail } from "@/app/services/email/contact";
+import axios from "axios";
+import Script from "next/script";
+import { usePathname } from "next/navigation";
 
 type OfferListProps = {
   offer: Offer;
@@ -20,9 +27,10 @@ interface FormValues {
   email: string;
   location: string;
   vehicle: string;
-  numberOfVehicles: string;
+  phoneNo: string;
   comment: string;
   privacyPolicy: boolean;
+  pageUrl: string;
 }
 
 const validationSchema = Yup.object().shape({
@@ -32,7 +40,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   location: Yup.string().required("Location is required"),
   vehicle: Yup.string().required("Vehicle is required"),
-  numberOfVehicles: Yup.string()
+  phoneNo: Yup.string()
     .required("Phone No is required"),
   comment: Yup.string(),
   privacyPolicy: Yup.boolean().oneOf(
@@ -47,10 +55,29 @@ export default function OfferDetail({ offer }: OfferListProps) {
   const title = t("titleOptions").split(",") || [];
   const locations = t("location").split(",") || [];
   const { currentLocale } = useDeviceDetection();
+  const [isSubmitting, setSubmitting] = useState(false);
+  const pathname = usePathname();
 
   const vehicleTypeOptions = carModels.map((option) => ({ value: option, label: option }));
   const titleOptions = title.map((option) => ({ value: option, label: option }));
   const locationOption = locations.map((option) => ({ value: option, label: option }));
+
+
+  //generate and set csrf token
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await axios.get("/api/csrf");
+        setCsrfToken(response.data.csrfToken);
+      } catch (error) {
+        console.error("Failed to fetch CSRF token:", error);
+      }
+    };
+
+    fetchCsrfToken();
+  }, []);
+
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -60,21 +87,55 @@ export default function OfferDetail({ offer }: OfferListProps) {
       email: "",
       location: "",
       vehicle: "",
-      numberOfVehicles: '',
+      phoneNo: '',
       comment: "",
       privacyPolicy: false,
+      pageUrl: pathname
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      console.log(values);
+      setSubmitting(true);
+ 
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+      if (!siteKey) {
+        console.log("Recpatcha site key not found!");
+        return;
+      }
+      const token = await grecaptcha.execute(siteKey, {
+        action: "geelyTestDriveForm",
+      });
+      if (!token) {
+        console.log("Recpatch failed");
+        return;
+      }
+      if (!csrfToken) {
+        console.log("CSRF token not found");
+        return;
+      }
+
+      const response = await saveOfferDetailForm(values, csrfToken, token, currentLocale);
+      console.log(response);
+      const responseData = response.data as KeyloopResponse;
+      if (responseData.InboundEnquiryResponse.status === "1") {
+        //email logic
+        await sendContactCustomerEmail(values.firstName, values.email, currentLocale, "offerBooking");
+        setSubmitting(false);
+        const slug = (offer?.link as any)?._ref || "";
+        window.location.href = `/${currentLocale}/${slug}`;
+      }
+      setSubmitting(false);
       resetForm();
     },
   });
   return (
     <>
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+        strategy="lazyOnload"
+      />
       <div className="offer-details__hero pt-[6rem]">
         {offer?.mainImage?.altText && (
-          <ImageComp 
+          <ImageComp
             block={offer.mainImage}
             imageClassName="object-cover w-full"
             width={1600}
@@ -97,7 +158,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
               )}
             </div>
 
-            
+
           </div>
 
           {/* Right Column - Contact Form */}
@@ -112,14 +173,14 @@ export default function OfferDetail({ offer }: OfferListProps) {
                   className="w-full h-10 neoSansArabic rounded-md border border-input bg-white px-4 py-[10px] text-sm"
                 >
                   <option value="">{t("titlePlaceholder")}</option>
-                  {titleOptions.map((title,index) => (
-                        <option
-                          key={index}
-                          value={title.value.toLowerCase()}
-                        >
-                          {title.label}
-                        </option>
-                      ))}
+                  {titleOptions.map((title, index) => (
+                    <option
+                      key={index}
+                      value={title.value.toLowerCase()}
+                    >
+                      {title.label}
+                    </option>
+                  ))}
                 </select>
                 {formik.touched.title && formik.errors.title && (
                   <div className="text-red-500 text-sm">
@@ -188,7 +249,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                       className="w-full neoSansArabic h-10 rounded-md border border-input bg-white px-4 py-[10px] text-sm"
                     >
                       <option value="">{t("locationPlaceholder")}</option>
-                      {locationOption.map((location,index) => (
+                      {locationOption.map((location, index) => (
                         <option
                           key={index}
                           value={location.value.toLowerCase()}
@@ -215,7 +276,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                       className="w-full neoSansArabic h-10 rounded-md border border-input bg-white px-4 py-[10px] text-sm"
                     >
                       <option value="">{t("carModelsPlaceholder")}</option>
-                      {carModels.map((model,index) => (
+                      {carModels.map((model, index) => (
                         <option
                           key={index}
                           value={model.toLowerCase()}
@@ -233,18 +294,18 @@ export default function OfferDetail({ offer }: OfferListProps) {
                   <div>
                     <input
                       type="text"
-                      name="numberOfVehicles"
+                      name="phoneNo"
                       placeholder={t("phoneNo")}
-                      value={formik.values.numberOfVehicles}
+                      value={formik.values.phoneNo}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       className="w-full neoSansArabic bg-white border-none h-10 rounded-md px-4 py-[13px]"
                       min="1"
                     />
-                    {formik.touched.numberOfVehicles &&
-                      formik.errors.numberOfVehicles && (
+                    {formik.touched.phoneNo &&
+                      formik.errors.phoneNo && (
                         <div className="text-red-500 text-sm">
-                          {formik.errors.numberOfVehicles}
+                          {formik.errors.phoneNo}
                         </div>
                       )}
                   </div>
@@ -270,9 +331,9 @@ export default function OfferDetail({ offer }: OfferListProps) {
                     className="mt-1"
                   />
                   <label htmlFor="privacyPolicy" className="text-sm neoSansArabic">
-                  {t("readText")}{" "}
+                    {t("readText")}{" "}
                     <Link href={`/${currentLocale}/privacy-policy`} className="text-[#06398F]">
-                    {t("privacyPolicyText")}
+                      {t("privacyPolicyText")}
                     </Link>{" "}
                     {t("readText2")} *
                   </label>
@@ -286,10 +347,19 @@ export default function OfferDetail({ offer }: OfferListProps) {
 
                 <button
                   type="submit"
-                  className="w-full neoSansArabic bg-black hover:bg-black/90 text-white rounded-none h-12"
+                  className={`${isSubmitting ? "cursor-not-allowed opacity-65" : ""} w-full neoSansArabic bg-black hover:bg-black/90 text-white rounded-none h-12`}
                   disabled={formik.isSubmitting}
                 >
                   {t("submit")}
+                  {isSubmitting && (
+                    <Image
+                      src="/images/infinite-spinner.svg"
+                      alt="arrow right"
+                      width={30}
+                      height={15}
+                      className="loaderImage inline-block"
+                    />
+                  )}
                 </button>
               </form>
             </div>

@@ -80,6 +80,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
   const [isMobileDevice, setIsMobileDevice] = useState(false)
   const swiperRef = useRef<any>(null)
   const { selectedTestDrive } = useTestDrive()
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const pathname = usePathname();
   const pathSegments = pathname.split("/");
@@ -161,6 +162,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
     onSubmit: async (values, { resetForm }) => {
       // Handle form submission
       console.log(values)
+      setSubmitting(true);
 
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
       if (!siteKey) {
@@ -183,9 +185,13 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
       console.log(response);
       const responseData = response.data as KeyloopResponse;
       if (responseData.InboundEnquiryResponse.status === "1") {
-        alert("Form submitted successfully");
+
+
         //email logic
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, formType.name);
+        setSubmitting(false);
+        const slug = (block?.link as any)?.slug || "";
+        window.location.href = `/${currentLocale}/${slug}`;
       }
 
       resetForm()
@@ -625,8 +631,17 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
               ) : null}
 
               {/* Submit Button */}
-              <button type="submit" className="w-32 bg-black hover:bg-black/90 text-white py-2 px-4 rounded-sm">
+              <button type="submit" className={`${isSubmitting ? "cursor-not-allowed opacity-65" : ""} w-32 bg-black hover:bg-black/90 text-white py-2 px-4 rounded-sm`}>
                 {block?.submitLabel || "Submit"}
+                {isSubmitting && (
+                  <Image
+                    src="/images/infinite-spinner.svg"
+                    alt="arrow right"
+                    width={30}
+                    height={15}
+                    className="loaderImage inline-block"
+                  />
+                )}
               </button>
             </form>
           </div>

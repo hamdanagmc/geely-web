@@ -1,19 +1,32 @@
+import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
-import {routing} from './i18n/routing';
+import { routing } from './i18n/routing';
 
-export default createMiddleware(routing);
+const intlMiddleware = createMiddleware(routing);
+const localePattern = /^\/(en|ar)(\/|$)/;
+
+export default function middleware(request: NextRequest) {
+  const lang = request.nextUrl.searchParams.get('lang');
+
+  if (lang === 'ar' || lang === 'en') {
+    const url = request.nextUrl.clone();
+
+    // Remove existing locale from pathname if present
+    url.pathname = url.pathname.replace(localePattern, '/');
+
+    // Add new locale prefix
+    url.pathname = `/${lang}${url.pathname}`.replace(/\/+$/, ''); 
+
+    url.searchParams.delete('lang'); 
+    return NextResponse.redirect(url);
+  }
+
+  return intlMiddleware(request);
+}
 
 export const config = {
   matcher: [
-    // Enable a redirect to a matching locale at the root
     '/',
-
-    // Set a cookie to remember the previous locale for
-    // all requests that have a locale prefix
-    '/(ar|en)/:path*',
-
-    // Enable redirects that add missing locales
-    // (e.g. `/pathnames` -> `/en/pathnames`)
-    "/((?!_next|_vercel|api/|.*\\..*).*)", // Exclude _next, _vercel, api, and static files
+    '/((?!_next|_vercel|api/|.*\\..*).*)',
   ]
 };

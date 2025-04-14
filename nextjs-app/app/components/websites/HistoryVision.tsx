@@ -12,7 +12,6 @@ type HistoryVisionProps = {
 
 export default function HistoryVisionComp({ block }: HistoryVisionProps) {
   const [hoverClass, setHoverClass] = useState("");
-  console.log("file", block.historyFile);
   return (
     <section
       className={`w-full vision_history ${block?.spacing ? "md:py-14 py-10" : ""} ${hoverClass}`}

@@ -170,6 +170,12 @@ export const requestQuoteForm = defineType({
             title: 'Submit Button Label',
             type: 'string',
         }),
+        defineField({
+            name : 'link',
+            type : 'reference',
+            title : 'Select thankyou Page',
+            to : [{type : 'page'}]
+          }),
     ],
     preview : {
         prepare () {

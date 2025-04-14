@@ -55,6 +55,12 @@ export const offer = defineType({
       title: 'Content',
       type: 'blockContent',
     }),
+    defineField({
+      name : 'link',
+      type : 'reference',
+      title : 'Select thankyou Page',
+      to : [{type : 'page'}]
+     }),
 
     defineField({
       name: 'language',

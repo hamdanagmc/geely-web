@@ -614,6 +614,15 @@ a.opacity-0 {
 .innerPage .richTextPara p {
     @apply text-[18px] leading-relaxed
 }
+.innerPage .thankyouRichText h2{
+margin-top: 20px;
+}
+.innerPage .thankyouRichText h1{
+    margin: 0 0 20px 0;
+    }
+.innerPage .thankyouRichText p{
+    margin: 20px 0 0 0;
+    }
 .reqTestForm button.static{
     position: static!important;
 }

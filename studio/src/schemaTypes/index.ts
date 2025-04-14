@@ -82,6 +82,8 @@ import { localeBlockContent } from './utils/localeBlockContent'
 import { fleetContactFormSection } from './objects/fleetContactFormSection'
 import { heroBrochureDownload } from './objects/heroBrochureDownload'
 import { brochureDownloadFormSection } from './objects/brochureDownloadFormSection'
+import { thankyouRichText } from './objects/thankyouRichText'
+import { thankyouBanner } from './objects/thankyouBanner'
 
 export const schemaTypes = [
   // Singletons
@@ -172,5 +174,7 @@ export const schemaTypes = [
   localeBlockContent,
   fleetContactFormSection,
   heroBrochureDownload,
-  brochureDownloadFormSection
+  brochureDownloadFormSection,
+  thankyouRichText,
+  thankyouBanner
 ]
