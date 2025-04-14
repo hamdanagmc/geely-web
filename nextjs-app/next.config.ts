@@ -1618,10 +1618,6 @@ const nextConfig: NextConfig = {
           { key: "Server", value: "" },
           { key: "Set-Cookie", value: "NEXT_LOCALE=en;Path=/;HttpOnly; Secure; SameSite=Lax" },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "https://geely-ae.vercel.app", // Replace with allowed domains
-          },
         ]
         
       },
