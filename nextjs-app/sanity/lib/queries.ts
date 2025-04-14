@@ -629,6 +629,14 @@ export const sideQuickQuery = defineQuery(`
   }
 `);
 
+export const siteSettingQuery = (locale: string) => {
+  return defineQuery(`
+    *[_type == "settings"][0] {
+  ...,
+  }
+  `);
+};
+
 export const getNewsQuery = (locale: string) => {
   return defineQuery(`
     *[_type == "news" && language == "${locale}"]

@@ -2,7 +2,7 @@
 
 import { sanityFetch } from "@/sanity/lib/live";
 import { sanityFetchCustom } from "@/sanity/lib/client";
-import { headerQuery, footerQuery, getGeelyNetworkQuery,sideQuickQuery } from "@/sanity/lib/queries";
+import { headerQuery, footerQuery, getGeelyNetworkQuery,sideQuickQuery,siteSettingQuery } from "@/sanity/lib/queries";
 
 
 
@@ -21,6 +21,15 @@ export async function getSideQuickData(locale : string) : Promise<any> {
       query : sideQuickQuery,
       params :  {language : locale},
       tags: ['fragment']
+  });
+  return data;
+}
+
+export async function getSiteSettingData(locale : string) : Promise<any> {
+  const data = await sanityFetchCustom({
+      query : siteSettingQuery(locale),
+      params :  {language : locale},
+      tags: ['settings']
   });
   return data;
 }

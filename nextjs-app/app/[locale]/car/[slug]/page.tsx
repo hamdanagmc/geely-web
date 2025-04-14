@@ -4,7 +4,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { getCarsQuery, carsSlugs } from "@/sanity/lib/queries";
 import { sanityFetchCustom } from "@/sanity/lib/client";
 import { GetCarsQueryResult } from "@/sanity.types";
-import { getFooter, getHeader,getSideQuickData } from "@/app/actions/common/sanityData";
+import { getFooter, getHeader,getSideQuickData,getSiteSettingData } from "@/app/actions/common/sanityData";
 import Header from "@/app/components/websites/Header";
 import Footer from "@/app/components/websites/Footer";
 import { notFound } from "next/navigation";
@@ -41,10 +41,11 @@ export default async function Page(props: Props) {
   const { locale, slug } = params;
   const updatedSlug = locale === "ar" ? `ar/${slug}` : slug;
 
-  const [headerData,footerData,sideQuickData,page] = await Promise.all([
+  const [headerData,footerData,sideQuickData,siteSettingData,page] = await Promise.all([
     getHeader(locale),
     getFooter(locale),
     getSideQuickData(locale),
+    getSiteSettingData(locale),
     sanityFetchCustom({
       query: getCarsQuery,
       params: { slug: updatedSlug },
@@ -58,9 +59,9 @@ export default async function Page(props: Props) {
 
   return (
     <div className="carDetailPage">
-     <Header sideQuickData = {sideQuickData} pageBg={false} locale={locale} fragment={headerData} />
+     <Header siteSettingData={siteSettingData} sideQuickData = {sideQuickData} pageBg={false} locale={locale} fragment={headerData} />
       <PageBuilderPage page={page as GetCarsQueryResult} />
-      <Footer locale={locale} fragment={footerData} />
+      <Footer siteSettingData={siteSettingData} locale={locale} fragment={footerData} />
     </div>
   );
 }

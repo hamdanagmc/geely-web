@@ -5,12 +5,23 @@ export const offer = defineType({
   name: 'offer',
   type: 'document',
   title: 'Offer',
+  groups: [
+    {
+      name: 'basic',
+      title: 'Basic',
+    },
+    {
+      name: 'form',
+      title: 'Offer Detail Form',
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
       validation: (Rule) => Rule.required(),
+      group : 'basic',
     }),
 
     defineField({
@@ -22,18 +33,21 @@ export const offer = defineType({
         source: 'title',
         maxLength: 96,
       },
+      group : 'basic',
     }),
     defineField({
       name: 'subTitle',
       title: 'Sub Title',
       type: 'string',
       validation: (Rule) => Rule.required(),
+      group : 'basic',
     }),
     defineField({
       name: 'offerDetailLabel',
       title: 'Offer Details Button Label',
       type: 'string',
       validation: (Rule) => Rule.required(),
+      group : 'basic',
     }),
     defineField({
       name: 'thumbnail',
@@ -41,6 +55,7 @@ export const offer = defineType({
       description:'image size should be 600x400 pixels',
       type: 'customImage',
       validation: (Rule) => Rule.required(),
+      group : 'basic',
     }),
     defineField({
       name: 'mainImage',
@@ -49,18 +64,28 @@ export const offer = defineType({
 
       type: 'customImage',
       validation: (Rule) => Rule.required(),
+      group : 'basic',
     }),
     defineField({
       name: 'content',
       title: 'Content',
       type: 'blockContent',
+      group : 'basic',
     }),
     defineField({
       name : 'link',
       type : 'reference',
       title : 'Select thankyou Page',
-      to : [{type : 'page'}]
+      to : [{type : 'page'}],
+      group : 'basic',
      }),
+
+     defineField({
+      name: 'offerDetailForm',
+      title: 'Offer Detail Form',
+      type: 'offerDetailForm',
+      group: 'form',
+    }),
 
     defineField({
       name: 'language',
@@ -71,6 +96,7 @@ export const offer = defineType({
         layout: 'dropdown',
       },
       readOnly: true,
+      
     }),
   ],
   preview: {

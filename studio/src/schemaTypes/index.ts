@@ -84,6 +84,7 @@ import { heroBrochureDownload } from './objects/heroBrochureDownload'
 import { brochureDownloadFormSection } from './objects/brochureDownloadFormSection'
 import { thankyouRichText } from './objects/thankyouRichText'
 import { thankyouBanner } from './objects/thankyouBanner'
+import { offerDetailForm } from './objects/offerDetailForm'
 
 export const schemaTypes = [
   // Singletons
@@ -176,5 +177,6 @@ export const schemaTypes = [
   heroBrochureDownload,
   brochureDownloadFormSection,
   thankyouRichText,
-  thankyouBanner
+  thankyouBanner,
+  offerDetailForm,
 ]

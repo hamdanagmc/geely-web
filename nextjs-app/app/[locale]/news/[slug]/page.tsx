@@ -3,7 +3,7 @@ import PageBuilderPage from "@/app/components/PageBuilder";
 import { getNewsDetailQuery, getNewsQuery } from "@/sanity/lib/queries";
 import { sanityFetchCustom } from "@/sanity/lib/client";
 import { GetPageQueryResult, News } from "@/sanity.types";
-import { getFooter, getHeader,getSideQuickData } from "@/app/actions/common/sanityData";
+import { getFooter, getHeader,getSideQuickData, getSiteSettingData } from "@/app/actions/common/sanityData";
 import Header from "@/app/components/websites/Header";
 import Footer from "@/app/components/websites/Footer";
 import ImageComp from "@/app/components/CustomImage";
@@ -42,10 +42,11 @@ export default async function Page(props: Props) {
   const { locale, slug } = params;
   const updatedSlug = locale === "ar" ? `ar/${slug}` : slug;
 
-  const [headerData, footerData,sideQuickData, page, news] = await Promise.all([
+  const [headerData, footerData,sideQuickData,siteSettingData, page, news] = await Promise.all([
     getHeader(locale),
     getFooter(locale),
     getSideQuickData(locale),
+    getSiteSettingData(locale),
     sanityFetchCustom({
       query: getNewsDetailQuery,
       params: { slug: updatedSlug },
@@ -63,7 +64,7 @@ export default async function Page(props: Props) {
 
   return (
     <>
-      <Header sideQuickData = {sideQuickData} pageBg={false} locale={locale} fragment={headerData} />
+      <Header siteSettingData={siteSettingData} sideQuickData = {sideQuickData} pageBg={false} locale={locale} fragment={headerData} />
       <div className="mainBanner">
         {page?.thumbnail?.altText && (
           <ImageComp
@@ -124,7 +125,7 @@ export default async function Page(props: Props) {
           </div>
         </div>
       </div>
-      <Footer locale={locale} fragment={footerData} />
+      <Footer siteSettingData={siteSettingData} locale={locale} fragment={footerData} />
     </>
   );
 }

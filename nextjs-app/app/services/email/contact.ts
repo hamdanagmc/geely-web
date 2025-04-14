@@ -14,9 +14,15 @@ export async function sendContactCustomerEmail(firstName : string, toEmail : str
             console.log("Server Side Error (Customer Email sending ) : ", "Invalid To Email or Invalid firstname");
             return { status: false, msg: "Invalid To Email or Invalid firstname" };
         }
+        const templateId = getEmailTemplate(currentLocale, templateName);
+        console.log("==> sendContactCustomerEmail() ", templateId);
+        if (!templateId) {
+            console.log("Server Side Error (Contact Customer Email sending ) : ", "Template ID not found for locale: " + currentLocale);
+            return { status: false, msg: 'Template ID not found for locale' };  
+        }
         await sendEmail({
             to: toEmail || "",
-            templateId: getEmailTemplate(currentLocale, templateName) ?? "",
+            templateId: templateId,
             dynamicTemplateData: {
                 firstName,
             },

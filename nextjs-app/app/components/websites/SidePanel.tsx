@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import type React from "react";
-import { SideQuickQueryResult } from "@/sanity.types";
+import { SideQuickQueryResult,SettingsQueryResult } from "@/sanity.types";
 import ImageComp from "../CustomImage";
 import { X, ShipWheelIcon as SteeringWheel } from "lucide-react";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import Link from "next/link";
+import { set } from "date-fns";
 
 interface SidePanelProps {
   isOpen: boolean;
   onClose: () => void;
   sideQuickData: SideQuickQueryResult;
   locale: string;
+  siteSettingData : SettingsQueryResult
 }
 
 const SidePanel: React.FC<SidePanelProps> = ({
@@ -18,6 +20,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
   onClose,
   sideQuickData,
   locale,
+  siteSettingData
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -149,30 +152,34 @@ const SidePanel: React.FC<SidePanelProps> = ({
           {/* Footer */}
           <div className="mt-auto p-6">
             <div className="flex items-center gap-6 mb-6">
-              <a
-                href="#"
+              <Link
+                href={siteSettingData?.facebookLink || "#"}
+                target="_blank"
                 className="text-white/ hover:text-white transition-colors"
               >
                 <Facebook className="w-6 h-6" />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href={siteSettingData?.instagramLink || "#"}
+                target="_blank"
                 className="text-white/ hover:text-white transition-colors"
               >
                 <Instagram className="w-6 h-6" />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href={siteSettingData?.twitterLink || "#"}
+                target="_blank"
                 className="text-white/ hover:text-white transition-colors"
               >
                 <Twitter className="w-6 h-6" />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href={siteSettingData?.youtubeLink || "#"}
+                target="_blank"
                 className="text-white/ hover:text-white transition-colors"
               >
                 <Youtube className="w-6 h-6" />
-              </a>
+              </Link>
             </div>
             <p className="text-sm text-white/">
               © Copyright 2025 Geely All rights reserved.

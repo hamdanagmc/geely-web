@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Facebook, Instagram, Twitter, Youtube, X, ChevronDown } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
-import type { HeaderQueryResult, SideQuickQueryResult } from "@/sanity.types"
+import type { HeaderQueryResult, SideQuickQueryResult, SettingsQueryResult } from "@/sanity.types"
 import SidePanel from "./SidePanel"
 import ImageComp from "../CustomImage"
 import { usePathname, useRouter } from "next/navigation"
@@ -13,9 +13,10 @@ type FooterProps = {
   fragment: HeaderQueryResult
   pageBg: boolean
   sideQuickData: SideQuickQueryResult
+  siteSettingData : SettingsQueryResult
 }
 
-function Header({ locale, fragment, pageBg, sideQuickData }: FooterProps) {
+function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: FooterProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false)
   const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null)
@@ -325,16 +326,16 @@ function Header({ locale, fragment, pageBg, sideQuickData }: FooterProps) {
           {/* Footer */}
           <div className="mt-auto p-6">
             <div className="flex items-center gap-6 mb-6">
-              <Link href="#" className="text-white transition-colors">
+              <Link href={siteSettingData?.facebookLink || "#"} className="text-white transition-colors">
                 <Facebook className="w-6 h-6" />
               </Link>
-              <Link href="#" className="text-white transition-colors">
+              <Link href={siteSettingData?.instagramLink || "#"} className="text-white transition-colors">
                 <Instagram className="w-6 h-6" />
               </Link>
-              <Link href="#" className="text-white transition-colors">
+              <Link href={siteSettingData?.twitterLink || "#"} className="text-white transition-colors">
                 <Twitter className="w-6 h-6" />
               </Link>
-              <Link href="#" className="text-white transition-colors">
+              <Link href={siteSettingData?.youtubeLink || "#"} className="text-white transition-colors">
                 <Youtube className="w-6 h-6" />
               </Link>
             </div>
@@ -347,6 +348,7 @@ function Header({ locale, fragment, pageBg, sideQuickData }: FooterProps) {
         isOpen={isSidePanelOpen}
         onClose={() => setIsSidePanelOpen(false)}
         sideQuickData={sideQuickData}
+        siteSettingData={siteSettingData}
         locale={locale}
       />
     </>

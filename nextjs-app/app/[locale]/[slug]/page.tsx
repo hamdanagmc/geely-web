@@ -6,7 +6,7 @@ import { PageOnboarding } from "@/app/components/Onboarding";
 import { sanityFetchCustom } from "@/sanity/lib/client";
 import Footer from "@/app/components/websites/Footer";
 import Header from "@/app/components/websites/Header";
-import { getHeader, getFooter, getSideQuickData } from "@/app/actions/common/sanityData";
+import { getHeader, getFooter, getSideQuickData,getSiteSettingData } from "@/app/actions/common/sanityData";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -46,10 +46,11 @@ export default async function Page(props: Props) {
   const { locale, slug } = params;
   const updatedSlug = locale === "ar" ? `ar/${slug}` : slug;
 
-  const [headerData, footerData, sideQuickData, page] = await Promise.all([
+  const [headerData, footerData, sideQuickData,siteSettingData, page] = await Promise.all([
     getHeader(locale),
     getFooter(locale),
     getSideQuickData(locale),
+    getSiteSettingData(locale),
     sanityFetchCustom({
       query: getPageQuery,
       params: { slug: updatedSlug },
@@ -63,9 +64,9 @@ export default async function Page(props: Props) {
 
   return (
     <div className={`main_page innerPage ${page?.blackBackground ? "textBlack" : ""}`}>
-      <Header sideQuickData = {sideQuickData} pageBg={page?.blackBackground || false} locale={locale} fragment={headerData} />
+      <Header siteSettingData={siteSettingData} sideQuickData = {sideQuickData} pageBg={page?.blackBackground || false} locale={locale} fragment={headerData} />
       <PageBuilderPage page={page as GetPageQueryResult} />
-      <Footer locale={locale} fragment={footerData} />
+      <Footer siteSettingData={siteSettingData} locale={locale} fragment={footerData} />
     </div>
   );
 }

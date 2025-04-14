@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getOfferDetailQuery } from "@/sanity/lib/queries";
 import { PageOnboarding } from "@/app/components/Onboarding";
 import { sanityFetchCustom } from "@/sanity/lib/client";
-import { getFooter, getHeader,getSideQuickData } from "@/app/actions/common/sanityData";
+import { getFooter, getHeader,getSideQuickData,getSiteSettingData } from "@/app/actions/common/sanityData";
 import Header from "@/app/components/websites/Header";
 import Footer from "@/app/components/websites/Footer";
 import OfferDetail from "@/app/components/websites/OfferDetail";
@@ -39,10 +39,11 @@ export default async function Page(props: Props) {
   const { locale, slug } = params;
   const updatedSlug = locale === "ar" ? `ar/${slug}` : slug;
 
-  const [headerData,footerData,sideQuickData,page] = await Promise.all([
+  const [headerData,footerData,sideQuickData,siteSettingData,page] = await Promise.all([
     getHeader(locale),
     getFooter(locale),
     getSideQuickData(locale),
+    getSiteSettingData(locale),
     sanityFetchCustom({
       query: getOfferDetailQuery,
       params: { slug: updatedSlug },
@@ -60,9 +61,9 @@ export default async function Page(props: Props) {
 
   return (
     <div className={`main_page innerPage textBlack`}>
-     <Header sideQuickData={sideQuickData} pageBg={true} locale={locale} fragment={headerData} />
+     <Header siteSettingData={siteSettingData} sideQuickData={sideQuickData} pageBg={true} locale={locale} fragment={headerData} />
       <OfferDetail offer={{ ...page, link: page.link && page.link.slug ? { _ref: page.link.slug, _type: "reference" } : undefined }} />
-     <Footer locale={locale} fragment={footerData} />
+     <Footer siteSettingData={siteSettingData} locale={locale} fragment={footerData} />
     </div>
   );
 }
