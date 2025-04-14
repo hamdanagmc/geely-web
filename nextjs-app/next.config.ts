@@ -1593,7 +1593,7 @@ const nextConfig: NextConfig = {
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
                 https://*.ads.linkedin.com https://www.facebook.com https://tr.snapchat.com https://analytics.tiktok.com
-                https://www.google.co.in;
+                https://www.google.co.in https://t.co https://analytics.twitter.com;
         
               style-src 'self' 'unsafe-inline'
                 https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com;
