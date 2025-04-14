@@ -1613,7 +1613,6 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "no-referrer" },
           { key: "X-Powered-By", value: "" },
           { key: "Server", value: "" },
-          { key: "X-Frame-Options", value: "deny" },
           { key: "Set-Cookie", value: "NEXT_LOCALE=en;Path=/;HttpOnly; Secure; SameSite=Lax" },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
           {
