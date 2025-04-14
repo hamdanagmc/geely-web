@@ -58,9 +58,9 @@ export default function OfferDetail({ offer }: OfferListProps) {
   const [isSubmitting, setSubmitting] = useState(false);
   const pathname = usePathname();
 
-  const vehicleTypeOptions = carModels.map((option) => ({ value: option, label: option }));
-  const titleOptions = title.map((option) => ({ value: option, label: option }));
-  const locationOption = locations.map((option) => ({ value: option, label: option }));
+  const vehicleTypeOptions = offer?.offerDetailForm?.vehicleDropdownValues?.map((option) => ({ value: option, label: option }));
+  const titleOptions = offer?.offerDetailForm?.titleDropdownValues?.map((option) => ({ value: option, label: option })) || [];
+  const locationOption = offer?.offerDetailForm?.locationDropdownValues?.map((option) => ({ value: option, label: option }));
 
 
   //generate and set csrf token
@@ -172,7 +172,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                   onBlur={formik.handleBlur}
                   className="w-full h-10 neoSansArabic rounded-md border border-input bg-white px-4 py-[10px] text-sm"
                 >
-                  <option value="">{t("titlePlaceholder")}</option>
+                  <option value="">{offer?.offerDetailForm?.titlePlaceholder}</option>
                   {titleOptions.map((title, index) => (
                     <option
                       key={index}
@@ -193,7 +193,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                     <input
                       type="text"
                       name="firstName"
-                      placeholder={t("firstName")}
+                      placeholder={offer?.offerDetailForm?.firstNamePlaceholder}
                       value={formik.values.firstName}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -209,7 +209,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                     <input
                       type="text"
                       name="lastName"
-                      placeholder={t("lastName")}
+                      placeholder={offer?.offerDetailForm?.lastNamePlaceholder}
                       value={formik.values.lastName}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -228,7 +228,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                     <input
                       type="email"
                       name="email"
-                      placeholder={t("email")}
+                      placeholder={offer?.offerDetailForm?.emailPlaceholder}
                       value={formik.values.email}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -248,8 +248,8 @@ export default function OfferDetail({ offer }: OfferListProps) {
                       onBlur={formik.handleBlur}
                       className="w-full neoSansArabic h-10 rounded-md border border-input bg-white px-4 py-[10px] text-sm"
                     >
-                      <option value="">{t("locationPlaceholder")}</option>
-                      {locationOption.map((location, index) => (
+                      <option value="">{offer?.offerDetailForm?.locationPlaceholder}</option>
+                      {(locationOption ?? []).map((location, index) => (
                         <option
                           key={index}
                           value={location.value.toLowerCase()}
@@ -275,13 +275,13 @@ export default function OfferDetail({ offer }: OfferListProps) {
                       onBlur={formik.handleBlur}
                       className="w-full neoSansArabic h-10 rounded-md border border-input bg-white px-4 py-[10px] text-sm"
                     >
-                      <option value="">{t("carModelsPlaceholder")}</option>
-                      {carModels.map((model, index) => (
+                      <option value="">{offer?.offerDetailForm?.vehiclePlaceholder}</option>
+                      {(vehicleTypeOptions ?? []).map((model, index) => (
                         <option
                           key={index}
-                          value={model.toLowerCase()}
+                          value={model.value.toLowerCase()}
                         >
-                          {model}
+                          {model.label}
                         </option>
                       ))}
                     </select>
@@ -295,7 +295,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                     <input
                       type="text"
                       name="phoneNo"
-                      placeholder={t("phoneNo")}
+                      placeholder={offer?.offerDetailForm?.phonePlaceholder}
                       value={formik.values.phoneNo}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -313,7 +313,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
 
                 <textarea
                   name="comment"
-                  placeholder={t("comments")}
+                  placeholder={offer?.offerDetailForm?.commentsPlaceholder}
                   value={formik.values.comment}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -337,6 +337,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                     </Link>{" "}
                     {t("readText2")} *
                   </label>
+                 
                 </div>
                 {formik.touched.privacyPolicy &&
                   formik.errors.privacyPolicy && (
@@ -350,7 +351,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                   className={`${isSubmitting ? "cursor-not-allowed opacity-65" : ""} w-full neoSansArabic bg-black hover:bg-black/90 text-white rounded-none h-12`}
                   disabled={formik.isSubmitting}
                 >
-                  {t("submit")}
+                  {offer?.offerDetailForm?.submitButtonLabel}
                   {isSubmitting && (
                     <Image
                       src="/images/infinite-spinner.svg"
