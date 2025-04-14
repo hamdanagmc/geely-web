@@ -1580,19 +1580,20 @@ const nextConfig: NextConfig = {
                 https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
                 https://connect.facebook.net https://snap.licdn.com
                 https://sc-static.net https://analytics.tiktok.com
-                https://tr.snapchat.com;
+                https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com;
               
               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
                 https://app-uae.freshmarketer.com https://www.google-analytics.com
                 https://*.cookiebot.com https://cdn.cookielaw.org https://*.freshmarketer.ae
                 https://www.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
                 https://px.ads.linkedin.com https://tr.snapchat.com
-                https://analytics.tiktok.com
+                https://analytics.tiktok.com https://analytics.google.com  https://stats.g.doubleclick.net 
                 https://*.ads.linkedin.com https://*.snapchat.com;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
-                https://*.ads.linkedin.com https://www.facebook.com https://tr.snapchat.com https://analytics.tiktok.com;
+                https://*.ads.linkedin.com https://www.facebook.com https://tr.snapchat.com https://analytics.tiktok.com
+                https://www.google.co.in;
         
               style-src 'self' 'unsafe-inline'
                 https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com;
@@ -1604,7 +1605,7 @@ const nextConfig: NextConfig = {
                 https://www.google.com/ https://*.cookiebot.com/
                 https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
                 https://www.youtube.com https://www.youtube-nocookie.com https://tr.snapchat.com
-                https://geely-ae.vercel.app/;
+                https://geely-ae.vercel.app/ https://td.doubleclick.net;
             `.replace(/\s{2,}/g, " "),
           },
           { key: "X-XSS-Protection", value: "1; mode=block" },
