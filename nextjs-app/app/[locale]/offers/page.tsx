@@ -45,7 +45,7 @@ export default async function Page({
   const resolvedParams = await params;
   const { locale } = resolvedParams;
 
-  const [headerData,footerData,sideQuickData, offers,siteSettingData, page] = await Promise.all([
+  const [headerData,footerData,sideQuickData,siteSettingData,offers, page] = await Promise.all([
     getHeader(locale),
     getFooter(locale),
     getSideQuickData(locale),
