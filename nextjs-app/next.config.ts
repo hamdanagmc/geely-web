@@ -1597,7 +1597,7 @@ const nextConfig: NextConfig = {
                 https://www.google.com;
         
               style-src 'self' 'unsafe-inline'
-                https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com;
+                https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.gstatic.com;
         
               font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com data:;
         
@@ -1607,7 +1607,7 @@ const nextConfig: NextConfig = {
                 https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
                 https://www.youtube.com https://www.youtube-nocookie.com https://tr.snapchat.com
                 https://geely-ae.vercel.app/ https://td.doubleclick.net
-                https://13442784.fls.doubleclick.net https://www.googletagmanager.com;
+                https://13442784.fls.doubleclick.net https://www.googletagmanager.com https://www.facebook.com;
             `.replace(/\s{2,}/g, " "),
           },
           { key: "X-XSS-Protection", value: "1; mode=block" },

@@ -18,6 +18,8 @@ import "swiper/css/navigation"
 import { Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import * as Yup from "yup"
+import { CRMEmailProps } from "@/app/types/common"
+import { sendCRMEmail } from "@/app/services/email/crm"
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
@@ -185,10 +187,11 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
       console.log(response);
       const responseData = response.data as KeyloopResponse;
       if (responseData.InboundEnquiryResponse.status === "1") {
-
-
         //email logic
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, formType.name);
+        const crmEmailProps = values as CRMEmailProps;
+        const notes = `Model: ${values.selectedModelTitle}, Location: ${values.location}`;
+        await sendCRMEmail(crmEmailProps, currentLocale, `${formType.title} Form`, notes);
         setSubmitting(false);
         const slug = (block?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;

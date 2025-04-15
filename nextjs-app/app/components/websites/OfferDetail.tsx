@@ -15,6 +15,7 @@ import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import axios from "axios";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
+import { sendCRMEmail } from "@/app/services/email/crm";
 
 type OfferListProps = {
   offer: Offer;
@@ -95,7 +96,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       setSubmitting(true);
- 
+
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
       if (!siteKey) {
         console.log("Recpatcha site key not found!");
@@ -119,6 +120,14 @@ export default function OfferDetail({ offer }: OfferListProps) {
       if (responseData.InboundEnquiryResponse.status === "1") {
         //email logic
         await sendContactCustomerEmail(values.firstName, values.email, currentLocale, "offerBooking");
+        const crmEmailProps = {
+          fname : values.firstName,
+          lname : values.lastName,
+          email : values.email,
+          phone : values.phoneNo,
+        };
+        const notes = `Offer Title - ${offer?.title} , Comments : ${values.comment}`;
+        await sendCRMEmail(crmEmailProps, currentLocale, "Offer Detail Form", notes);
         setSubmitting(false);
         const slug = (offer?.link as any)?._ref || "";
         window.location.href = `/${currentLocale}/${slug}`;
@@ -337,7 +346,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
                     </Link>{" "}
                     {t("readText2")} *
                   </label>
-                 
+
                 </div>
                 {formik.touched.privacyPolicy &&
                   formik.errors.privacyPolicy && (

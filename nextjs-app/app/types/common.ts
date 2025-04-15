@@ -17,3 +17,10 @@ export interface CaptchaVerificationResponse {
     hostname: string;
     [key: string]: any;
   }
+
+ export type CRMEmailProps = {
+    fname: string;
+    lname : string;
+    email: string;
+    phone: string;
+}

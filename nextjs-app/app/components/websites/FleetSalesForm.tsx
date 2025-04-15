@@ -11,6 +11,8 @@ import { saveFleetSalesForm } from "@/app/actions/keyloop/fleetSales";
 import Script from "next/script";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import Image from "next/image";
+import { CRMEmailProps } from "@/app/types/common";
+import { sendCRMEmail } from "@/app/services/email/crm";
 
 
 type FleetContactFormSectionProps = {
@@ -87,7 +89,7 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
   const [phone, setPhone] = useState("");
   const [isMounted, setIsMounted] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
-  console.log(block,"block")
+  console.log(block, "block")
 
   useEffect(() => {
     setIsMounted(true);
@@ -152,6 +154,9 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
       if (responseData.InboundEnquiryResponse.status === "1") {
         //email logic
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, "fleetSales");
+        const crmEmailProps = values as CRMEmailProps;
+        const notes = `Fleet Size: ${values.fleetSize}, Company Name: ${values.companyName}`;
+        await sendCRMEmail(crmEmailProps, currentLocale, "Fleet Sales Form", notes);
         setSubmitting(false);
         const slug = (block?.form?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/fleet-sales-thank-you`;
@@ -524,14 +529,14 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
               >
                 {block?.form?.submitButtonLabel || 'Submit'}
                 {isSubmitting && (
-                                  <Image
-                                    src="/images/infinite-spinner.svg"
-                                    alt="arrow right"
-                                    width={30}
-                                    height={15}
-                                    className="loaderImage inline-block"
-                                  />
-                                )}
+                  <Image
+                    src="/images/infinite-spinner.svg"
+                    alt="arrow right"
+                    width={30}
+                    height={15}
+                    className="loaderImage inline-block"
+                  />
+                )}
               </button>
             </div>
           </form>
