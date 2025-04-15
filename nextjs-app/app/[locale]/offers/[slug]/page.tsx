@@ -6,6 +6,7 @@ import { getFooter, getHeader,getSideQuickData,getSiteSettingData } from "@/app/
 import Header from "@/app/components/websites/Header";
 import Footer from "@/app/components/websites/Footer";
 import OfferDetail from "@/app/components/websites/OfferDetail";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -52,11 +53,7 @@ export default async function Page(props: Props) {
   ]);
 
   if (!page?._id) {
-    return (
-      <div className="py-40">
-        <PageOnboarding />
-      </div>
-    );
+    return notFound();
   }
 
   return (
