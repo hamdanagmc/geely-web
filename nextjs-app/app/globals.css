@@ -1300,7 +1300,7 @@ p.brochure_desc {
         font-size: 20px;
     }
     .heroBannerCnt>div{
-        padding: 0 30px;
+        padding: 0 20px;
     }
     .heroBannerBtn a{
         font-size: 15px;
@@ -1407,8 +1407,8 @@ background: #bfbfcb;
     .heroBannerLft img{
         position: static !important;
     }
-    .heroBannerBtn a {
-        font-size: 15px;
+    .heroBannerBtn a,.heroBannerBtn button {
+        font-size: 14px;
         padding: 6px 10px 6px 10px;
     }
     .heroBannerBtn{
