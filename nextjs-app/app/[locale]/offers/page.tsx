@@ -8,6 +8,7 @@ import Footer from "@/app/components/websites/Footer";
 import Header from "@/app/components/websites/Header";
 import { getFooter, getHeader,getSideQuickData,getSiteSettingData } from "@/app/actions/common/sanityData";
 import Offerlist from "@/app/components/websites/Offerlist";
+import { notFound } from "next/navigation";
 
 /**
  * Generate the static params for the page.
@@ -63,11 +64,7 @@ export default async function Page({
   ]);
 
   if (!page?._id) {
-    return (
-      <div className="py-40">
-        <PageOnboarding />
-      </div>
-    );
+    return notFound();
   }
 
   return (

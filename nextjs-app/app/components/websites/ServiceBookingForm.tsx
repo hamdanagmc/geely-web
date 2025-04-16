@@ -2,8 +2,8 @@
 import { saveServiceBookingForm } from "@/app/actions/keyloop/serviceBooking";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
-import { sendCRMEmail } from "@/app/services/email/crm";
-import { CRMEmailProps } from "@/app/types/common";
+import { sendCRMServideBookingEmail } from "@/app/services/email/crm";
+import { ServiceBookingProps } from "@/app/types/email";
 import type { ServiceBookingForm } from "@/sanity.types";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -137,9 +137,9 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
       if (responseData.InboundEnquiryResponse.status === "1") {
         //email logic
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, "serviceBooking");
-        const crmEmailProps = values as CRMEmailProps;
-        const notes = `Vehicle Type: ${values.vehicleType}, Model Year: ${values.modelYear}, Service Center: ${values.serviceCenter}`;
-        await sendCRMEmail(crmEmailProps, currentLocale, "Service Booking Form", notes);
+        const crmEmailProps = values as ServiceBookingProps;
+        const pageUrl = window.location.href;
+        await sendCRMServideBookingEmail(crmEmailProps, currentLocale, "Service Booking Form", pageUrl);
         setSubmitting(false);
         const slug = (block?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;

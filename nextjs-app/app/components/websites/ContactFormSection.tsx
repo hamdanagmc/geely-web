@@ -2,8 +2,9 @@
 import { saveContactForm } from "@/app/actions/keyloop/contact";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
-import { sendCRMEmail } from "@/app/services/email/crm";
+import { sendCRMContactEmail } from "@/app/services/email/crm";
 import { CRMEmailProps } from "@/app/types/common";
+import { ContactEmailFields } from "@/app/types/email";
 import { ContactFormSection } from "@/sanity.types";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -151,9 +152,9 @@ export default function ContactFormSectionComp({
       if (responseData.InboundEnquiryResponse.status === "1") {
         //email logic
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, "contact");
-        const crmEmailProps = values as CRMEmailProps;
-        const notes = `Type: ${values.type}, Location: ${values.location}, Comments: ${values.comments}`;
-        await sendCRMEmail(crmEmailProps, currentLocale, "Contact Us Form", notes);
+        const crmEmailProps = values as ContactEmailFields;
+        const pageUrl = window.location.href;
+        await sendCRMContactEmail(crmEmailProps, currentLocale, "Contact Us Form", pageUrl);
         const slug = (block?.form?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;
         setSubmitting(false);

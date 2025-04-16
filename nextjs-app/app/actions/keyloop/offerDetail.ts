@@ -39,7 +39,7 @@ export async function saveOfferDetailForm(data: OfferDetailFormPayload, csrfToke
         "enquiry": {
             "apikey": API_KEY,
             "lead": {
-                "origin": `Geely Offer Page Enquiry - ${currentLocale.toUpperCase()}`,
+                "origin": `Geely Offer Form - ${currentLocale.toUpperCase()}`,
                 "source": "WEBENQUIRY",
                 "branch": BRANCH_ID,
                 "idnumber": "",

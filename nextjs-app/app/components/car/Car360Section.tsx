@@ -230,9 +230,9 @@ export default function Car360Comp({ block }: Car360Props) {
           {activeTab === "exterior" && (
             <>
               {/* Car image turntable */}
-              <div className="flex justify-center pt-[34px]">
+              <div className="flex justify-center pt-[34px] bg-[#EAE9E8]">
                 <div
-                  className="imageTurntable"
+                  className="imageTurntable mix-blend-multiply"
                   style={{ width: "810px", height: "300px" }}
                 >
                   {currentImages.length > 0 ? (

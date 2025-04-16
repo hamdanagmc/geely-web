@@ -1,18 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
-import dynamic from "next/dynamic";
-import { FleetContactFormSection } from "@/sanity.types";
-import { usePathname } from "next/navigation";
-import axios from "axios";
 import { saveFleetSalesForm } from "@/app/actions/keyloop/fleetSales";
-import Script from "next/script";
+import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
+import { sendCRMFleetSalesEmail } from "@/app/services/email/crm";
+import { FleetSalesFormProps } from "@/app/types/email";
+import { FleetContactFormSection } from "@/sanity.types";
+import axios from "axios";
+import { useFormik } from "formik";
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import { CRMEmailProps } from "@/app/types/common";
-import { sendCRMEmail } from "@/app/services/email/crm";
+import { usePathname } from "next/navigation";
+import Script from "next/script";
+import { useEffect, useState } from "react";
+import * as Yup from "yup";
 
 
 type FleetContactFormSectionProps = {
@@ -89,7 +89,6 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
   const [phone, setPhone] = useState("");
   const [isMounted, setIsMounted] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
-  console.log(block, "block")
 
   useEffect(() => {
     setIsMounted(true);
@@ -154,12 +153,12 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
       if (responseData.InboundEnquiryResponse.status === "1") {
         //email logic
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, "fleetSales");
-        const crmEmailProps = values as CRMEmailProps;
-        const notes = `Fleet Size: ${values.fleetSize}, Company Name: ${values.companyName}`;
-        await sendCRMEmail(crmEmailProps, currentLocale, "Fleet Sales Form", notes);
+        const crmEmailProps = values as FleetSalesFormProps;
+        const pageUrl = window.location.href;
+        await sendCRMFleetSalesEmail(crmEmailProps, currentLocale, "Fleet Sales Form", pageUrl);
         setSubmitting(false);
         const slug = (block?.form?.link as any)?.slug || "";
-        window.location.href = `/${currentLocale}/fleet-sales-thank-you`;
+        window.location.href = `/${currentLocale}/${slug}`;
       }
 
       resetForm();

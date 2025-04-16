@@ -1,21 +1,22 @@
 "use client";
-import { Offer } from "@/sanity.types";
-import { useEffect, useState } from "react";
-import ImageComp from "../CustomImage";
-import Link from "next/link";
-import { type PortableTextBlock } from "next-sanity";
-import PortableText from "@/app/components/PortableText";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useTranslations } from "next-intl";
-import useDeviceDetection from "../../hooks/useDeviceDetection";
-import Image from "next/image";
 import { saveOfferDetailForm } from "@/app/actions/keyloop/offerDetail";
+import PortableText from "@/app/components/PortableText";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
+import { sendCRMOfferEmail } from "@/app/services/email/crm";
+import { OfferFormProps } from "@/app/types/email";
+import { Offer } from "@/sanity.types";
 import axios from "axios";
-import Script from "next/script";
+import { useFormik } from "formik";
+import { useTranslations } from "next-intl";
+import { type PortableTextBlock } from "next-sanity";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { sendCRMEmail } from "@/app/services/email/crm";
+import Script from "next/script";
+import { useEffect, useState } from "react";
+import * as Yup from "yup";
+import useDeviceDetection from "../../hooks/useDeviceDetection";
+import ImageComp from "../CustomImage";
 
 type OfferListProps = {
   offer: Offer;
@@ -120,14 +121,9 @@ export default function OfferDetail({ offer }: OfferListProps) {
       if (responseData.InboundEnquiryResponse.status === "1") {
         //email logic
         await sendContactCustomerEmail(values.firstName, values.email, currentLocale, "offerBooking");
-        const crmEmailProps = {
-          fname : values.firstName,
-          lname : values.lastName,
-          email : values.email,
-          phone : values.phoneNo,
-        };
-        const notes = `Offer Title - ${offer?.title} , Comments : ${values.comment}`;
-        await sendCRMEmail(crmEmailProps, currentLocale, "Offer Detail Form", notes);
+        const crmEmailProps = values as OfferFormProps;
+        const pageUrl = window.location.href;
+        await sendCRMOfferEmail(crmEmailProps, currentLocale, "Offer Form", pageUrl);
         setSubmitting(false);
         const slug = (offer?.link as any)?._ref || "";
         window.location.href = `/${currentLocale}/${slug}`;

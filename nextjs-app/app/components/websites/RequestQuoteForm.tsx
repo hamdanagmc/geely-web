@@ -2,12 +2,13 @@
 import { saveRequestQuoteForm } from "@/app/actions/keyloop/requestQuote"
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions"
 import { sendContactCustomerEmail } from "@/app/services/email/contact"
+import { sendCRMRequestQuoteEmail } from "@/app/services/email/crm"
+import { RequestQuoteProps } from "@/app/types/email"
 import type { RequestQuoteForm } from "@/sanity.types"
 import { urlForImage } from "@/sanity/lib/utils"
 import axios from "axios"
 import { useFormik } from "formik"
 import { ArrowLeft, ArrowRight } from "lucide-react"
-import { useTestDrive } from "../../context/TestDriveContext"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -18,8 +19,7 @@ import "swiper/css/navigation"
 import { Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import * as Yup from "yup"
-import { CRMEmailProps } from "@/app/types/common"
-import { sendCRMEmail } from "@/app/services/email/crm"
+import { useTestDrive } from "../../context/TestDriveContext"
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
@@ -189,9 +189,9 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
       if (responseData.InboundEnquiryResponse.status === "1") {
         //email logic
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, formType.name);
-        const crmEmailProps = values as CRMEmailProps;
-        const notes = `Model: ${values.selectedModelTitle}, Location: ${values.location}`;
-        await sendCRMEmail(crmEmailProps, currentLocale, `${formType.title} Form`, notes);
+        const crmEmailProps = values as RequestQuoteProps;
+        const pageUrl = window.location.href;
+        await sendCRMRequestQuoteEmail(crmEmailProps, currentLocale, formType.title, pageUrl);
         setSubmitting(false);
         const slug = (block?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;
