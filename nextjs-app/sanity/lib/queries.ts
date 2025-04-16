@@ -243,6 +243,17 @@ export const getFleetPageQuery = (locale: string) => {
           ...,
           ${linkFields},
         },
+        _type == "fleetContactFormSection" => {
+          ...,
+          form{
+          ...,
+          link -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
+          }
+      },
         _type == "listCars" => {
         cars[]{
           ...,
