@@ -1583,7 +1583,7 @@ const nextConfig: NextConfig = {
                 https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com https://googleads.g.doubleclick.net
                 https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net 
                 https://www.googleadservices.com https://bat.bing.com https://trackback.gotrackier.com https://trk.betrck.com
-                https://googleads.g.doubleclick.net https://www.google.com;
+                https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com;
               
               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
                 https://app-uae.freshmarketer.com https://www.google-analytics.com
@@ -1593,7 +1593,7 @@ const nextConfig: NextConfig = {
                 https://analytics.tiktok.com https://analytics.google.com  https://stats.g.doubleclick.net 
                 https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
                 https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
-                https://www.googleadservices.com;
+                https://www.googleadservices.com https://www.google*;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
@@ -1614,7 +1614,8 @@ const nextConfig: NextConfig = {
                 https://geely-ae.vercel.app/ https://td.doubleclick.net
                 https://13442784.fls.doubleclick.net https://www.googletagmanager.com https://www.facebook.com
                 https://aax-eu.amazon-adsystem.com https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net
-                https://www.googleadservices.com;
+                https://www.googleadservices.com https://trackback.gotrackier.com https://trk.betrck.com https://bat.bing.com
+                https://googleads.g.doubleclick.net;
             `.replace(/\s{2,}/g, " "),
           },
           { key: "X-XSS-Protection", value: "1; mode=block" },
