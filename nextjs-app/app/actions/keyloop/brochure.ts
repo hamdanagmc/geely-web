@@ -39,7 +39,7 @@ export async function saveBrochureForm(data: BrochureFormProps, csrfToken: strin
         "enquiry": {
             "apikey": API_KEY,
             "lead": {
-                "origin": `Geely Brochure Form - ${currentLocale.toUpperCase()}`,
+                "origin": `Geely Brochure Download - ${currentLocale.toUpperCase()}`,
                 "source": "WEBENQUIRY",
                 "branch": BRANCH_ID,
                 "idnumber": "",
