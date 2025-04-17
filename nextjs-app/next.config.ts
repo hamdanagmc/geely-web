@@ -1593,13 +1593,13 @@ const nextConfig: NextConfig = {
                 https://analytics.tiktok.com https://analytics.google.com  https://stats.g.doubleclick.net 
                 https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
                 https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
-                https://www.googleadservices.com https://www.google*;
+                https://www.googleadservices.com https://www.google.co.in;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
                 https://*.ads.linkedin.com https://www.facebook.com https://tr.snapchat.com https://analytics.tiktok.com
                 https://www.google.co.in https://t.co https://analytics.twitter.com https://ad.doubleclick.net
-                https://www.google.com https://www.linkedin.com;
+                https://www.google.com https://www.linkedin.com https://bat.bing.com https://googleads.g.doubleclick.net;
         
               style-src 'self' 'unsafe-inline'
                 https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.gstatic.com;
@@ -1615,7 +1615,7 @@ const nextConfig: NextConfig = {
                 https://13442784.fls.doubleclick.net https://www.googletagmanager.com https://www.facebook.com
                 https://aax-eu.amazon-adsystem.com https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net
                 https://www.googleadservices.com https://trackback.gotrackier.com https://trk.betrck.com https://bat.bing.com
-                https://googleads.g.doubleclick.net;
+                https://googleads.g.doubleclick.net https://thinkabout88.gotrackier.io/;
             `.replace(/\s{2,}/g, " "),
           },
           { key: "X-XSS-Protection", value: "1; mode=block" },
