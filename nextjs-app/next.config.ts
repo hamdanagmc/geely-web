@@ -1580,7 +1580,8 @@ const nextConfig: NextConfig = {
                 https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
                 https://connect.facebook.net https://snap.licdn.com
                 https://sc-static.net https://analytics.tiktok.com
-                https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com https://googleads.g.doubleclick.net;
+                https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com https://googleads.g.doubleclick.net
+                https://c.amazon-adsystem.com;
               
               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
                 https://app-uae.freshmarketer.com https://www.google-analytics.com
