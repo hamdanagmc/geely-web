@@ -1589,7 +1589,8 @@ const nextConfig: NextConfig = {
                 https://www.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
                 https://px.ads.linkedin.com https://tr.snapchat.com
                 https://analytics.tiktok.com https://analytics.google.com  https://stats.g.doubleclick.net 
-                https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon;
+                https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
+                https://aax-eu.amazon-adsystem.com;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com

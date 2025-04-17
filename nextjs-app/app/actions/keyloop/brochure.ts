@@ -91,7 +91,7 @@ export async function saveBrochureForm(data: BrochureFormProps, csrfToken: strin
             }
         }
     });
-
+    console.log("Keyloop Payload : ", payload);
     var config = {
         method: 'post',
         url: ENDPOINT_URL,
