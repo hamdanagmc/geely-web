@@ -1582,7 +1582,8 @@ const nextConfig: NextConfig = {
                 https://sc-static.net https://analytics.tiktok.com
                 https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com https://googleads.g.doubleclick.net
                 https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net 
-                https://www.googleadservices.com;
+                https://www.googleadservices.com https://bat.bing.com https://trackback.gotrackier.com https://trk.betrck.com
+                https://googleads.g.doubleclick.net https://www.google.com;
               
               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
                 https://app-uae.freshmarketer.com https://www.google-analytics.com
