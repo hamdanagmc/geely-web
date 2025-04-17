@@ -1581,7 +1581,7 @@ const nextConfig: NextConfig = {
                 https://connect.facebook.net https://snap.licdn.com
                 https://sc-static.net https://analytics.tiktok.com
                 https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com https://googleads.g.doubleclick.net
-                https://c.amazon-adsystem.com https://ad.doubleclick.net;
+                https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net;
               
               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
                 https://app-uae.freshmarketer.com https://www.google-analytics.com
@@ -1590,7 +1590,7 @@ const nextConfig: NextConfig = {
                 https://px.ads.linkedin.com https://tr.snapchat.com
                 https://analytics.tiktok.com https://analytics.google.com  https://stats.g.doubleclick.net 
                 https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
-                https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com;
+                https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
@@ -1610,7 +1610,7 @@ const nextConfig: NextConfig = {
                 https://www.youtube.com https://www.youtube-nocookie.com https://tr.snapchat.com
                 https://geely-ae.vercel.app/ https://td.doubleclick.net
                 https://13442784.fls.doubleclick.net https://www.googletagmanager.com https://www.facebook.com
-                https://aax-eu.amazon-adsystem.com https://c.amazon-adsystem.com https://ad.doubleclick.net;
+                https://aax-eu.amazon-adsystem.com https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net;
             `.replace(/\s{2,}/g, " "),
           },
           { key: "X-XSS-Protection", value: "1; mode=block" },
