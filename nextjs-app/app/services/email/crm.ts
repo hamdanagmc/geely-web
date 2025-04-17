@@ -196,3 +196,42 @@ export async function sendCRMOfferEmail(props : OfferFormProps, currentLocale : 
         return { status: false, msg: 'Something went wrong while sending email' };
     }
 }
+
+export async function sendCRMBrochureEmail(props : BrochureFormProps, currentLocale : string, formType: string, pageUrl : string) {
+    console.log("==> sendCRMBrochureEmail() ", props, currentLocale, formType);
+    try {
+        if (!currentLocale) {
+            console.log("Server Side Error (CRM Email sending ) : ", "Invalid locale");
+            return { status: false, msg: 'Invalid Locale' };
+        }
+        const toEmail = process.env.SENDGRID_CRM_TO_EMAIL;
+        if (!toEmail) {
+            console.log("Server Side Error (CRM Email sending ) : ", "Invalid To Email");
+            return { status: false, msg: 'Invalid To Email' };
+        }
+        
+        
+        await sendEmail({
+            to: toEmail || "",
+            templateId: process.env.SENDGRID_CRM_BROCHURE_FORM_TEMPLATE_EN ?? "",
+            dynamicTemplateData: {
+                title : props.title,
+                fname : props.fname,
+                lname : props.lname,
+                email : props.email,
+                phone : props.countrymobileNoCode + props.phone,
+                contactYou : props.contactYou,
+                selectedVehicles : props.brochure_check.toString(),
+                comments : props.comments,
+                formType : formType,
+                lang : currentLocale.toUpperCase(),
+                pageUrl : pageUrl,
+            },
+        });
+        console.log("CRM Email Sent Success to - " + toEmail );
+        return { status: true, msg: 'Email sent successfully' };
+    } catch (error : any) {
+        console.log("Server Side Error (CRM Email sending ) : ", error.message);
+        return { status: false, msg: 'Something went wrong while sending email' };
+    }
+}

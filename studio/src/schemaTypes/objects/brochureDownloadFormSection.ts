@@ -33,7 +33,8 @@ export const brochureDownloadFormSection = defineType({
                 { name: 'image', type: 'customImage', title: 'Image' },
                 { name: 'financeText', type: 'string', title: 'Finance Text' },
                 { name: 'leaseText', type: 'string', title: 'Lease Text' },
-                { name: 'brochureFile', type: 'file', title: 'Brochure File',
+                {
+                  name: 'brochureFile', type: 'file', title: 'Brochure File',
                   options: {
                     accept: 'application/pdf',
                   },
@@ -143,15 +144,21 @@ export const brochureDownloadFormSection = defineType({
           title: 'Terms and Conditions',
           type: 'object',
           fields: [
-              defineField({ name: 'label', title: 'Terms and Conditions Text', type: 'string' }),
-              defineField({ name: 'termsAndConditionsTitle', title: 'Terms and Conditions Heading', type: 'string' }),
-              defineField({ name: 'link', title: 'link', type: 'string' })
+            defineField({ name: 'label', title: 'Terms and Conditions Text', type: 'string' }),
+            defineField({ name: 'termsAndConditionsTitle', title: 'Terms and Conditions Heading', type: 'string' }),
+            defineField({ name: 'link', title: 'link', type: 'string' })
           ]
-      }),
+        }),
         defineField({
           name: "submitButtonLabel",
           type: "string",
           title: "Submit Button Label",
+        }),
+        defineField({
+          name: 'link',
+          type: 'reference',
+          title: 'Select thankyou Page',
+          to: [{ type: 'page' }]
         }),
       ]
     })

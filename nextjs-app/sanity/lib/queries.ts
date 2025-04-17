@@ -67,6 +67,17 @@ export const getPageQuery = defineQuery(`
             }
           }
       },
+      _type == "brochureDownloadFormSection" => {
+          ...,
+          form{
+          ...,
+          link -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
+          }
+      },
       _type == "requestQuoteForm" => {
           ...,
           link -> {

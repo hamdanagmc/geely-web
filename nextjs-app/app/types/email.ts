@@ -64,3 +64,18 @@ export type OfferFormProps = {
     privacyPolicy: boolean;
     pageUrl: string;
 };
+
+export type BrochureFormProps = {
+    fname: string;
+    lname: string;
+    title: string;
+    email: string;
+    phone: string;
+    fleetSize: string;
+    companyName: string;
+    comments: string;
+    agreed: boolean;
+    brochure_check: string[];
+    countrymobileNoCode: string;
+    contactYou: string;
+  }

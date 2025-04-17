@@ -12,7 +12,9 @@ export const getEmailTemplate = (currentLocale: string, templateName: string) =>
         case 'serviceBooking':
             return process.env[`SENDGRID_SERVICE_BOOKING_TEMPLATE_${currentLocale.toUpperCase()}`];
         case 'offerBooking':
-                return process.env[`SENDGRID_OFFER_BOOKING_TEMPLATE_${currentLocale.toUpperCase()}`];
+            return process.env[`SENDGRID_OFFER_BOOKING_TEMPLATE_${currentLocale.toUpperCase()}`];
+        case 'brochureForm':
+            return process.env[`SENDGRID_BROCHURE_FORM_TEMPLATE_${currentLocale.toUpperCase()}`];
         default:
             throw new Error(`Template "${templateName}" not found for locale "${currentLocale}"`);
     }
