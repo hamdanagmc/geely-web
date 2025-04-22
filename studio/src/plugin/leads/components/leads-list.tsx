@@ -1,32 +1,22 @@
-import React from "react";
-import { Stack, Flex, Heading, Container, Card, Button } from "@sanity/ui";
+import { Container, Heading, Stack } from "@sanity/ui";
 import styles from "../styles/leads-list.module.css";
 import { Lead } from "./LeadsTool";
-import { DownloadIcon } from "@sanity/icons";
-import { exportToExcel } from 'react-json-to-excel';
+
 
 interface LeadsListProps {
   leads: Lead[];
 }
 
+interface UtmProps {
+  utm_source: string;
+  utm_medium: string;
+  utm_campaign: string;
+}
+
 export default function LeadsList({ leads }: LeadsListProps) {
   return (
     <Container className={styles.mainContainer} style={{ marginTop: "60px" }}>
-      <Flex align="center" justify="space-between">
-        <Heading>Geely Leads Dashboard</Heading>
-        <Card>
-            <Button
-              fontSize={[1.5, 1.5, 2]}
-              icon={DownloadIcon}
-              padding={[4, 4, 4]}
-              text="Export To Excel"
-              tone="positive"
-              className='btn btn-success'
-              radius="full"
-              onClick={() => exportToExcel(leads, 'GeelyLeads')}
-            />
-          </Card>
-      </Flex>
+
       <LeadsTable leads={leads} />
     </Container>
   );
@@ -34,7 +24,6 @@ export default function LeadsList({ leads }: LeadsListProps) {
 
 // Define the LeadsTable component
 function LeadsTable({ leads }: LeadsListProps) {
-  console.log(leads);
   return (
     <Stack space={3} padding={[3]}>
       {leads?.length === 0 ? (
@@ -50,6 +39,7 @@ function LeadsTable({ leads }: LeadsListProps) {
               <tr>
                 <th>Sno</th>
                 <th>Form Type</th>
+                <th>Landing page</th>
                 <th>Title</th>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -66,6 +56,9 @@ function LeadsTable({ leads }: LeadsListProps) {
                 <th>Do You want us to contact you</th>
                 <th>Page URL</th>
                 <th>Comments</th>
+                <th>UTM Source</th>
+                <th>UTM Medium</th>
+                <th>UTM Campaign</th>
                 <th>Created At</th>
               </tr>
             </thead>
@@ -91,10 +84,26 @@ function LeadsTable({ leads }: LeadsListProps) {
                   pageUrl,
                   _createdAt,
                 } = lead;
+
+                const url = pageUrl ? new URL(pageUrl) : { hostname: "N/A", pathname: "", searchParams: new URLSearchParams() };
+                const landingPage = url.hostname + url.pathname
+                const searchParams = url.searchParams;
+                const isEmpty = [...searchParams.entries()].length === 0;
+                const utmParameters: UtmProps = {
+                  utm_source: "N/A",
+                  utm_medium: "N/A",
+                  utm_campaign: "N/A",
+                };
+                if (!isEmpty) {
+                  utmParameters.utm_source = searchParams.get("utm_source") || "N/A";
+                  utmParameters.utm_medium = searchParams.get("utm_medium") || "N/A";
+                  utmParameters.utm_campaign = searchParams.get("utm_campaign") || "N/A";
+                }
                 return (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{formType || "N/A"}</td>
+                    <td>{landingPage || "N/A"}</td>
                     <td>{title || "N/A"}</td>
                     <td>{firstName || "N/A"}</td>
                     <td>{lastName || "N/A"}</td>
@@ -111,6 +120,9 @@ function LeadsTable({ leads }: LeadsListProps) {
                     <td>{contactYou || "N/A"}</td>
                     <td>{pageUrl || "N/A"}</td>
                     <td>{comments || "N/A"}</td>
+                    <td>{utmParameters.utm_source}</td>
+                    <td>{utmParameters.utm_medium}</td>
+                    <td>{utmParameters.utm_campaign}</td>
                     <td>{new Date(_createdAt).toLocaleString() || "N/A"}</td>
                   </tr>
                 );
