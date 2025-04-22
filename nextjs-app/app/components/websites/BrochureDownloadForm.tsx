@@ -15,6 +15,7 @@ import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import ImageComp from "../CustomImage";
+import { saveLeads } from "@/app/actions/sanity/leads";
 
 type BrochureDownloadFormSectionProps = {
   block: BrochureDownloadFormSection;
@@ -182,7 +183,7 @@ export default function BrochureDownloadForm({
         const crmEmailProps = values as BrochureFormProps;
         const pageUrl = window.location.href;
         await sendCRMBrochureEmail(crmEmailProps, currentLocale, "Brochure Form", pageUrl);
-        
+
         // Handle form submission
         const selectedFiles = downloadValues
           .filter((item) => item.title && selectedValues.includes(item.title))
@@ -201,6 +202,28 @@ export default function BrochureDownloadForm({
         // Reset form and selected values
         resetForm();
         setSelectedValues([]);
+
+        // save Sanity lead data
+        const leadData = {
+          title: values.title || "",
+          firstName: values.fname || "",
+          lastName: values.lname || "",
+          email: values.email || "",
+          phone: `${values.countrymobileNoCode || ""} ${values.phone || ""}`,
+          fleetSize:  "",
+          companyName:  "",
+          comments: values.comments || "",
+          formType: "Brochure Download Form",
+          vehicleMake: "",
+          vehicleModel: values.brochure_check.join(", ") || "",
+          location: "",
+          modelYear: "",
+          serviceCenter: "",
+          type: "",
+          contactYou: values.contactYou || "",
+          pageUrl,
+        };
+        await saveLeads(leadData);
 
         //redirect to thankyou page
         const slug = (block?.form?.link as any)?.slug || "";

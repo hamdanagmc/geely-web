@@ -1,0 +1,91 @@
+.mainContainer{
+    width: 90% !important;
+    max-width: 90% !important;
+    margin-bottom: 100px!important;
+}
+
+.mainTable{
+    margin-top: 30px;
+    border: transparent;
+}
+.mainTable p{
+    margin-bottom: 5px;
+}
+.mainTable th{
+    background: #3B4C36;
+    color: #fff;
+    border: transparent;
+}
+.mainTable  thead tr th:nth-child(1), .mainTable  thead tr th:nth-child(1) {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.mainTable thead tr th:last-child, .mainTable thead tr th:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+/*.mainTable tr td:nth-child(3){
+    font-weight: 600;
+    color: #3B4C36;
+}*/
+.mainTable  thead tr th:nth-child(2){
+    width: 180px;
+    min-width: 180px;
+}
+.mainTable  thead tr th:nth-child(3){
+    width: 65px;
+    min-width: 65px;
+}
+.mainTable  thead tr th:nth-child(9){
+    width: 200px;
+    min-width: 200px;
+}
+.mainTable  thead tr th:nth-child(12){
+    width: 230px;
+    min-width: 230px;
+}
+.mainTable  thead tr th:nth-child(14){
+    width: 230px;
+    min-width: 230px;
+}
+.mainTable  thead tr th:nth-child(18){
+    width: 250px;
+    min-width: 250px;
+}
+.mainTable  thead tr th:nth-child(19){
+    width: 180px;
+    min-width: 180px;
+}
+.mainTable  thead tr th:nth-child(4){
+    width: 200px;
+    min-width: 200px;
+}
+.mainTable  thead tr th:nth-child(5){
+    width: 200px;
+    min-width: 200px;
+}
+.mainTable  thead tr th:nth-child(6){
+    width: 160px;
+    min-width: 160px;
+}
+.mainTable  thead tr th:nth-child(7){
+    width: 172px;
+    min-width: 172px;
+}
+.mainTable  thead tr th:nth-child(8){
+    width: 120px;
+    min-width: 120px;
+}
+.mainTable  thead tr th:nth-child(10){
+    width: 250px;
+    min-width: 250px;
+}
+.mainTable  thead tr th:nth-child(11),.mainTable  thead tr th:nth-child(12),
+.mainTable  thead tr th:nth-child(13),.mainTable  thead tr th:nth-child(14),
+.mainTable  thead tr th:nth-child(15),.mainTable  thead tr th:nth-child(16){
+    width: 140px;
+    min-width: 140px;
+}
+.mainContainer div{
+    padding-left: 0!important;
+}

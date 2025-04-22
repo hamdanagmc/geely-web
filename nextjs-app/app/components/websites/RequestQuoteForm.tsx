@@ -20,6 +20,7 @@ import { Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import * as Yup from "yup"
 import { useTestDrive } from "../../context/TestDriveContext"
+import { saveLeads } from "@/app/actions/sanity/leads"
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
@@ -192,6 +193,29 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
         const crmEmailProps = values as RequestQuoteProps;
         const pageUrl = window.location.href;
         await sendCRMRequestQuoteEmail(crmEmailProps, currentLocale, formType.title, pageUrl);
+
+        // Save the lead data to Sanity
+        const leadData = {
+          title: values.title || "",
+          firstName: values.fname || "",
+          lastName: values.lname || "",
+          email: values.email || "",
+          phone: `${values.countrymobileNoCode} ${values.phone}`, 
+          fleetSize: "",
+          companyName: "",
+          comments: values.comments || "",
+          formType: formType.title,
+          vehicleMake: values.selectedFilter === "ALL" ? values.carTypes.toString() : values.selectedFilter,
+          vehicleModel: values.selectedModelTitle || "",
+          location: values.location || "",
+          modelYear: "",
+          serviceCenter: "",
+          type: "",
+          contactYou: "",
+          pageUrl,
+        };
+        await saveLeads(leadData);
+
         setSubmitting(false);
         const slug = (block?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;

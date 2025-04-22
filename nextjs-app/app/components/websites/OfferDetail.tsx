@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
 import ImageComp from "../CustomImage";
+import { saveLeads } from "@/app/actions/sanity/leads";
 
 type OfferListProps = {
   offer: Offer;
@@ -124,6 +125,29 @@ export default function OfferDetail({ offer }: OfferListProps) {
         const crmEmailProps = values as OfferFormProps;
         const pageUrl = window.location.href;
         await sendCRMOfferEmail(crmEmailProps, currentLocale, "Offer Form", pageUrl);
+
+        // Save the lead data to Sanity
+        const leadData = {
+          title: values.title || "",
+          firstName: values.firstName || "",
+          lastName: values.lastName || "",
+          email: values.email || "",
+          phone: values.phoneNo || "",
+          fleetSize: "",
+          companyName: "",
+          comments: values.comment || "",
+          formType: "Offer Form",
+          vehicleMake: "",
+          vehicleModel: values.vehicle || "",
+          location: values.location || "",
+          modelYear: "",
+          serviceCenter: "",
+          type: "",
+          contactYou: "",
+          pageUrl
+        };
+        await saveLeads(leadData)
+
         setSubmitting(false);
         const slug = (offer?.link as any)?._ref || "";
         window.location.href = `/${currentLocale}/${slug}`;

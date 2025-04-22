@@ -23,6 +23,7 @@ import { languageFilter } from '@sanity/language-filter'
 import { muxInput } from 'sanity-plugin-mux-input';
 import { media } from 'sanity-plugin-media';
 import { seoMetaFields } from "sanity-plugin-seo";
+import { leadPlugin } from './src/plugin/leads/plugin'
 
 // Environment variables for project configuration
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-projectID'
@@ -171,6 +172,7 @@ export default defineConfig({
       mp4_support: 'standard',
     }),
     seoMetaFields(),
+    leadPlugin(),
   ],
 
   // Schema configuration, imported from ./src/schemaTypes/index.ts

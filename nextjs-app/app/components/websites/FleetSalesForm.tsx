@@ -1,5 +1,6 @@
 "use client";
 import { saveFleetSalesForm } from "@/app/actions/keyloop/fleetSales";
+import { saveLeads } from "@/app/actions/sanity/leads";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMFleetSalesEmail } from "@/app/services/email/crm";
@@ -156,6 +157,28 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
         const crmEmailProps = values as FleetSalesFormProps;
         const pageUrl = window.location.href;
         await sendCRMFleetSalesEmail(crmEmailProps, currentLocale, "Fleet Sales Form", pageUrl);
+        // Save the lead data to Sanity
+        const leadData = {
+          title: values.title,
+          firstName: values.fname,
+          lastName: values.lname,
+          email: values.email,
+          phone: `${values.countrymobileNoCode} ${values.phone}`,
+          fleetSize: values.fleetSize,
+          companyName: values.companyName,
+          comments: values.comments,
+          formType: "Fleet Sales Form",
+          vehicleMake: "",
+          vehicleModel: "",
+          location: "",
+          modelYear:"",
+          serviceCenter:  "",
+          type: "",
+          contactYou: "",
+          pageUrl,
+        };
+        await saveLeads(leadData)
+        
         setSubmitting(false);
         const slug = (block?.form?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;

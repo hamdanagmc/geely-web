@@ -1732,6 +1732,31 @@ export type BlockContent = Array<{
   _key: string;
 }>;
 
+export type Lead = {
+  _id: string;
+  _type: "lead";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  fleetSize?: string;
+  companyName?: string;
+  comments?: string;
+  formType?: string;
+  vehicleMake?: string;
+  vehicleModel?: string;
+  location?: string;
+  modelYear?: string;
+  serviceCenter?: string;
+  type?: string;
+  contactYou?: string;
+  pageUrl?: string;
+};
+
 export type GeelyNetwork = {
   _id: string;
   _type: "geelyNetwork";
@@ -2721,7 +2746,7 @@ export type InternationalizedArrayReference = Array<{
   _key: string;
 } & InternationalizedArrayReferenceValue>;
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleText | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | NavItem | Navigation | LinkList | LinkItem | CallToAction | Link | InfoSection | BlockContent | GeelyNetwork | LocaleBlockContent | LocaleString | Vehicle | Color | Showrooms | Model | Settings | MetaTag | MetaAttribute | Twitter | OpenGraph | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReferenceValue | Offer | OfferDetailForm | News | Fragment | SideKickSection | Footer | Header | Page | RichText | Car | SeoMetaFields | SanityFileAsset | CustomImage | Post | Person | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | InternationalizedArrayReference;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleText | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | NavItem | Navigation | LinkList | LinkItem | CallToAction | Link | InfoSection | BlockContent | Lead | GeelyNetwork | LocaleBlockContent | LocaleString | Vehicle | Color | Showrooms | Model | Settings | MetaTag | MetaAttribute | Twitter | OpenGraph | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReferenceValue | Offer | OfferDetailForm | News | Fragment | SideKickSection | Footer | Header | Page | RichText | Car | SeoMetaFields | SanityFileAsset | CustomImage | Post | Person | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | InternationalizedArrayReference;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery

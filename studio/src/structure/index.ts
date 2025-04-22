@@ -312,6 +312,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       S.documentTypeListItem('geelyNetwork').title('Geely Networks').icon(EarthGlobeIcon),
       S.documentTypeListItem('vehicle').title('Vehicle 360').icon(ComponentIcon),
       S.documentTypeListItem('color').title('Colors').icon(ColorWheelIcon),
+      S.documentTypeListItem('lead').title('Leads').icon(ColorWheelIcon),
       
       /*S.listItem()
         .title('Site Utils')

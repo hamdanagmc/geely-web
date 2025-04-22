@@ -1,5 +1,6 @@
 "use client";
 import { saveContactForm } from "@/app/actions/keyloop/contact";
+import { saveLeads } from "@/app/actions/sanity/leads";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMContactEmail } from "@/app/services/email/crm";
@@ -155,6 +156,29 @@ export default function ContactFormSectionComp({
         const crmEmailProps = values as ContactEmailFields;
         const pageUrl = window.location.href;
         await sendCRMContactEmail(crmEmailProps, currentLocale, "Contact Us Form", pageUrl);
+
+        // Save the lead data to Sanity
+        const leadData = {
+          title: values.title,
+          firstName: values.fname,
+          lastName: values.lname,
+          email: values.email,
+          phone: values.countrymobileNoCode +" " + values.phone,
+          fleetSize: "",
+          companyName: "",
+          comments: values.comments,
+          formType: "Contact Us",
+          vehicleMake: "",
+          vehicleModel: "",
+          location: values.location,
+          modelYear: "",
+          serviceCenter: "",
+          type: values.type,
+          contactYou: "",
+          pageUrl,
+        };
+        await saveLeads(leadData);
+
         const slug = (block?.form?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;
         setSubmitting(false);

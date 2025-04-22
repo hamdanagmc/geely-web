@@ -1,0 +1,9 @@
+.mainContainer select{
+    border-radius: 5px;
+    min-width: 167px;
+    min-height: 38px;
+}
+.text-red{
+    color: #ff0000;
+    font-weight: 500;
+}

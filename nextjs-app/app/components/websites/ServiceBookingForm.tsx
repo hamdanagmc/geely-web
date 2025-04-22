@@ -1,5 +1,6 @@
 "use client";
 import { saveServiceBookingForm } from "@/app/actions/keyloop/serviceBooking";
+import { saveLeads } from "@/app/actions/sanity/leads";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMServideBookingEmail } from "@/app/services/email/crm";
@@ -140,6 +141,29 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
         const crmEmailProps = values as ServiceBookingProps;
         const pageUrl = window.location.href;
         await sendCRMServideBookingEmail(crmEmailProps, currentLocale, "Service Booking Form", pageUrl);
+
+        // Sanity lead data
+        const leadData = {
+          title: values.title || "",
+          firstName: values.fname || "",
+          lastName: values.lname || "",
+          email: values.email || "",
+          phone: `${values.countrymobileNoCode || ""} ${values.phone || ""}`,
+          fleetSize: "",
+          companyName: "",
+          comments:  "",
+          formType: "Service Booking Form",
+          vehicleMake:  "",
+          vehicleModel: values.vehicleType || "",
+          location: "",
+          modelYear: values.modelYear.toString() || "",
+          serviceCenter: values.serviceCenter || "",
+          type: "",
+          contactYou: "",
+          pageUrl,
+        };
+        await saveLeads(leadData);
+
         setSubmitting(false);
         const slug = (block?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;

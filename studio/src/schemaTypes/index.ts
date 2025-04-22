@@ -85,6 +85,7 @@ import { brochureDownloadFormSection } from './objects/brochureDownloadFormSecti
 import { thankyouRichText } from './objects/thankyouRichText'
 import { thankyouBanner } from './objects/thankyouBanner'
 import { offerDetailForm } from './objects/offerDetailForm'
+import { lead } from './documents/lead'
 
 export const schemaTypes = [
   // Singletons
@@ -102,6 +103,7 @@ export const schemaTypes = [
   news,
   geelyNetwork,
   offer,
+  lead,
   
   // Objects
   blockContent,
