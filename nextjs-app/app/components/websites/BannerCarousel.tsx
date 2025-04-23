@@ -15,6 +15,7 @@ import ImageComp from "../CustomImage"
 import useDeviceDetection from "../../hooks/useDeviceDetection"
 import { useTestDrive } from "../../context/TestDriveContext";
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 type BannerCarouselProps = {
   block: BannerCarousel
@@ -66,18 +67,28 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
           {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: isMobileDevice
-                ? slide?.mobileImage?.altText
-                  ? `url(${urlForImage(slide?.mobileImage?.image)?.url()})`
-                  : undefined
-                : slide?.desktopImage?.altText
-                  ? `url(${urlForImage(slide?.desktopImage?.image)?.url()})`
-                  : undefined,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          ></div>
+            
+          >{isMobileDevice && slide?.mobileImage?.altText ? (
+            <Image
+              src={urlForImage(slide?.mobileImage?.image ?? "")?.url() ?? "/placeholder.svg"}
+              alt={slide?.mobileImage?.altText || ""}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+              quality={90}
+            />
+          ) : slide?.desktopImage?.altText ? (
+            <Image
+              src={urlForImage(slide?.desktopImage?.image)?.url() || "/placeholder.svg"}
+              alt={slide?.desktopImage?.altText || ""}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+              quality={90}
+            />
+          ) : null}</div>
 
           {/* Content Overlay */}
           <div className="absolute banner_Text_main inset-0 flex max-w-[1440px] m-auto flex-col">

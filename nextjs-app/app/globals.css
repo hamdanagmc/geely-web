@@ -1596,6 +1596,9 @@ text-align: center;
 .offer-details{
     padding: 45px 16px;
 }
+.cursor-grab{
+    height: 140px!important;
+}
 }
 
 .brochure-submit-btn{

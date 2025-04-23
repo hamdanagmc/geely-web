@@ -1,34 +1,30 @@
-"use client";
+"use client"
 
-import type React from "react";
-import { useState, useCallback, useMemo, useEffect } from "react";
-import { Check } from "lucide-react";
-import { ReactImageTurntable } from "react-image-turntable";
-import type { ReactImageTurntableProps } from "react-image-turntable";
-import type { Car360, ExteriorImage } from "../../types/car360";
-import dynamic from "next/dynamic";
-import Image from "next/image";
+import { useState, useMemo, useEffect } from "react"
+import { Check } from "lucide-react"
+import NextImage from "next/image"
+import type { Car360, ExteriorImage } from "../../types/car360"
+import dynamic from "next/dynamic"
+import { CustomImageTurntable } from "./CustomImageTurntable"
 
 type Car360Props = {
-  block: Car360;
-  index: number;
-};
+  block: Car360
+  index: number
+}
 
-const DynamicPanoramaViewer = dynamic(
-  () => import("@/app/components/websites/PanoramaViewer"),
-  {
-    ssr: false,
-  }
-);
+const DynamicPanoramaViewer = dynamic(() => import("@/app/components/websites/PanoramaViewer"), {
+  ssr: false,
+})
 
 export default function Car360Comp({ block }: Car360Props) {
-  const [activeTab, setActiveTab] = useState<"exterior" | "interior">(
-    "exterior"
-  );
-  const [selectedColor, setSelectedColor] = useState<string>("");
-  const [rotationDisabled, setRotationDisabled] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"exterior" | "interior">("exterior")
+  const [selectedColor, setSelectedColor] = useState<string>("")
+  const [previousColor, setPreviousColor] = useState<string>("")
+  const [isColorTransitioning, setIsColorTransitioning] = useState(false)
+  const [colorTransitionProgress, setColorTransitionProgress] = useState(1) // 0 to 1
+  const [error, setError] = useState<string | null>(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const bgColor = "#EAE9E8" // Define background color once to ensure consistency
 
   const colorOptions = useMemo(() => {
     return (
@@ -37,8 +33,8 @@ export default function Car360Comp({ block }: Car360Props) {
         color: `${exterior.color.hexCode}`,
         images: exterior.images360.map((img) => img.asset.url),
       })) || []
-    );
-  }, [block.selectedCar?.exteriorImages]);
+    )
+  }, [block.selectedCar?.exteriorImages])
 
   // Get the first interior image URL or use fallback
   const interiorImageUrl = useMemo(() => {
@@ -47,52 +43,69 @@ export default function Car360Comp({ block }: Car360Props) {
       block.selectedCar.interiorImages.length > 0 &&
       block.selectedCar.interiorImages[0]?.asset?.url
     ) {
-      return block.selectedCar.interiorImages[0].asset.url;
+      return block.selectedCar.interiorImages[0].asset.url
     }
-    return "/images/panorama.webp"; // Fallback image
-  }, [block.selectedCar?.interiorImages]);
+    return "/images/panorama.webp" // Fallback image
+  }, [block.selectedCar?.interiorImages])
 
   useEffect(() => {
     if (colorOptions.length > 0 && !selectedColor) {
-      setSelectedColor(colorOptions[0].id);
+      setSelectedColor(colorOptions[0].id)
     }
-  }, [colorOptions, selectedColor]);
-
-  const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-      setRotationDisabled(true);
-    }
-  }, []);
+  }, [colorOptions, selectedColor])
 
   const currentImages = useMemo(() => {
-    return (
-      colorOptions.find((option) => option.id === selectedColor)?.images || []
-    );
-  }, [selectedColor, colorOptions]);
+    return colorOptions.find((option) => option.id === selectedColor)?.images || []
+  }, [selectedColor, colorOptions])
 
-  const turntableProps: ReactImageTurntableProps = useMemo(
-    () => ({
-      images: currentImages,
-      autoRotate: { disabled: true },
-      onPointerDown: () => setRotationDisabled(true),
-      onPointerUp: () => setRotationDisabled(false),
-      onKeyDown: handleKeyDown,
-      onKeyUp: () => setRotationDisabled(false),
-    }),
-    [currentImages, handleKeyDown]
-  );
+  const previousImages = useMemo(() => {
+    return colorOptions.find((option) => option.id === previousColor)?.images || []
+  }, [previousColor, colorOptions])
+
+  // Handle color change with smooth transition
+  useEffect(() => {
+    if (!selectedColor || selectedColor === previousColor) return
+
+    // Start transition
+    if (previousColor) {
+      setIsColorTransitioning(true)
+      setColorTransitionProgress(0)
+
+      // Animate transition
+      const startTime = performance.now()
+      const duration = 500 // 500ms transition
+
+      const animateTransition = (currentTime: number) => {
+        const elapsed = currentTime - startTime
+        const progress = Math.min(elapsed / duration, 1)
+        setColorTransitionProgress(progress)
+
+        if (progress < 1) {
+          requestAnimationFrame(animateTransition)
+        } else {
+          setIsColorTransitioning(false)
+          setPreviousColor(selectedColor)
+        }
+      }
+
+      requestAnimationFrame(animateTransition)
+    } else {
+      // First time setting color, no transition needed
+      setPreviousColor(selectedColor)
+    }
+  }, [selectedColor, previousColor])
 
   useEffect(() => {
     const handleError = (event: ErrorEvent) => {
-      setError(event.error.message);
-    };
+      setError(event.error.message)
+    }
 
-    window.addEventListener("error", handleError);
+    window.addEventListener("error", handleError)
 
     return () => {
-      window.removeEventListener("error", handleError);
-    };
-  }, []);
+      window.removeEventListener("error", handleError)
+    }
+  }, [])
 
   // For the hidden grid section
   const structuredSpecs = useMemo(() => {
@@ -100,17 +113,17 @@ export default function Car360Comp({ block }: Car360Props) {
       return block.specList.map((spec) => ({
         value: spec.value || "",
         unit: spec.unit || "",
-      }));
+      }))
     }
-    return [];
-  }, [block?.specList]);
+    return []
+  }, [block?.specList])
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Error: {error}</div>
   }
 
   if (!block.selectedCar) {
-    return <div className="text-center">No car data available</div>;
+    return <div className="text-center">No car data available</div>
   }
 
   return (
@@ -118,21 +131,16 @@ export default function Car360Comp({ block }: Car360Props) {
       {/* Modal for Panorama Viewer */}
       {isOpen && activeTab === "interior" && (
         <div className="fixed inset-0 panoramaViewer flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="relative panoramaViewerPopup  max-h-[calc(screen-60px)] max-w-[80%] bg-white rounded-lg shadow-lg w-full p-6">
+          <div className="relative panoramaViewerPopup max-h-[calc(screen-60px)] max-w-[80%] bg-white rounded-lg shadow-lg w-full p-6">
             {/* Close Button */}
             <button
               onClick={() => {
-                setIsOpen(false);
-                setActiveTab("exterior");
+                setIsOpen(false)
+                setActiveTab("exterior")
               }}
               className="absolute top-[5px] z-[11] ltr:right-[5px] rtl:left-[5px] text-gray-600 hover:text-gray-900"
             >
-              <Image
-                src="/images/close-btn.svg"
-                alt="Close"
-                width={24}
-                height={24}
-              />
+              <NextImage src="/images/close-btn.svg" alt="Close" width={24} height={24} />
             </button>
             <div
               style={{
@@ -160,7 +168,8 @@ export default function Car360Comp({ block }: Car360Props) {
       )}
       <div
         id={`${block?.htmlId}`}
-        className={`${activeTab === "exterior" ? "pb-10 pt-[60px] px-4" : ""} w-full relative min-h-[850px] car360Comp bg-[#EAE9E8]`}
+        className={`${activeTab === "exterior" ? "pb-10 pt-[60px] px-4" : ""} w-full relative min-h-[850px] car360Comp`}
+        style={{ backgroundColor: bgColor }}
       >
         {/* Header */}
         {activeTab === "exterior" && (
@@ -179,9 +188,7 @@ export default function Car360Comp({ block }: Car360Props) {
             <button
               onClick={() => setActiveTab("exterior")}
               className={`text-[22px] leading-8 font-medium px-4 py-1 ${
-                activeTab === "exterior"
-                  ? "text-black border-black"
-                  : "text-gray-400"
+                activeTab === "exterior" ? "text-black border-black" : "text-gray-400"
               }`}
             >
               {block?.exteriorLabel || "Exterior"}
@@ -189,8 +196,8 @@ export default function Car360Comp({ block }: Car360Props) {
             <span className="text-black mt-[6px] h-[18px] text-xl">|</span>
             <button
               onClick={() => {
-                setActiveTab("interior");
-                setIsOpen(true);
+                setActiveTab("interior")
+                setIsOpen(true)
               }}
               className={`text-[22px] leading-8 font-medium px-4 py-1 text-gray-400`}
             >
@@ -200,7 +207,6 @@ export default function Car360Comp({ block }: Car360Props) {
         )}
 
         {/* Color selector */}
-
         {colorOptions.length > 0 && activeTab === "exterior" && (
           <div className="absolute colorBox ltr:left-[60px] rtl:right-[60px] bottom-[42%] flex flex-col space-y-3 z-10">
             {colorOptions.map((option) => (
@@ -208,42 +214,61 @@ export default function Car360Comp({ block }: Car360Props) {
                 key={option.id}
                 onClick={() => setSelectedColor(option.id)}
                 className={`w-9 h-9 rounded-full flex items-center justify-center border-2 ${
-                  selectedColor === option.id
-                    ? "border-teal-600"
-                    : "border-gray-200"
+                  selectedColor === option.id ? "border-teal-600" : "border-gray-200"
                 }`}
                 aria-label={`Select ${option.id} color`}
                 style={{ background: `${option.color}` }}
+                disabled={isColorTransitioning}
               >
-                {selectedColor === option.id && (
-                  <Check className="text-white" size={18} />
-                )}
+                {selectedColor === option.id && <Check className="text-white" size={18} />}
               </button>
             ))}
           </div>
         )}
 
         {/* Car Display Section */}
-        <div
-          className={`relative ${activeTab === "exterior" ? "max-w-6xl mb-8" : "w-full"} mx-auto`}
-        >
+        <div className={`relative ${activeTab === "exterior" ? "max-w-6xl mb-8" : "w-full"} mx-auto`}>
           {activeTab === "exterior" && (
             <>
               {/* Car image turntable */}
-              <div className="flex justify-center pt-[34px] bg-[#EAE9E8]">
+              <div className="flex justify-center pt-[34px] relative">
+                {/* Current color images */}
                 <div
-                  className="imageTurntable mix-blend-multiply"
-                  style={{ width: "810px", height: "300px" }}
+                  className="mix-blend-multiply"
+                  style={{
+                    opacity: isColorTransitioning ? colorTransitionProgress : 1,
+                  }}
                 >
                   {currentImages.length > 0 ? (
-                    <ReactImageTurntable
-                      key={selectedColor}
-                      {...turntableProps}
+                    <CustomImageTurntable
+                      images={currentImages}
+                      width={810}
+                      height={300}
+                      dragSensitivity={1.5}
                     />
                   ) : (
-                    <div>No images available for this color</div>
+                    <div style={{ width: "810px", height: "300px", backgroundColor: bgColor }}>
+                      No images available for this color
+                    </div>
                   )}
                 </div>
+
+                {/* Previous color images - shown during transition */}
+                {isColorTransitioning && previousImages.length > 0 && (
+                  <div
+                    className="mix-blend-multiply absolute top-[34px]"
+                    style={{
+                      opacity: 1 - colorTransitionProgress,
+                    }}
+                  >
+                    <CustomImageTurntable
+                      images={previousImages}
+                      width={810}
+                      height={300}
+                      dragSensitivity={1.5}
+                    />
+                  </div>
+                )}
               </div>
             </>
           )}
@@ -252,8 +277,7 @@ export default function Car360Comp({ block }: Car360Props) {
           <div className="spec_360_container relative">
             <div className="spec-whell-number">
               <p>
-                {block?.specificationTitle}{" "}
-                <span>{block?.specificationSubTitle}</span>
+                {block?.specificationTitle} <span>{block?.specificationSubTitle}</span>
               </p>
             </div>
             <div className="spec_360_block">
@@ -275,5 +299,5 @@ export default function Car360Comp({ block }: Car360Props) {
         )}
       </div>
     </>
-  );
+  )
 }

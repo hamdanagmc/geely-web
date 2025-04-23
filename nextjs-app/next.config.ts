@@ -1629,6 +1629,36 @@ const nextConfig: NextConfig = {
         ]
         
       },
+      // Cache fonts for 1 year
+    {
+      source: '/fonts/(.*)',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, max-age=31536000, immutable',
+        },
+      ],
+    },
+    // Cache images for 1 year (you wrote 7 days, but max-age shows 1 year)
+    {
+      source: '/images/(.*)',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, max-age=31536000, immutable',
+        },
+      ],
+    },
+    // Cache Google Fonts for 1 year (can also reduce to 30 days if desired)
+    {
+      source: '/:path*{/}fonts.googleapis.com/:rest*',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, max-age=31536000, immutable',
+        },
+      ],
+    },
     ]
   },
 }
