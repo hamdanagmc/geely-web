@@ -36,8 +36,8 @@ export type Lead = {
 
 export default function LeadsTool() {
 
-  const [model, setModel] = useState('');
-  const [location, setLocation] = useState('');
+  const [models, setModels] = useState<string[]>([]);
+  const [locations, setLocations] = useState<string[]>([]);
   const [landingPage, setLandingPage] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
@@ -63,7 +63,7 @@ export default function LeadsTool() {
     return <ErrorView />;
   }
 
-  const handleClick = () => {
+  const handleClick = (sortBy: string) => {
     let conditions = [];
     if (fromDate) {
       const fD = fromDate + "T00:00:00Z";
@@ -73,40 +73,45 @@ export default function LeadsTool() {
       const tD = toDate + "T23:59:59Z";
       conditions.push(`_createdAt <= "${tD}"`);
     }
-    if (model) {
-      conditions.push(`vehicleModel == "${model}"`);
+    if (models.length > 0) {
+      const modelConditions = models.map(m => `vehicleModel match "*${m}*"`).join(' || ');
+      conditions.push(`(${modelConditions})`);
     }
-    if (location) {
-      conditions.push(`location == "${location}"`);
+    if (locations.length > 0) {
+      const locationConditions = locations.map(l => `location match "*${l}*"`).join(' || ');
+      conditions.push(`(${locationConditions})`);
     }
     if (landingPage) {
       conditions.push(`pageUrl match "${landingPage}*"`);
     }
 
-    if (conditions.length > 0) {
+    const whereClause = conditions.length > 0 ? ` && ${conditions.join(' && ')}` : '';
+    const sortClause = sortBy === "newest" ? "_createdAt desc"
+      : sortBy === "oldest" ? "_createdAt asc"
+        : sortBy === "a-z" ? "firstName asc"
+          : sortBy === "z-a" ? "firstName desc"
+            : "_createdAt desc";
 
-      const whereClause = conditions.length > 0 ? ` && ${conditions.join(' && ')}` : '';
-      const q = `*[_type == 'lead'${whereClause}] | order(_createdAt desc)`;
-
+    const q = `*[_type == 'lead'${whereClause}] | order(${sortClause})`;
+    console.log(q);
+    if (conditions.length > 0 || sortBy) {
       setQuery(q);
       setFieldError('');
     } else {
       setFieldError('Please select at least one filter option.');
     }
-
-  }
-
+  };
 
   const leadFilters = getLeadFilters(leads) as FilterProps;
 
-
   const handleChange = (value: string): void => {
     setSortBy(value);
-    if (value) {
-      setQuery(`*[_type == 'lead'] | order(${value === "newest" ? "_createdAt desc" : value === "oldest" ? "_createdAt asc" : value === "a-z" ? "firstName asc" : value === "z-a" ? "firstName desc" : ""})`);
-    } else {
-      setQuery(q);
-    }
+    handleClick(value); // Reuse handleClick to apply both filters and sorting
+  };
+
+  const clearSortBy = (): void => {
+    setSortBy('');
+    handleClick('newest');
   }
 
   return (
@@ -131,12 +136,16 @@ export default function LeadsTool() {
 
           <Card padding={2}>
             <Stack>
+              Select Models
               <Select
-                className={`form-control`}
+                multiple
+                className="form-control"
                 style={{ maxWidth: '220px' }}
-                value={model} onChange={e => setModel(e.currentTarget.value)}
+                value={models}
+                onChange={(e) =>
+                  setModels(Array.from((e.target as HTMLSelectElement).selectedOptions, (option) => option.value))
+                }
               >
-                <option value="" >Choose Model</option>
                 {leadFilters.vehicleModels.map((model, index) => (
                   <option key={index} value={model}>{model}</option>
                 ))}
@@ -145,11 +154,16 @@ export default function LeadsTool() {
           </Card>
           <Card padding={2}>
             <Stack>
+              Select Locations
               <Select
-                className={`form-control`}
-                value={location} onChange={e => setLocation(e.currentTarget.value)}
+                multiple
+                className="form-control"
+                style={{ minWidth: '270px' }}
+                value={locations}
+                onChange={(e) =>
+                  setLocations(Array.from((e.target as HTMLSelectElement).selectedOptions, (option) => option.value))
+                }
               >
-                <option value="" >Choose Location</option>
                 {leadFilters.locations.map((location, index) => (
                   <option key={index} value={location}>{location}</option>
                 ))}
@@ -207,7 +221,7 @@ export default function LeadsTool() {
               text="Search"
               className='btn btn-primary'
               radius="full"
-              onClick={handleClick}
+              onClick={() => handleClick('newest')}
             />
           </Card>
           <Card>
@@ -217,8 +231,8 @@ export default function LeadsTool() {
               className='btn btn-secondary'
               radius="full"
               onClick={() => {
-                setModel('');
-                setLocation('');
+                setModels([]);
+                setLocations([]);
                 setLandingPage('');
                 setFromDate('');
                 setToDate('');
@@ -232,7 +246,7 @@ export default function LeadsTool() {
         <Container className={styles.mainContainer} style={{ marginTop: "0px !important", paddingTop: "0px !important" }}>
           <Flex >
             <Stack>
-                <Flex align="center" gap={2}>
+              <Flex align="center" gap={2}>
                 <Select
                   className={`form-control`}
                   style={{ maxWidth: '220px' }}
@@ -246,17 +260,14 @@ export default function LeadsTool() {
                 </Select>
                 {sortBy && (
                   <Button
-                  fontSize={2}
-                  padding={2}
-                  text="X"
-                  tone="critical"
-                  onClick={() => {
-                    setSortBy('');
-                    setQuery(q);
-                  }}
+                    fontSize={2}
+                    padding={2}
+                    text="X"
+                    tone="critical"
+                    onClick={() => clearSortBy()}
                   />
                 )}
-                </Flex>
+              </Flex>
             </Stack>
 
           </Flex>

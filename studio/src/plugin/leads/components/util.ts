@@ -5,21 +5,30 @@ export type FilterProps = {
     pageUrls: string[];
 }
 export function getLeadFilters(leads: Lead[]): FilterProps {
-    const uniqueLocations = new Set();
-    const uniqueVehicleModels = new Set();
-    const uniquePageUrls = new Set();
+    const uniqueLocationsMap = new Map<string, string>();
+    const uniqueVehicleModelsMap = new Map<string, string>(); // key: lowercase, value: Capitalized
+    const uniquePageUrls = new Set<string>();
+
+    const capitalizeFirst = (str: string) =>
+        str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
     leads.forEach((lead) => {
         // Location
         if (lead.location && lead.location.trim() !== "") {
-            uniqueLocations.add(lead.location.trim());
-        }
+            const trimmed = lead.location.trim();
+            const key = trimmed.toLowerCase();
+            if (!uniqueLocationsMap.has(key)) {
+              uniqueLocationsMap.set(key, capitalizeFirst(trimmed));
+            }
+          }
 
         // Vehicle Models (may be comma-separated)
         if (lead.vehicleModel && lead.vehicleModel.trim() !== "") {
             lead.vehicleModel.split(",").forEach((model) => {
-                if (model.trim()) {
-                    uniqueVehicleModels.add(model.trim());
+                const trimmed = model.trim();
+                const key = trimmed.toLowerCase();
+                if (trimmed && !uniqueVehicleModelsMap.has(key)) {
+                    uniqueVehicleModelsMap.set(key, capitalizeFirst(trimmed));
                 }
             });
         }
@@ -36,14 +45,13 @@ export function getLeadFilters(leads: Lead[]): FilterProps {
         }
     });
 
-    // Convert Sets to Arrays
-    const locations = [...uniqueLocations];
-    const vehicleModels = [...uniqueVehicleModels];
+    const locations = [...uniqueLocationsMap.values()];
+    const vehicleModels = [...uniqueVehicleModelsMap.values()];
     const pageUrls = [...uniquePageUrls];
 
     return {
         locations,
         vehicleModels,
         pageUrls,
-    } as FilterProps;
+    };
 }
