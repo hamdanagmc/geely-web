@@ -86,6 +86,7 @@ import { thankyouRichText } from './objects/thankyouRichText'
 import { thankyouBanner } from './objects/thankyouBanner'
 import { offerDetailForm } from './objects/offerDetailForm'
 import { lead } from './documents/lead'
+import { optOutForm } from './objects/optOutForm'
 
 export const schemaTypes = [
   // Singletons
@@ -181,4 +182,5 @@ export const schemaTypes = [
   thankyouRichText,
   thankyouBanner,
   offerDetailForm,
+  optOutForm,
 ]

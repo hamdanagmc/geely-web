@@ -15,17 +15,17 @@ interface UtmProps {
 
 export default function LeadsList({ leads }: LeadsListProps) {
   return (
-    <Container className={styles.mainContainer} style={{ marginTop: "60px" }}>
+    
 
       <LeadsTable leads={leads} />
-    </Container>
+
   );
 }
 
 // Define the LeadsTable component
 function LeadsTable({ leads }: LeadsListProps) {
   return (
-    <Stack space={3} padding={[3]}>
+    <Stack >
       {leads?.length === 0 ? (
         <Heading style={{ padding: "20px", fontSize: "14px" }}>
           You have no leads
@@ -38,13 +38,13 @@ function LeadsTable({ leads }: LeadsListProps) {
             <thead>
               <tr>
                 <th>Sno</th>
-                <th>Form Type</th>
-                <th>Landing page</th>
                 <th>Title</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Form Type</th>
+                <th>Landing page</th>
                 <th>Fleet Size</th>
                 <th>Company Name</th>
                 <th>Vehicle Make</th>
@@ -102,13 +102,13 @@ function LeadsTable({ leads }: LeadsListProps) {
                 return (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{formType || "N/A"}</td>
-                    <td>{landingPage || "N/A"}</td>
                     <td>{title || "N/A"}</td>
                     <td>{firstName || "N/A"}</td>
                     <td>{lastName || "N/A"}</td>
                     <td>{email || "N/A"}</td>
                     <td>{phone || "N/A"}</td>
+                    <td>{formType || "N/A"}</td>
+                    <td>{landingPage || "N/A"}</td>
                     <td>{fleetSize || "N/A"}</td>
                     <td>{companyName || "N/A"}</td>
                     <td>{vehicleMake || "N/A"}</td>

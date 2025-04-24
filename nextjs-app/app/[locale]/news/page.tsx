@@ -29,7 +29,7 @@ export async function generateMetadata({
   const { data: page } = await sanityFetchCustom({
     query: getNewsPageQuery(locale),
     params: { locale },
-    tags: [`page:news`],
+    tags: ["page:" + locale === "ar" ? "ar/news" : "news"],
   });
 
   return {
@@ -54,11 +54,12 @@ export default async function Page({
     sanityFetchCustom({
       query: getNewsQuery(locale),
       params: { locale },
+      tags: ["news"],
     }),
     sanityFetchCustom({
       query: getNewsPageQuery(locale),
       params: { locale },
-      tags: ["page"],
+      tags: ["page:" + locale === "ar" ? "ar/news" : "news"],
     }),
   ]);
 

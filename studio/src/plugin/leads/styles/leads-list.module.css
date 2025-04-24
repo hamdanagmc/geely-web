@@ -35,12 +35,12 @@
     color: #3B4C36;
 }*/
 .mainTable  thead tr th:nth-child(2){
-    width: 180px;
-    min-width: 180px;
+    width: 70px;
+    min-width: 70px;
 }
-.mainTable  thead tr th:nth-child(4){
-    width: 65px;
-    min-width: 65px;
+.mainTable  thead tr th:nth-child(3){
+    width: 200px;
+    min-width: 200px;
 }
 .mainTable  thead tr th:nth-child(10){
     width: 200px;

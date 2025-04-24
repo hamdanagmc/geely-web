@@ -52,6 +52,14 @@ export type FleetSalesFormProps = {
     countrymobileNoCode: string;
 };
 
+export type OptOutFormFields = {
+    name: string;
+    email: string;
+    phone: string;
+    stopMarketing: string;
+    countrymobileNoCode: string;
+}
+
 export type OfferFormProps = {
     title: string;
     firstName: string;
@@ -78,4 +86,4 @@ export type BrochureFormProps = {
     brochure_check: string[];
     countrymobileNoCode: string;
     contactYou: string;
-  }
+}

@@ -100,7 +100,8 @@ export const page = defineType({
         { type: 'heroBrochureDownload' },
         { type: 'brochureDownloadFormSection' },
         { type: 'thankyouRichText' },
-        { type: 'thankyouBanner' }
+        { type: 'thankyouBanner' },
+        { type: 'optOutForm' },
       ],
 
       options: {

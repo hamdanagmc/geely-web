@@ -7,6 +7,7 @@ import "../styles/lease.css";
 import LeadsList from './leads-list';
 import { FilterProps, getLeadFilters } from './util';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import styles from "../styles/leads-list.module.css";
 
 export type Lead = {
   _id: string;
@@ -43,6 +44,7 @@ export default function LeadsTool() {
   const q = `*[_type == 'lead'] | order(_createdAt desc)`;
   const [query, setQuery] = useState(q);
   const [fieldError, setFieldError] = useState('');
+  const [sortBy, setSortBy] = useState('');
 
   const {
     data,
@@ -98,6 +100,15 @@ export default function LeadsTool() {
   const leadFilters = getLeadFilters(leads) as FilterProps;
 
 
+  const handleChange = (value: string): void => {
+    setSortBy(value);
+    if (value) {
+      setQuery(`*[_type == 'lead'] | order(${value === "newest" ? "_createdAt desc" : value === "oldest" ? "_createdAt asc" : value === "a-z" ? "firstName asc" : value === "z-a" ? "firstName desc" : ""})`);
+    } else {
+      setQuery(q);
+    }
+  }
+
   return (
     <ToastProvider>
       <Container className="mainContainer" style={{ marginTop: '60px', maxWidth: '100%', overflow: 'scroll' }}>
@@ -122,7 +133,7 @@ export default function LeadsTool() {
             <Stack>
               <Select
                 className={`form-control`}
-                style={{maxWidth:'220px'}}
+                style={{ maxWidth: '220px' }}
                 value={model} onChange={e => setModel(e.currentTarget.value)}
               >
                 <option value="" >Choose Model</option>
@@ -184,10 +195,10 @@ export default function LeadsTool() {
             />
           </Card>
 
-          </Flex>
+        </Flex>
 
-          <Flex align="center" className='d-flex submitBtn justify-content-center gap-3'>
-          
+        <Flex align="center" className='d-flex submitBtn justify-content-center gap-3'>
+
           <Card>
             <Button
               fontSize={[1.5, 1.5, 2]}
@@ -218,11 +229,43 @@ export default function LeadsTool() {
           </Card>
         </Flex>
         {fieldError && <p className="text-center formError mt-4 mb-0 text-red">{fieldError}</p>}
-        <LeadsList
-          leads={leads}
-        />
+        <Container className={styles.mainContainer} style={{ marginTop: "0px !important", paddingTop: "0px !important" }}>
+          <Flex >
+            <Stack>
+                <Flex align="center" gap={2}>
+                <Select
+                  className={`form-control`}
+                  style={{ maxWidth: '220px' }}
+                  value={sortBy} onChange={e => handleChange(e.currentTarget.value)}
+                >
+                  <option value="" >Sort By</option>
+                  <option value="a-z">A-Z</option>
+                  <option value="z-a">Z-A</option>
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                </Select>
+                {sortBy && (
+                  <Button
+                  fontSize={2}
+                  padding={2}
+                  text="X"
+                  tone="critical"
+                  onClick={() => {
+                    setSortBy('');
+                    setQuery(q);
+                  }}
+                  />
+                )}
+                </Flex>
+            </Stack>
+
+          </Flex>
+          <LeadsList
+            leads={leads}
+          />
+        </Container>
       </Container>
-    </ToastProvider>
+    </ToastProvider >
   )
 }
 

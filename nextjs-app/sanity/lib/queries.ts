@@ -67,6 +67,15 @@ export const getPageQuery = defineQuery(`
             }
           }
       },
+      _type == "optOutForm" => {
+          
+          ...,
+          link -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
+      },
       _type == "brochureDownloadFormSection" => {
           ...,
           form{
@@ -471,7 +480,7 @@ export const headerQuery = defineQuery(`
     }
   }
   `);
-  
+
 
 export const footerQuery = defineQuery(`
   *[_type == "fragment" && type == "Footer" && language == $language][0] {
@@ -687,7 +696,7 @@ export const getCarListQuery = groq`
 export const getAllVehiclesQuery = (locale: string) => `
   *[_type == "vehicle" && language == "${locale}"]`;
 
-  export const getGeelyNetworkQuery = (locale: string) => `
+export const getGeelyNetworkQuery = (locale: string) => `
   *[_type == "geelyNetwork"] {
   ...,
     "title": select("${locale}" == "en" => titleLocale.en, titleLocale.ar),

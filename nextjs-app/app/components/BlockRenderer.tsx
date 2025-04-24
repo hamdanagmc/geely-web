@@ -50,6 +50,7 @@ import StickyTabsComponent from "@/app/components/car/StickyTabsComponent";
 import Car360Section from "@/app/components/car/Car360Section";
 import ThankyouRichText from "@/app/components/websites/ThankyouRichText";
 import ThankyouBanner from "@/app/components/websites/ThankyouBanner";
+import OptOutFormComp from "./websites/OptOutFormComp";
 
 type BlocksType = {
   [key: string]: React.FC<any>;
@@ -115,7 +116,8 @@ const Blocks: BlocksType = {
   heroBrochureDownload : HeroBrochureDownload,
   brochureDownloadFormSection : BrochureDownloadFormSection,
   thankyouRichText : ThankyouRichText,
-  thankyouBanner : ThankyouBanner
+  thankyouBanner : ThankyouBanner,
+  optOutForm : OptOutFormComp,
 };
 
 /**
