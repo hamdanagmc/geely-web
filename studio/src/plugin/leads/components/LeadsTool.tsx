@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { exportToExcel } from 'react-json-to-excel';
 import { useListeningQuery } from 'sanity-plugin-utils';
 import "../styles/lease.css";
-import LeadsList from './leads-list';
+import LeadsList, { UtmProps } from './leads-list';
 import { FilterProps, getLeadFilters } from './util';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "../styles/leads-list.module.css";
+import { page } from '../../../schemaTypes/documents/page';
 
 export type Lead = {
   _id: string;
@@ -114,6 +115,47 @@ export default function LeadsTool() {
     handleClick('newest');
   }
 
+  const orderedLeads = leads.map((lead: Lead) => {
+    const url = lead.pageUrl ? new URL(lead.pageUrl) : { hostname: "N/A", pathname: "", searchParams: new URLSearchParams() };
+    const landingPage = url.hostname + url.pathname
+    const searchParams = url.searchParams;
+    const isEmpty = [...searchParams.entries()].length === 0;
+    const utmParameters: UtmProps = {
+      utm_source: "N/A",
+      utm_medium: "N/A",
+      utm_campaign: "N/A",
+    };
+    if (!isEmpty) {
+      utmParameters.utm_source = searchParams.get("utm_source") || "N/A";
+      utmParameters.utm_medium = searchParams.get("utm_medium") || "N/A";
+      utmParameters.utm_campaign = searchParams.get("utm_campaign") || "N/A";
+    }
+    return {
+      title: lead.title || '',
+      firstName: lead.firstName || '',
+      lastName: lead.lastName || '',
+      email: lead.email || '',
+      phone: lead.phone || '',
+      formType: lead.formType || '',
+      landingPage: landingPage || '',
+      fleetSize: lead.fleetSize || '',
+      companyName: lead.companyName || '',
+      vehicleMake: lead.vehicleMake || '',
+      vehicleModel: lead.vehicleModel || '',
+      location: lead.location || '',
+      modelYear: lead.modelYear || '',
+      serviceCenter: lead.serviceCenter || '',
+      type: lead.type || '',
+      contactYou: lead.contactYou || '',
+      pageUrl: lead.pageUrl || '',
+      comments: lead.comments || '',
+      utmSource: utmParameters.utm_source || '',
+      utmMedium: utmParameters.utm_medium || '',
+      utmCampaign: utmParameters.utm_campaign || '',
+      _createdAt: lead._createdAt || '',
+    }
+  });
+
   return (
     <ToastProvider>
       <Container className="mainContainer" style={{ marginTop: '60px', maxWidth: '100%', overflow: 'scroll' }}>
@@ -128,7 +170,7 @@ export default function LeadsTool() {
               tone="positive"
               className='btn btn-success exportToExcel'
               radius="full"
-              onClick={() => exportToExcel(leads, 'GeelyLeads')}
+              onClick={() => exportToExcel(orderedLeads, 'GeelyLeads')}
             />
           </Card>
         </div>

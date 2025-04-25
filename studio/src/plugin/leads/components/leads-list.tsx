@@ -7,7 +7,7 @@ interface LeadsListProps {
   leads: Lead[];
 }
 
-interface UtmProps {
+export interface UtmProps {
   utm_source: string;
   utm_medium: string;
   utm_campaign: string;
