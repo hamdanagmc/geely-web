@@ -19,12 +19,6 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // English pages
-      // Home page
-      {
-        source: "/",
-        destination: "/en",
-        permanent: true,
-      },
       // Car pages
       {
         source: "/all-new-coolray",
@@ -1517,29 +1511,6 @@ const nextConfig: NextConfig = {
       // Handle URLs with hash fragments
       {
         source: "/:path*/#:hash*",
-        destination: "/:path*",
-        permanent: true,
-      },
-      // Handle URLs with fbclid or ttclid parameters
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "query",
-            key: "fbclid",
-          },
-        ],
-        destination: "/:path*",
-        permanent: true,
-      },
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "query",
-            key: "ttclid",
-          },
-        ],
         destination: "/:path*",
         permanent: true,
       },
