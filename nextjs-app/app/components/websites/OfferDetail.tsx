@@ -150,7 +150,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
 
         setSubmitting(false);
         const slug = (offer?.link as any)?._ref || "";
-        window.location.href = `/${currentLocale}/${slug}`;
+        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
       }
       setSubmitting(false);
       resetForm();

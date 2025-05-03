@@ -86,6 +86,8 @@ export const offerDetailForm = defineType({
             type: "reference",
             title: "Select Thank You Page",
             to: [{ type: "page" }],
+            readOnly: true,
+            deprecated : {reason: "This field is deprecated and will be removed in the future."}
         }),
     ],
     preview: {

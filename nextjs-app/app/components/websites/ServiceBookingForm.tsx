@@ -166,7 +166,7 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
 
         setSubmitting(false);
         const slug = (block?.link as any)?.slug || "";
-        window.location.href = `/${currentLocale}/${slug}`;
+        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
       }
 
       resetForm();

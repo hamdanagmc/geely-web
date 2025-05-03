@@ -227,7 +227,7 @@ export default function BrochureDownloadForm({
 
         //redirect to thankyou page
         const slug = (block?.form?.link as any)?.slug || "";
-        window.location.href = `/${currentLocale}/${slug}`;
+        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
         setSubmitting(false);
       }
 

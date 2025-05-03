@@ -181,7 +181,7 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
         
         setSubmitting(false);
         const slug = (block?.form?.link as any)?.slug || "";
-        window.location.href = `/${currentLocale}/${slug}`;
+        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
       }
 
       resetForm();

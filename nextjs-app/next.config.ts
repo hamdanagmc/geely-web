@@ -1520,29 +1520,6 @@ const nextConfig: NextConfig = {
         destination: "/:path*",
         permanent: true,
       },
-      // Handle URLs with fbclid or ttclid parameters
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "query",
-            key: "fbclid",
-          },
-        ],
-        destination: "/:path*",
-        permanent: true,
-      },
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "query",
-            key: "ttclid",
-          },
-        ],
-        destination: "/:path*",
-        permanent: true,
-      },
     ]
   },
   images: {
