@@ -19,12 +19,6 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // English pages
-      // Home page
-      {
-        source: "/",
-        destination: "/en",
-        permanent: true,
-      },
       // Car pages
       {
         source: "/all-new-coolray",
