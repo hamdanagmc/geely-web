@@ -19,6 +19,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // English pages
+      // Home page
+      {
+        source: "/",
+        destination: "/en",
+        permanent: true,
+      },
       // Car pages
       {
         source: "/all-new-coolray",
@@ -1570,7 +1576,8 @@ const nextConfig: NextConfig = {
                 https://www.googletagmanager.com https://px.ads.linkedin.com
                 https://*.ads.linkedin.com https://www.facebook.com https://tr.snapchat.com https://analytics.tiktok.com
                 https://www.google.co.in https://t.co https://analytics.twitter.com https://ad.doubleclick.net
-                https://www.google.com https://www.linkedin.com https://bat.bing.com https://googleads.g.doubleclick.net;
+                https://www.google.com https://www.linkedin.com https://bat.bing.com https://googleads.g.doubleclick.net
+                https://www.googleadservices.com;
         
               style-src 'self' 'unsafe-inline'
                 https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.gstatic.com;
