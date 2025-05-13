@@ -58,7 +58,7 @@ const validationSchema = Yup.object({
     "You must accept the terms and conditions"
   ),
   brochure_check: Yup.array()
-    .min(1, "At least one brochure must be selected")
+    .min(1, "Please select a brochure to download.")
     .required("Selection is required"),
   countrymobileNoCode: Yup.string().required("Country code is required"),
 });
