@@ -295,7 +295,7 @@ export default function BrochureDownloadForm({
                       className="offertext"
                     >
                       <input
-                        type="checkbox"
+                        type="radio"
                         id={`brochure_${item._key}`}
                         className="brochure_check"
                         name="brochure_check"
