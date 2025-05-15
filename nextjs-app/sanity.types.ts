@@ -1157,6 +1157,12 @@ export type HeroBannerComponent = {
     [internalGroqTypeReferenceTo]?: "car";
   };
   brochureTitle?: string;
+  brochurePageLink?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
   brochureFile?: {
     asset?: {
       _ref: string;
@@ -4275,7 +4281,7 @@ export type GetNewsDetailQueryResult = {
   }> | null;
 } | null;
 // Variable: getCarsQuery
-// Query: *[_type == 'car' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    seo,    "pageBuilder": pageBuilder[]{      ...,      _type == "car360" => {        ...,        selectedCar->{          _id,          name,          exteriorImages[]{            color->{              _id,              name,              hexCode            },            images360[]{              asset->{                url              }            }          },          interiorImages[]{            asset->{              url            }          }        }      },      _type == "heroBannerComponent" => {        video {    asset-> {      playbackId,      assetId,      filename,    }  }      },      link -> {              _id,              title,              "slug": slug.current            }    }  }
+// Query: *[_type == 'car' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    seo,    "pageBuilder": pageBuilder[]{      ...,      _type == "car360" => {        ...,        selectedCar->{          _id,          name,          exteriorImages[]{            color->{              _id,              name,              hexCode            },            images360[]{              asset->{                url              }            }          },          interiorImages[]{            asset->{              url            }          }        }      },      _type == "heroBannerComponent" => {        video {    asset-> {      playbackId,      assetId,      filename,    }  }      },      link -> {              _id,              title,              "slug": slug.current            },            brochurePageLink -> {              _id,              title,              "slug": slug.current            }    }  }
 export type GetCarsQueryResult = {
   _id: string;
   _type: "car";
@@ -4323,6 +4329,7 @@ export type GetCarsQueryResult = {
     }>;
     htmlId?: string;
     link: null;
+    brochurePageLink: null;
   } | {
     _key: string;
     _type: "comfortSlider";
@@ -4337,6 +4344,7 @@ export type GetCarsQueryResult = {
     }>;
     htmlId?: string;
     link: null;
+    brochurePageLink: null;
   } | {
     _key: string;
     _type: "featureHighlightsComponent";
@@ -4356,6 +4364,7 @@ export type GetCarsQueryResult = {
     }>;
     htmlId?: string;
     link: null;
+    brochurePageLink: null;
   } | {
     _key: string;
     _type: "heroBannerComponent";
@@ -4407,6 +4416,11 @@ export type GetCarsQueryResult = {
       slug: string | null;
     } | null;
     brochureTitle?: string;
+    brochurePageLink: {
+      _id: string;
+      title: string | null;
+      slug: string | null;
+    } | null;
     brochureFile?: {
       asset?: {
         _ref: string;
@@ -4442,6 +4456,7 @@ export type GetCarsQueryResult = {
       link?: string;
     };
     link: null;
+    brochurePageLink: null;
   } | {
     _key: string;
     _type: "owlStageOuter";
@@ -4456,12 +4471,14 @@ export type GetCarsQueryResult = {
     }>;
     htmlId?: string;
     link: null;
+    brochurePageLink: null;
   } | {
     _key: string;
     _type: "richText";
     content?: BlockContent;
     htmlId?: string;
     link: null;
+    brochurePageLink: null;
   } | {
     _key: string;
     _type: "richTextheadingPara";
@@ -4485,6 +4502,7 @@ export type GetCarsQueryResult = {
     }>;
     htmlId?: string;
     link: null;
+    brochurePageLink: null;
   } | {
     _key: string;
     _type: "stickyTabsComponent";
@@ -4506,6 +4524,7 @@ export type GetCarsQueryResult = {
       _key: string;
     }>;
     link: null;
+    brochurePageLink: null;
   }> | null;
 } | null;
 // Variable: getOfferDetailQuery
@@ -4952,7 +4971,7 @@ declare module "@sanity/client" {
     "*[_type == \"settings\"][0]": SettingsQueryResult;
     "\n  *[_type == 'page' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    blackBackground,\n    heading,\n    subheading,\n    seo,\n    \"pageBuilder\": pageBuilder[]{\n      ...,\n      _type == \"callToAction\" => {\n        \n  link {\n      ...,\n      \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n      }\n,\n      },\n      _type == \"carModelComponent\" => {\n        carModels[]{\n          ...,\n          exploreLink {\n            text,\n            link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n        }\n      },\n       _type == \"contactFormSection\" => {\n          ...,\n          form{\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n      },\n      _type == \"optOutForm\" => {\n          \n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"brochureDownloadFormSection\" => {\n          ...,\n          form{\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n      },\n      _type == \"requestQuoteForm\" => {\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"fleetContactFormSection\" => {\n          ...,\n          form{\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n      },\n      _type == \"serviceBookingForm\" => {\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n          }\n      },\n      _type == \"bannerCarousel\" => {\n        ...,\n        link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"thankyouRichText\" => {\n        ...,\n        callToActionButton{\n        ...,\n        link { _type, linkType, openInNewTab, href, path, \"page\": page->{ _id, title, \"slug\": slug.current } },\n         }\n      },\n\n      \n      _type == \"infoSection\" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n          }\n        }\n      },\n      _type == \"heroVideoComponent\" => {\n        video {\n          asset-> {\n            playbackId,\n            assetId,\n            filename\n          }\n        }\n      },\n      _type == \"imagesAndVideosSection\" => {\n        ...,\n        modelGalleryList[]{\n          ...,\n        }\n      }\n    }\n  }\n": GetPageQueryResult;
     "\n  *[_type == 'news' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    blackBackground,\n    thumbnail,\n    seo,\n    \"pageBuilder\": pageBuilder[]{\n      ...,\n      _type == \"callToAction\" => {\n        \n  link {\n      ...,\n      \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n      }\n,\n      },\n      _type == \"carModelComponent\" => {\n        carModels[]{\n          ...,\n          exploreLink {\n          text,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n          }\n        }\n        }\n      },\n      _type == \"infoSection\" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n          }\n        }\n      },\n    },\n  }\n": GetNewsDetailQueryResult;
-    "\n  *[_type == 'car' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    seo,\n    \"pageBuilder\": pageBuilder[]{\n      ...,\n      _type == \"car360\" => {\n        ...,\n        selectedCar->{\n          _id,\n          name,\n          exteriorImages[]{\n            color->{\n              _id,\n              name,\n              hexCode\n            },\n            images360[]{\n              asset->{\n                url\n              }\n            }\n          },\n          interiorImages[]{\n            asset->{\n              url\n            }\n          }\n        }\n      },\n      _type == \"heroBannerComponent\" => {\n        video {\n    asset-> {\n      playbackId,\n      assetId,\n      filename,\n    }\n  }\n      },\n      link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n    }\n  }\n": GetCarsQueryResult;
+    "\n  *[_type == 'car' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    seo,\n    \"pageBuilder\": pageBuilder[]{\n      ...,\n      _type == \"car360\" => {\n        ...,\n        selectedCar->{\n          _id,\n          name,\n          exteriorImages[]{\n            color->{\n              _id,\n              name,\n              hexCode\n            },\n            images360[]{\n              asset->{\n                url\n              }\n            }\n          },\n          interiorImages[]{\n            asset->{\n              url\n            }\n          }\n        }\n      },\n      _type == \"heroBannerComponent\" => {\n        video {\n    asset-> {\n      playbackId,\n      assetId,\n      filename,\n    }\n  }\n      },\n      link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            brochurePageLink -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n    }\n  }\n": GetCarsQueryResult;
     "\n  *[_type == 'offer' && slug.current == $slug][0]{\n     ...,\n     link -> {\n              \"slug\": slug.current\n          }\n  }\n": GetOfferDetailQueryResult;
     "\n  *[_type == \"page\" || _type == \"post\" && defined(slug.current)] | order(_type asc) {\n    \"slug\": slug.current,\n    _type,\n    _updatedAt,\n  }\n": SitemapDataResult;
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{firstName, lastName, picture},\n\n  }\n": AllPostsQueryResult;

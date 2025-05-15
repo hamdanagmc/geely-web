@@ -105,14 +105,13 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
                 {block?.testDriveTitle}
               </button>
             )}
-            {block.brochureFile && (
-              <Link
-                href={urlForPDF(block.brochureFile) || ""}
-                target="_blank"
+            {block.brochurePageLink && (
+                <Link
+                href={`/${currentLocale}/${(block?.brochurePageLink as any)?.slug?.replace(/^ar\//, "") || ""}`}
                 className="px-[18px] py-3 text-[17px] font-medium leading-5 bg-black hover:bg-[#194bff] text-white rounded-[3px]"
-              >
+                >
                 {block?.brochureTitle}
-              </Link>
+                </Link>
             )}
           </div>
         </div>

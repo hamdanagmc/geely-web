@@ -44,7 +44,9 @@ const validationSchema = Yup.object().shape({
   location: Yup.string().required("Location is required"),
   vehicle: Yup.string().required("Vehicle is required"),
   phoneNo: Yup.string()
-    .required("Phone No is required"),
+        .matches(/^[0-9]+$/, "Phone number must be only digits")
+        .min(9, "Phone number must be at least 9 digits")
+        .required("Phone number is required"),
   comment: Yup.string(),
   privacyPolicy: Yup.boolean().oneOf(
     [true],
