@@ -15,6 +15,7 @@ import { NextIntlClientProvider } from "next-intl";
 import Cookie from "../components/websites/cookie";
 import Gtm from "../components/websites/Gtm";
 import { TestDriveProvider } from '../context/TestDriveContext';
+import StoreProvider from '../StoreProvider';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -94,6 +95,7 @@ export default async function RootLayout({
           )}
           <SanityLive onError={handleError} />
           <main className="">
+          <StoreProvider>
             <TestDriveProvider>
             <NextIntlClientProvider messages={messages}>
               {children}
@@ -101,6 +103,7 @@ export default async function RootLayout({
               <Gtm/>
             </NextIntlClientProvider>
             </TestDriveProvider>
+            </StoreProvider>
           </main>
         </>
       </body>

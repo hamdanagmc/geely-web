@@ -87,6 +87,12 @@ import { thankyouBanner } from './objects/thankyouBanner'
 import { offerDetailForm } from './objects/offerDetailForm'
 import { lead } from './documents/lead'
 import { optOutForm } from './objects/optOutForm'
+import customerLookup from './objects/customerLookup'
+import customerDetails from './objects/customerDetails'
+import appointmentBooked from './objects/appointmentBooked'
+import {appointmentError} from './objects/appointmentError'
+import { optOutLead } from './documents/optOutLead'
+
 
 export const schemaTypes = [
   // Singletons
@@ -105,6 +111,7 @@ export const schemaTypes = [
   geelyNetwork,
   offer,
   lead,
+  optOutLead,
   
   // Objects
   blockContent,
@@ -183,4 +190,8 @@ export const schemaTypes = [
   thankyouBanner,
   offerDetailForm,
   optOutForm,
+  customerLookup,
+  customerDetails,
+  appointmentBooked,
+  appointmentError
 ]

@@ -22,4 +22,5 @@ export interface CreateAppointmentPayload {
     serviceProductIds: string[];
     startDate: string;
     vehicleId: number;
+    startDateTime : string;
 }

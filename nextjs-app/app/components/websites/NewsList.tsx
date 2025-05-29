@@ -71,12 +71,13 @@ export default function NewsList({ news }: NewsListProps) {
                 className={`relative ${viewType === "list" ? "w-[300px] flex-shrink-0" : "w-full"} aspect-[3/2]`}
               >
                 {item?.thumbnail?.altText && (
-                  <ImageComp
+                  <Link href={`/${currentLocale}/news/${item?.slug?.current?.split('/').filter(segment => segment !== '').pop()}`}><ImageComp
                     block={item.thumbnail}
                     imageClassName="object-cover w-full h-full"
                     width={600}
                     height={500}
                   />
+                  </Link>
                 )}
               </div>
               <div className="pt-4 flex-grow">

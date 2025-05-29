@@ -51,6 +51,10 @@ import Car360Section from "@/app/components/car/Car360Section";
 import ThankyouRichText from "@/app/components/websites/ThankyouRichText";
 import ThankyouBanner from "@/app/components/websites/ThankyouBanner";
 import OptOutFormComp from "./websites/OptOutFormComp";
+import CustomerDetails from "./websites/CustomerDetails";
+import CustomerLookupComp from "./websites/CustomerLookupComp";
+import AppointmentConfirm from "./websites/AppointmentConfirm";
+import AppointmentBookingError from "./websites/AppointmentBookingError";
 
 type BlocksType = {
   [key: string]: React.FC<any>;
@@ -118,6 +122,10 @@ const Blocks: BlocksType = {
   thankyouRichText : ThankyouRichText,
   thankyouBanner : ThankyouBanner,
   optOutForm : OptOutFormComp,
+  customerLookup: CustomerLookupComp,
+  customerDetails : CustomerDetails,
+  appointmentBooked : AppointmentConfirm,
+  appointmentError : AppointmentBookingError,
 };
 
 /**

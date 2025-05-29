@@ -112,8 +112,17 @@ export default defineType({
                   name : 'link',
                   type : 'reference',
                   title : 'Select Car Detail Page',
-                  to : [{type : 'car'}]
+                  to : [{type : 'car'}],
+                  readOnly: true,
+                  deprecated: {
+                  reason: 'deprecated for future use',
+                  }
                 }),
+                defineField({
+                  name: 'externalLink',
+                  type: 'link',
+                  title: 'External Link'
+                })
               ]
             }),
             defineField({

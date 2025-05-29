@@ -1,4 +1,4 @@
-import { ColorWheelIcon, ComponentIcon, FolderIcon, UlistIcon, EarthGlobeIcon, TiersIcon, CogIcon } from '@sanity/icons'
+import { ColorWheelIcon, ComponentIcon, FolderIcon, UlistIcon, EarthGlobeIcon, TiersIcon, CogIcon, DocumentIcon } from '@sanity/icons'
 import type { StructureBuilder, StructureResolver } from 'sanity/structure'
 import { i18n } from '../../language'
 
@@ -313,6 +313,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       S.documentTypeListItem('vehicle').title('Vehicle 360').icon(ComponentIcon),
       S.documentTypeListItem('color').title('Colors').icon(ColorWheelIcon),
       //S.documentTypeListItem('lead').title('Leads').icon(ColorWheelIcon),
+      //S.documentTypeListItem('optOutLead').title('Opt Out Leads').icon(DocumentIcon),
       
       /*S.listItem()
         .title('Site Utils')

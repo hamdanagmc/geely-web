@@ -46,6 +46,193 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type AppointmentError = {
+  _type: "appointmentError";
+  heading?: string;
+  subHeadingOne?: string;
+  subHeadingTwo?: string;
+  helpText?: string;
+  tryAgainButton?: string;
+  tryAgainLink?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+};
+
+export type AppointmentBooked = {
+  _type: "appointmentBooked";
+  subHeading?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      linkType?: "href" | "page" | "car";
+      href?: string;
+      page?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      post?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "post";
+      };
+      openInNewTab?: boolean;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  confirmationDetails?: {
+    bookingIDLabel?: string;
+    licensePlateNoLabel?: string;
+    serviceLabel?: string;
+    startDateLabel?: string;
+    dropOffTime?: string;
+    workshopLabel?: string;
+    CityCountryLabel?: string;
+    countryLabel?: string;
+    locationLabel?: string;
+  };
+  helpText?: string;
+  bookButton?: CallToAction;
+  exploreButton?: CallToAction;
+};
+
+export type CustomerDetails = {
+  _type: "customerDetails";
+  heading?: string;
+  customerNameFull?: string;
+  restartButton?: string;
+  restartButtonLink?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+  customerdetails?: {
+    customerNameLabel?: string;
+    PhoneNumberLabel?: string;
+    rigisterEmailAddressLabel?: string;
+    addressLine1Label?: string;
+    areaLocalityLabel?: string;
+    countrylabel?: string;
+    vehicleLabel?: string;
+    vinLabel?: string;
+    licensePlateNo?: string;
+  };
+  detailForm?: {
+    serviceCenterLebel?: string;
+    serviceCenterPlaceholder?: string;
+    serviceLabel?: string;
+    servicePlaceholder?: string;
+    dateLabel?: string;
+    datePlaceholder?: string;
+    timeLabel?: string;
+    timePlaceholder?: string;
+  };
+  mileageLabel?: string;
+  mileagePlaceholder?: string;
+  mileageDropdown?: {
+    label?: string;
+    options?: Array<number>;
+  };
+  submitButton?: CallToAction;
+};
+
+export type CustomerLookup = {
+  _type: "customerLookup";
+  Heading?: string;
+  subHeading?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      linkType?: "href" | "page" | "car";
+      href?: string;
+      page?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      post?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "post";
+      };
+      openInNewTab?: boolean;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  form?: {
+    licensePlateLabel?: string;
+    licensePlatePlaceholder?: string;
+    plateNoPlaceholder?: string;
+    sourcePlaceholder?: string;
+    orLabel?: string;
+    vinNumberLabel?: string;
+    vinNoPlaceholder?: string;
+    termsAndCondition?: string;
+    termsAndConditionColor?: string;
+    termsAndConditionLink?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
+    buttomText?: string;
+  };
+};
+
 export type OptOutForm = {
   _type: "optOutForm";
   heading?: string;
@@ -1266,6 +1453,7 @@ export type CarModelComponent = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "car";
       };
+      externalLink?: Link;
     };
     getQuoteLink?: {
       text?: string;
@@ -1464,6 +1652,7 @@ export type PageBackground = {
   desktopImage?: CustomImage;
   tabletImage?: CustomImage;
   mobileImage?: CustomImage;
+  isFullScreenBanner?: boolean;
   position?: "top" | "center" | "bottom" | "left" | "right" | "top left" | "top right" | "bottom left" | "bottom right";
   size?: "contain" | "cover" | "auto" | "100% 100%";
 };
@@ -1641,26 +1830,6 @@ export type CallToAction = {
   _type: "callToAction";
   buttonText?: string;
   link?: Link;
-};
-
-export type Link = {
-  _type: "link";
-  linkType?: "href" | "page" | "car" | "path";
-  href?: string;
-  page?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  };
-  car?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "car";
-  };
-  path?: string;
-  openInNewTab?: boolean;
 };
 
 export type InfoSection = {
@@ -2412,6 +2581,17 @@ export type Footer = {
   linkList1?: LinkList;
   linkList2?: LinkList;
   linkList3?: LinkList;
+  imageLinkArray?: Array<{
+    image?: CustomImage;
+    title?: string;
+    pageLink?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
+    _key: string;
+  }>;
 };
 
 export type Header = {
@@ -2551,9 +2731,37 @@ export type Page = {
     _key: string;
   } & ThankyouBanner | {
     _key: string;
-  } & OptOutForm>;
+  } & OptOutForm | {
+    _key: string;
+  } & CustomerLookup | {
+    _key: string;
+  } & CustomerDetails | {
+    _key: string;
+  } & AppointmentBooked | {
+    _key: string;
+  } & AppointmentError>;
   seo?: SeoMetaFields;
   language?: "en" | "ar";
+};
+
+export type Link = {
+  _type: "link";
+  linkType?: "href" | "page" | "car" | "path";
+  href?: string;
+  page?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+  car?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "car";
+  };
+  path?: string;
+  openInNewTab?: boolean;
 };
 
 export type RichText = {
@@ -2776,7 +2984,7 @@ export type InternationalizedArrayReference = Array<{
   _key: string;
 } & InternationalizedArrayReferenceValue>;
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | OptOutForm | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleText | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | NavItem | Navigation | LinkList | LinkItem | CallToAction | Link | InfoSection | BlockContent | Lead | GeelyNetwork | LocaleBlockContent | LocaleString | Vehicle | Color | Showrooms | Model | Settings | MetaTag | MetaAttribute | Twitter | OpenGraph | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReferenceValue | Offer | OfferDetailForm | News | Fragment | SideKickSection | Footer | Header | Page | RichText | Car | SeoMetaFields | SanityFileAsset | CustomImage | Post | Person | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | InternationalizedArrayReference;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | AppointmentError | AppointmentBooked | CustomerDetails | CustomerLookup | OptOutForm | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleText | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | NavItem | Navigation | LinkList | LinkItem | CallToAction | InfoSection | BlockContent | Lead | GeelyNetwork | LocaleBlockContent | LocaleString | Vehicle | Color | Showrooms | Model | Settings | MetaTag | MetaAttribute | Twitter | OpenGraph | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReferenceValue | Offer | OfferDetailForm | News | Fragment | SideKickSection | Footer | Header | Page | Link | RichText | Car | SeoMetaFields | SanityFileAsset | CustomImage | Post | Person | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | InternationalizedArrayReference;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -2827,7 +3035,7 @@ export type SettingsQueryResult = {
   youtubeLink?: string;
 } | null;
 // Variable: getPageQuery
-// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    blackBackground,    heading,    subheading,    seo,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }      },      },      _type == "carModelComponent" => {        carModels[]{          ...,          exploreLink {            text,            link -> {              _id,              title,              "slug": slug.current            }          }        }      },       _type == "contactFormSection" => {          ...,          form{          ...,          link -> {              _id,              title,              "slug": slug.current            }          }      },      _type == "optOutForm" => {                    ...,          link -> {              _id,              title,              "slug": slug.current            }      },      _type == "brochureDownloadFormSection" => {          ...,          form{          ...,          link -> {              _id,              title,              "slug": slug.current            }          }      },      _type == "requestQuoteForm" => {          ...,          link -> {              _id,              title,              "slug": slug.current            }      },      _type == "fleetContactFormSection" => {          ...,          form{          ...,          link -> {              _id,              title,              "slug": slug.current            }          }      },      _type == "serviceBookingForm" => {          ...,          link -> {              _id,              title,              "slug": slug.current          }      },      _type == "bannerCarousel" => {        ...,        link -> {              _id,              title,              "slug": slug.current            }      },      _type == "thankyouRichText" => {        ...,        callToActionButton{        ...,        link { _type, linkType, openInNewTab, href, path, "page": page->{ _id, title, "slug": slug.current } },         }      },            _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }          }        }      },      _type == "heroVideoComponent" => {        video {          asset-> {            playbackId,            assetId,            filename          }        }      },      _type == "imagesAndVideosSection" => {        ...,        modelGalleryList[]{          ...,        }      }    }  }
+// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    blackBackground,    heading,    subheading,    seo,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }      },      },      _type == "carModelComponent" => {        carModels[]{          ...,          exploreLink {            text,            link -> {              _id,              title,              "slug": slug.current            },            externalLink{            type,            linkType,            openInNewTab,            href,            path,            "car": car->{              _id,              title,              "slug": slug.current            },            "page": page->{            _id,            title,            "slug": slug.current          }              }          }        }      },       _type == "contactFormSection" => {          ...,          form{          ...,          link -> {              _id,              title,              "slug": slug.current            }          }      },      _type == "optOutForm" => {                    ...,          link -> {              _id,              title,              "slug": slug.current            }      },      _type == "brochureDownloadFormSection" => {          ...,          form{          ...,          link -> {              _id,              title,              "slug": slug.current            }          }      },      _type == "requestQuoteForm" => {          ...,          link -> {              _id,              title,              "slug": slug.current            }      },      _type == "fleetContactFormSection" => {          ...,          form{          ...,          link -> {              _id,              title,              "slug": slug.current            }          }      },      _type == "serviceBookingForm" => {          ...,          link -> {              _id,              title,              "slug": slug.current          }      },      _type == "customerLookup" => {          ...,          form{          ...,          termsAndConditionLink -> {              _id,              title,              "slug": slug.current          }}      },      _type == "bannerCarousel" => {        ...,        link -> {              _id,              title,              "slug": slug.current            }      },      _type == "thankyouRichText" => {        ...,        callToActionButton{        ...,        link { _type, linkType, openInNewTab, href, path, "page": page->{ _id, title, "slug": slug.current } },         }      },            _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }          }        }      },      _type == "heroVideoComponent" => {        video {          asset-> {            playbackId,            assetId,            filename          }        }      },      _type == "appointmentBooked" => {          ...,          exploreButton {            ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }      },        },        bookButton {            ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }      },        }      },      _type == "appointmentError" => {          ...,          tryAgainLink -> {              _id,              title,              "slug": slug.current            }      },      _type == "customerDetails" => {          ...,          restartButtonLink -> {              _id,              title,              "slug": slug.current            }      },      _type == "imagesAndVideosSection" => {        ...,        modelGalleryList[]{          ...,        }      }    }  }
 export type GetPageQueryResult = {
   _id: string;
   _type: "page";
@@ -2838,6 +3046,107 @@ export type GetPageQueryResult = {
   subheading: null;
   seo: SeoMetaFields | null;
   pageBuilder: Array<{
+    _key: string;
+    _type: "appointmentBooked";
+    subHeading?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        linkType?: "car" | "href" | "page";
+        href?: string;
+        page?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "page";
+        };
+        post?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "post";
+        };
+        openInNewTab?: boolean;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    confirmationDetails?: {
+      bookingIDLabel?: string;
+      licensePlateNoLabel?: string;
+      serviceLabel?: string;
+      startDateLabel?: string;
+      dropOffTime?: string;
+      workshopLabel?: string;
+      CityCountryLabel?: string;
+      countryLabel?: string;
+      locationLabel?: string;
+    };
+    helpText?: string;
+    bookButton: {
+      _type: "callToAction";
+      buttonText?: string;
+      link: {
+        _type: "link";
+        linkType?: "car" | "href" | "page" | "path";
+        href?: string;
+        page: string | null;
+        car: string | null;
+        path?: string;
+        openInNewTab?: boolean;
+        post: null;
+      } | null;
+    } | null;
+    exploreButton: {
+      _type: "callToAction";
+      buttonText?: string;
+      link: {
+        _type: "link";
+        linkType?: "car" | "href" | "page" | "path";
+        href?: string;
+        page: string | null;
+        car: string | null;
+        path?: string;
+        openInNewTab?: boolean;
+        post: null;
+      } | null;
+    } | null;
+  } | {
+    _key: string;
+    _type: "appointmentError";
+    heading?: string;
+    subHeadingOne?: string;
+    subHeadingTwo?: string;
+    helpText?: string;
+    tryAgainButton?: string;
+    tryAgainLink: {
+      _id: string;
+      title: string | null;
+      slug: string | null;
+    } | null;
+  } | {
     _key: string;
     _type: "backgroundWithCaption";
     backgroundImage?: {
@@ -3031,6 +3340,23 @@ export type GetPageQueryResult = {
           title: string | null;
           slug: string | null;
         } | null;
+        externalLink: {
+          type: null;
+          linkType: "car" | "href" | "page" | "path" | null;
+          openInNewTab: boolean | null;
+          href: string | null;
+          path: string | null;
+          car: {
+            _id: string;
+            title: string | null;
+            slug: string | null;
+          } | null;
+          page: {
+            _id: string;
+            title: string | null;
+            slug: string | null;
+          } | null;
+        } | null;
       } | null;
       getQuoteLink?: {
         text?: string;
@@ -3162,6 +3488,111 @@ export type GetPageQueryResult = {
     complaintLabel?: string;
     complaintPlaceholder?: string;
     submitButtonLabel?: string;
+  } | {
+    _key: string;
+    _type: "customerDetails";
+    heading?: string;
+    customerNameFull?: string;
+    restartButton?: string;
+    restartButtonLink: {
+      _id: string;
+      title: string | null;
+      slug: string | null;
+    } | null;
+    customerdetails?: {
+      customerNameLabel?: string;
+      PhoneNumberLabel?: string;
+      rigisterEmailAddressLabel?: string;
+      addressLine1Label?: string;
+      areaLocalityLabel?: string;
+      countrylabel?: string;
+      vehicleLabel?: string;
+      vinLabel?: string;
+      licensePlateNo?: string;
+    };
+    detailForm?: {
+      serviceCenterLebel?: string;
+      serviceCenterPlaceholder?: string;
+      serviceLabel?: string;
+      servicePlaceholder?: string;
+      dateLabel?: string;
+      datePlaceholder?: string;
+      timeLabel?: string;
+      timePlaceholder?: string;
+    };
+    mileageLabel?: string;
+    mileagePlaceholder?: string;
+    mileageDropdown?: {
+      label?: string;
+      options?: Array<number>;
+    };
+    submitButton?: CallToAction;
+  } | {
+    _key: string;
+    _type: "customerLookup";
+    Heading?: string;
+    subHeading?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        linkType?: "car" | "href" | "page";
+        href?: string;
+        page?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "page";
+        };
+        post?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "post";
+        };
+        openInNewTab?: boolean;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    form: {
+      licensePlateLabel?: string;
+      licensePlatePlaceholder?: string;
+      plateNoPlaceholder?: string;
+      sourcePlaceholder?: string;
+      orLabel?: string;
+      vinNumberLabel?: string;
+      vinNoPlaceholder?: string;
+      termsAndCondition?: string;
+      termsAndConditionColor?: string;
+      termsAndConditionLink: {
+        _id: string;
+        title: string | null;
+        slug: string | null;
+      } | null;
+      buttomText?: string;
+    } | null;
   } | {
     _key: string;
     _type: "customImage";
@@ -3831,6 +4262,7 @@ export type GetPageQueryResult = {
     desktopImage?: CustomImage;
     tabletImage?: CustomImage;
     mobileImage?: CustomImage;
+    isFullScreenBanner?: boolean;
     position?: "bottom left" | "bottom right" | "bottom" | "center" | "left" | "right" | "top left" | "top right" | "top";
     size?: "100% 100%" | "auto" | "contain" | "cover";
   } | {
@@ -4281,7 +4713,7 @@ export type GetNewsDetailQueryResult = {
   }> | null;
 } | null;
 // Variable: getCarsQuery
-// Query: *[_type == 'car' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    seo,    "pageBuilder": pageBuilder[]{      ...,      _type == "car360" => {        ...,        selectedCar->{          _id,          name,          exteriorImages[]{            color->{              _id,              name,              hexCode            },            images360[]{              asset->{                url              }            }          },          interiorImages[]{            asset->{              url            }          }        }      },      _type == "heroBannerComponent" => {        video {    asset-> {      playbackId,      assetId,      filename,    }  }      },      link -> {              _id,              title,              "slug": slug.current            },            brochurePageLink -> {              _id,              title,              "slug": slug.current            }    }  }
+// Query: *[_type == 'car' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    seo,    "pageBuilder": pageBuilder[]{      ...,      _type == "car360" => {        ...,        selectedCar->{          _id,          name,          exteriorImages[]{            color->{              _id,              name,              hexCode            },            images360[]{              asset->{                url              }            }          },          interiorImages[]{            asset->{              url            }          }        }      },      _type == "heroBannerComponent" => {        video {      asset-> {      playbackId,      assetId,      filename,    }     }      },      link -> {              _id,              title,              "slug": slug.current            },            brochurePageLink -> {              _id,              title,              "slug": slug.current            }    }  }
 export type GetCarsQueryResult = {
   _id: string;
   _type: "car";
@@ -4782,7 +5214,7 @@ export type HeaderQueryResult = {
   } | null;
 } | null;
 // Variable: footerQuery
-// Query: *[_type == "fragment" && type == "Footer" && language == $language][0] {    footer {      copyrightText,      footerLogo {        altText,        image {          asset {            _ref          }        }      },      footerLogo2 {        altText,        image {          asset {            _ref          }        }      },      linkList {        title,        links[] {          _key,          linkText,          link {            _type,            linkType,            openInNewTab,            href,            path,            "car": car->{              _id,              title,              "slug": slug.current            },            "page": page->{            _id,            title,            "slug": slug.current          }          }        }      },      linkList1 {        title,        links[] {          _key,          linkText,          link {            _type,            linkType,            openInNewTab,            href,            path,            "page": page->{              _id,              title,              "slug": slug.current            },            "car": car->{              _id,              title,              "slug": slug.current            },          }        }      },      linkList2 {        title,        links[] {          _key,          linkText,          link {            _type,            linkType,            openInNewTab,            href,            path,            "page": page->{              _id,              title,              "slug": slug.current            },            "car": car->{              _id,              title,              "slug": slug.current            },          }        }      },      linkList3 {        title,        links[] {          _key,          linkText,          link {            _type,            linkType,            openInNewTab,            href,            path,            "page": page->{              _id,              title,              "slug": slug.current            },            "car": car->{              _id,              title,              "slug": slug.current            },          }        }      }    }  }
+// Query: *[_type == "fragment" && type == "Footer" && language == $language][0] {    footer {      copyrightText,      footerLogo {        altText,        image {          asset {            _ref          }        }      },      footerLogo2 {        altText,        image {          asset {            _ref          }        }      },      linkList {        title,        links[] {          _key,          linkText,          link {            _type,            linkType,            openInNewTab,            href,            path,            "car": car->{              _id,              title,              "slug": slug.current            },            "page": page->{            _id,            title,            "slug": slug.current          }          }        }      },      linkList1 {        title,        links[] {          _key,          linkText,          link {            _type,            linkType,            openInNewTab,            href,            path,            "page": page->{              _id,              title,              "slug": slug.current            },            "car": car->{              _id,              title,              "slug": slug.current            },          }        }      },      linkList2 {        title,        links[] {          _key,          linkText,          link {            _type,            linkType,            openInNewTab,            href,            path,            "page": page->{              _id,              title,              "slug": slug.current            },            "car": car->{              _id,              title,              "slug": slug.current            },          }        }      },      imageLinkArray[]{      ...,      pageLink -> {              _id,              title,              "slug": slug.current            }      },      linkList3 {        title,        links[] {          _key,          linkText,          link {            _type,            linkType,            openInNewTab,            href,            path,            "page": page->{              _id,              title,              "slug": slug.current            },            "car": car->{              _id,              title,              "slug": slug.current            },          }        }      }    }  }
 export type FooterQueryResult = {
   footer: {
     copyrightText: string | null;
@@ -4874,6 +5306,16 @@ export type FooterQueryResult = {
         } | null;
       }> | null;
     } | null;
+    imageLinkArray: Array<{
+      image?: CustomImage;
+      title?: string;
+      pageLink: {
+        _id: string;
+        title: string | null;
+        slug: string | null;
+      } | null;
+      _key: string;
+    }> | null;
     linkList3: {
       title: string | null;
       links: Array<{
@@ -4969,9 +5411,9 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"][0]": SettingsQueryResult;
-    "\n  *[_type == 'page' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    blackBackground,\n    heading,\n    subheading,\n    seo,\n    \"pageBuilder\": pageBuilder[]{\n      ...,\n      _type == \"callToAction\" => {\n        \n  link {\n      ...,\n      \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n      }\n,\n      },\n      _type == \"carModelComponent\" => {\n        carModels[]{\n          ...,\n          exploreLink {\n            text,\n            link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n        }\n      },\n       _type == \"contactFormSection\" => {\n          ...,\n          form{\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n      },\n      _type == \"optOutForm\" => {\n          \n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"brochureDownloadFormSection\" => {\n          ...,\n          form{\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n      },\n      _type == \"requestQuoteForm\" => {\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"fleetContactFormSection\" => {\n          ...,\n          form{\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n      },\n      _type == \"serviceBookingForm\" => {\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n          }\n      },\n      _type == \"bannerCarousel\" => {\n        ...,\n        link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"thankyouRichText\" => {\n        ...,\n        callToActionButton{\n        ...,\n        link { _type, linkType, openInNewTab, href, path, \"page\": page->{ _id, title, \"slug\": slug.current } },\n         }\n      },\n\n      \n      _type == \"infoSection\" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n          }\n        }\n      },\n      _type == \"heroVideoComponent\" => {\n        video {\n          asset-> {\n            playbackId,\n            assetId,\n            filename\n          }\n        }\n      },\n      _type == \"imagesAndVideosSection\" => {\n        ...,\n        modelGalleryList[]{\n          ...,\n        }\n      }\n    }\n  }\n": GetPageQueryResult;
+    "\n  *[_type == 'page' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    blackBackground,\n    heading,\n    subheading,\n    seo,\n    \"pageBuilder\": pageBuilder[]{\n      ...,\n      _type == \"callToAction\" => {\n        \n  link {\n      ...,\n      \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n      }\n,\n      },\n      _type == \"carModelComponent\" => {\n        carModels[]{\n          ...,\n          exploreLink {\n            text,\n            link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            externalLink{\n            type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"page\": page->{\n            _id,\n            title,\n            \"slug\": slug.current\n          }\n              }\n          }\n        }\n      },\n       _type == \"contactFormSection\" => {\n          ...,\n          form{\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n      },\n      _type == \"optOutForm\" => {\n          \n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"brochureDownloadFormSection\" => {\n          ...,\n          form{\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n      },\n      _type == \"requestQuoteForm\" => {\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"fleetContactFormSection\" => {\n          ...,\n          form{\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n          }\n      },\n      _type == \"serviceBookingForm\" => {\n          ...,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n          }\n      },\n      _type == \"customerLookup\" => {\n          ...,\n          form{\n          ...,\n          termsAndConditionLink -> {\n              _id,\n              title,\n              \"slug\": slug.current\n          }\n}\n      },\n      _type == \"bannerCarousel\" => {\n        ...,\n        link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"thankyouRichText\" => {\n        ...,\n        callToActionButton{\n        ...,\n        link { _type, linkType, openInNewTab, href, path, \"page\": page->{ _id, title, \"slug\": slug.current } },\n         }\n      },\n\n      \n      _type == \"infoSection\" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n          }\n        }\n      },\n      _type == \"heroVideoComponent\" => {\n        video {\n          asset-> {\n            playbackId,\n            assetId,\n            filename\n          }\n        }\n      },\n      _type == \"appointmentBooked\" => {\n          ...,\n          exploreButton {\n            ...,\n          \n  link {\n      ...,\n      \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n      }\n,\n        },\n        bookButton {\n            ...,\n          \n  link {\n      ...,\n      \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n      }\n,\n        }\n      },\n      _type == \"appointmentError\" => {\n          ...,\n          tryAgainLink -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"customerDetails\" => {\n          ...,\n          restartButtonLink -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      _type == \"imagesAndVideosSection\" => {\n        ...,\n        modelGalleryList[]{\n          ...,\n        }\n      }\n    }\n  }\n": GetPageQueryResult;
     "\n  *[_type == 'news' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    blackBackground,\n    thumbnail,\n    seo,\n    \"pageBuilder\": pageBuilder[]{\n      ...,\n      _type == \"callToAction\" => {\n        \n  link {\n      ...,\n      \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n      }\n,\n      },\n      _type == \"carModelComponent\" => {\n        carModels[]{\n          ...,\n          exploreLink {\n          text,\n          link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n          }\n        }\n        }\n      },\n      _type == \"infoSection\" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == \"link\" => {\n    \"page\": page->slug.current,\n    \"post\": post->slug.current,\n    \"car\": car->slug.current,\n  }\n\n          }\n        }\n      },\n    },\n  }\n": GetNewsDetailQueryResult;
-    "\n  *[_type == 'car' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    seo,\n    \"pageBuilder\": pageBuilder[]{\n      ...,\n      _type == \"car360\" => {\n        ...,\n        selectedCar->{\n          _id,\n          name,\n          exteriorImages[]{\n            color->{\n              _id,\n              name,\n              hexCode\n            },\n            images360[]{\n              asset->{\n                url\n              }\n            }\n          },\n          interiorImages[]{\n            asset->{\n              url\n            }\n          }\n        }\n      },\n      _type == \"heroBannerComponent\" => {\n        video {\n    asset-> {\n      playbackId,\n      assetId,\n      filename,\n    }\n  }\n      },\n      link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            brochurePageLink -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n    }\n  }\n": GetCarsQueryResult;
+    "\n  *[_type == 'car' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    seo,\n    \"pageBuilder\": pageBuilder[]{\n      ...,\n      _type == \"car360\" => {\n        ...,\n        selectedCar->{\n          _id,\n          name,\n          exteriorImages[]{\n            color->{\n              _id,\n              name,\n              hexCode\n            },\n            images360[]{\n              asset->{\n                url\n              }\n            }\n          },\n          interiorImages[]{\n            asset->{\n              url\n            }\n          }\n        }\n      },\n      _type == \"heroBannerComponent\" => {\n        video {\n      asset-> {\n      playbackId,\n      assetId,\n      filename,\n    }\n     }\n      },\n      link -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            brochurePageLink -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n    }\n  }\n": GetCarsQueryResult;
     "\n  *[_type == 'offer' && slug.current == $slug][0]{\n     ...,\n     link -> {\n              \"slug\": slug.current\n          }\n  }\n": GetOfferDetailQueryResult;
     "\n  *[_type == \"page\" || _type == \"post\" && defined(slug.current)] | order(_type asc) {\n    \"slug\": slug.current,\n    _type,\n    _updatedAt,\n  }\n": SitemapDataResult;
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{firstName, lastName, picture},\n\n  }\n": AllPostsQueryResult;
@@ -4981,7 +5423,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"page\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PagesSlugsResult;
     "\n  *[_type == \"cars\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": CarsSlugsResult;
     "\n  *[_type == \"fragment\" && type == \"Header\" && language == $language][0] {\n    header {\n      logo, blackLogo, searchIcon, searchIconBlack, mapIcon, mapIconBlack, toggleMenuIcon, toggleMenuIconBlack \n        { altText, image { asset { _ref } } },\n      navigation {\n        navItems[] {\n          _key, title, hasSubPages,\n          link { _type, linkType, openInNewTab, href, path, \"page\": page->{ _id, title, \"slug\": slug.current } },\n          navigation {\n            navItems[] {\n              _key, title,\n              link { _type, linkType, openInNewTab, href, path, \"page\": page->{ _id, title, \"slug\": slug.current } }\n            }\n          }\n        }\n      }\n    }\n  }\n  ": HeaderQueryResult;
-    "\n  *[_type == \"fragment\" && type == \"Footer\" && language == $language][0] {\n    footer {\n      copyrightText,\n      footerLogo {\n        altText,\n        image {\n          asset {\n            _ref\n          }\n        }\n      },\n      footerLogo2 {\n        altText,\n        image {\n          asset {\n            _ref\n          }\n        }\n      },\n      linkList {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"page\": page->{\n            _id,\n            title,\n            \"slug\": slug.current\n          }\n          }\n        }\n      },\n      linkList1 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n      linkList2 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n      linkList3 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      }\n    }\n  }\n": FooterQueryResult;
+    "\n  *[_type == \"fragment\" && type == \"Footer\" && language == $language][0] {\n    footer {\n      copyrightText,\n      footerLogo {\n        altText,\n        image {\n          asset {\n            _ref\n          }\n        }\n      },\n      footerLogo2 {\n        altText,\n        image {\n          asset {\n            _ref\n          }\n        }\n      },\n      linkList {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"page\": page->{\n            _id,\n            title,\n            \"slug\": slug.current\n          }\n          }\n        }\n      },\n      linkList1 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n      linkList2 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n      imageLinkArray[]{\n      ...,\n      pageLink -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      linkList3 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      }\n    }\n  }\n": FooterQueryResult;
     "\n  *[_type == \"fragment\" && type == \"SideKick\" && language == $language][0] {\n    sideKickSection {\n...,\n      iconLinkList1 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          ...,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n      iconLinkList2 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          ...,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n    }\n  }\n": SideQuickQueryResult;
     "\n*[_type == \"carList\"][0] {\n  ...,\n  \"cars\": cars[]{\n    ...,\n    \"carData\": @->{\n      name,\n      image,\n      \"slug\": slug.current\n    }\n  }\n}": GetCarListQueryResult;
   }

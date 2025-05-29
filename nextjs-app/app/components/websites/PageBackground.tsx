@@ -13,7 +13,7 @@ type PageBackgroundProps = {
 export default function PageBackgroundComp({ block }: PageBackgroundProps) {
   const { isMobileDevice } = useDeviceDetection();
   return (
-    <section className="relative w-full min-h-[600px] heroBgImg h-screen overflow-hidden">
+    <section className={`${block?.isFullScreenBanner ? 'height_auto h-[350px]' : 'h-screen min-h-[600px]'} relative w-full heroBgImg  overflow-hidden`}>
       {!isMobileDevice &&
         block?.desktopImage?.altText &&
         urlForImage(block?.desktopImage?.image)?.url() && (

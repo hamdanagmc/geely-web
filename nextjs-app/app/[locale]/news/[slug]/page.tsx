@@ -63,9 +63,9 @@ export default async function Page(props: Props) {
       }
 
   return (
-    <>
-      <Header siteSettingData={siteSettingData} sideQuickData = {sideQuickData} pageBg={false} locale={locale} fragment={headerData} />
-      <div className="mainBanner">
+   <div className={`main_page innerPage newsDetailPage textBlack`}>
+      <Header siteSettingData={siteSettingData} sideQuickData = {sideQuickData} pageBg={true} locale={locale} fragment={headerData} />
+      <div className="mainBanner pt-24">
         {page?.thumbnail?.altText && (
           <ImageComp
             block={page.thumbnail}
@@ -75,13 +75,13 @@ export default async function Page(props: Props) {
           />
         )}
       </div>
-      <div className="max-w-[1440px] mx-auto px-4 py-4 md:px-8 md:py-12">
+      <div className="max-w-[1440px] mx-auto px-4 py-4 md:px-8 md:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           <div className="lg:col-span-8">
             <PageBuilderPage page={page as unknown as GetPageQueryResult} />
           </div>
           {/* Sidebar */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4 recentNews">
             <div className="bg-[#FAF9F8] rounded-[4px] p-6">
               <h2 className="text-[16px] font-bold mb-4 pb-2 border-b border-[#454545]/20">
                 RECENT NEWS
@@ -92,8 +92,8 @@ export default async function Page(props: Props) {
                     key={index}
                     className="py-4 border-b border-[#454545]/20"
                   >
-                    <div className="flex items-start space-x-4 rtl:space-x-reverse">
-                      <div className="relative w-[120px] h-[80px] flex-shrink-0">
+                    <div className="md:flex items-start space-x-4 rtl:space-x-reverse">
+                      <div className="relative md:w-[120px] md:h-[80px] mb-5 md:mb-0 flex-shrink-0">
                         {newsItem?.thumbnail?.altText && (
                           <ImageComp
                             block={newsItem.thumbnail}
@@ -126,6 +126,6 @@ export default async function Page(props: Props) {
         </div>
       </div>
       <Footer siteSettingData={siteSettingData} locale={locale} fragment={footerData} />
-    </>
+    </div>
   );
 }

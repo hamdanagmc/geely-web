@@ -11,6 +11,7 @@
     "typegen": "sanity typegen generate"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.7.0",
     "@mux/mux-video-react": "^0.24.3",
     "@sanity/client": "^6.27.2",
     "@sanity/image-url": "^1.1.0",
@@ -34,9 +35,11 @@
     "panolens": "^0.12.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "react-image-turntable": "^3.1.2",
     "react-scroll-parallax": "^3.4.5",
     "react-select": "^5.10.0",
+    "redux-persist": "^6.0.0",
     "sanity": "^3.74.0",
     "sonner": "^1.7.0",
     "styled-components": "^6.1.13",

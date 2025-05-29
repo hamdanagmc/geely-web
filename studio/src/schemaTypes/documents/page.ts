@@ -102,6 +102,10 @@ export const page = defineType({
         { type: 'thankyouRichText' },
         { type: 'thankyouBanner' },
         { type: 'optOutForm' },
+        {type: 'customerLookup'},
+        {type: 'customerDetails'},
+        {type: 'appointmentBooked'},
+        {type : 'appointmentError'}
       ],
 
       options: {

@@ -28,6 +28,13 @@ export default defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'isFullScreenBanner',
+      type: 'boolean',
+      title: 'Screen Banner height',
+      description: 'Disable full screen banner',
+      initialValue: false,
+    }),
+    defineField({
         name: 'position',
         type: 'string',
         title: 'Background Position',

@@ -52,7 +52,24 @@ export const getPageQuery = defineQuery(`
               _id,
               title,
               "slug": slug.current
-            }
+            },
+            externalLink{
+            type,
+            linkType,
+            openInNewTab,
+            href,
+            path,
+            "car": car->{
+              _id,
+              title,
+              "slug": slug.current
+            },
+            "page": page->{
+            _id,
+            title,
+            "slug": slug.current
+          }
+              }
           }
         }
       },
@@ -114,6 +131,17 @@ export const getPageQuery = defineQuery(`
               "slug": slug.current
           }
       },
+      _type == "customerLookup" => {
+          ...,
+          form{
+          ...,
+          termsAndConditionLink -> {
+              _id,
+              title,
+              "slug": slug.current
+          }
+}
+      },
       _type == "bannerCarousel" => {
         ...,
         link -> {
@@ -148,6 +176,33 @@ export const getPageQuery = defineQuery(`
             filename
           }
         }
+      },
+      _type == "appointmentBooked" => {
+          ...,
+          exploreButton {
+            ...,
+          ${linkFields},
+        },
+        bookButton {
+            ...,
+          ${linkFields},
+        }
+      },
+      _type == "appointmentError" => {
+          ...,
+          tryAgainLink -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
+      },
+      _type == "customerDetails" => {
+          ...,
+          restartButtonLink -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
       },
       _type == "imagesAndVideosSection" => {
         ...,
@@ -383,12 +438,12 @@ export const getCarsQuery = defineQuery(`
       },
       _type == "heroBannerComponent" => {
         video {
-    asset-> {
+      asset-> {
       playbackId,
       assetId,
       filename,
     }
-  }
+     }
       },
       link -> {
               _id,
@@ -579,6 +634,14 @@ export const footerQuery = defineQuery(`
           }
         }
       },
+      imageLinkArray[]{
+      ...,
+      pageLink -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
+      },
       linkList3 {
         title,
         links[] {
@@ -676,8 +739,11 @@ export const siteSettingQuery = (locale: string) => {
 export const getNewsQuery = (locale: string) => {
   return defineQuery(`
     *[_type == "news" && language == "${locale}"]
+    | order(publishDate desc)
   `);
 };
+
+
 
 export const getOffersQuery = (locale: string) => {
   return defineQuery(`

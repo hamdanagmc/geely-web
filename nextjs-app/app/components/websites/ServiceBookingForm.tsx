@@ -138,7 +138,19 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
       if (responseData.InboundEnquiryResponse.status === "1") {
         //email logic
         await sendContactCustomerEmail(values.fname, values.email, currentLocale, "serviceBooking");
-        const crmEmailProps = values as ServiceBookingProps;
+        const crmEmailProps: ServiceBookingProps = {
+          fname: values.fname,
+          email: values.email,
+          phone: values.phone,
+          vehicleType: values.vehicleType,
+          serviceCenter: values.serviceCenter,
+          recommendedService: "",
+          dateAndTime: "",
+          timeSlot: "",
+          appointmentId: "",
+          country: "", 
+          mileage: "", 
+        };
         const pageUrl = window.location.href;
         await sendCRMServideBookingEmail(crmEmailProps, currentLocale, "Service Booking Form", pageUrl);
 

@@ -28,15 +28,16 @@ export type RequestQuoteProps = {
 
 export type ServiceBookingProps = {
     fname: string;
-    lname: string;
-    title: string;
     email: string;
     phone: string;
     vehicleType: string;
-    modelYear: number;
     serviceCenter: string;
-    agreed: boolean;
-    countrymobileNoCode: string;
+    recommendedService : string;
+    dateAndTime : string;
+    timeSlot : string;
+    appointmentId : string;
+    country : string;
+    mileage : string;
 };
 
 export type FleetSalesFormProps = {

@@ -43,7 +43,7 @@ export async function findCustomerByPhone(phone: string): Promise<CommonResponse
         method: 'get',
         url,
         headers: {
-            'Authorization': '43a33e25408884bc600652d8',
+            Authorization: SERVICE_BOOKING_API_TOKEN,
         },
         params: { phone },
     };

@@ -42,5 +42,34 @@ export const footer = defineType({
             type: 'linkList',
             title: 'Link List 3',
         }),
+        defineField({
+            name: 'imageLinkArray',
+            title: 'StickyLinks',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'image',
+                            type: 'customImage',
+                            title: 'Image',
+                        }),
+                        defineField({
+                            name: 'title',
+                            type: 'string',
+                            title: 'Title',
+                        }),
+                        defineField({
+                            name: 'pageLink',
+                            title: 'Select Page Link',
+                            type: 'reference',
+                            to: [{ type: 'page' }],
+                        }),
+                    ],
+                },
+            ],
+        }),
+
     ],
 });

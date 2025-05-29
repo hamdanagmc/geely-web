@@ -9,6 +9,8 @@ import Header from "@/app/components/websites/Header";
 import Cookie from "@/app/components/websites/cookie";
 import { getFooter, getHeader,getSideQuickData, getSiteSettingData } from "@/app/actions/common/sanityData";
 import { notFound } from "next/navigation";
+import App from "next/app";
+
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -66,7 +68,7 @@ export default async function Page({
   return (
     <div className="main_page">
       <Header siteSettingData={siteSettingData} sideQuickData={sideQuickData} pageBg={false} locale={locale} fragment={headerData} />
-      <PageBuilderPage page={page as GetPageQueryResult} />
+      <PageBuilderPage page={page as GetPageQueryResult} />      
       <Footer siteSettingData={siteSettingData} locale={locale} fragment={footerData} />
     </div>
   );

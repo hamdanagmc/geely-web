@@ -44,3 +44,10 @@ export type LeadProps = {
     contactYou?: string;
     pageUrl? : string;
   };
+
+  export type OptOutLeadProps = {
+    name?: string;
+    email?: string;
+    phone?: string;
+    stopMarketing?: string;
+  };

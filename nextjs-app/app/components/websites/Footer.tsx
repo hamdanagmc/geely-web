@@ -33,7 +33,7 @@ export default function Footer({ locale, fragment, siteSettingData }: FooterProp
 
   return (
     <>
-      <StickyLinks />
+      <StickyLinks fragment = {fragment} />
 
       <footer className={`bg-[#21262A] text-white`}>
         <div className="max-w-[1440px] mx-auto px-5 md:px-8 py-[50px] md:pt-[130px] md:pb-[100px]">

@@ -34,6 +34,26 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
   const { setTestDrive } = useTestDrive()
   const router = useRouter()
 
+  const getLinkHref = (link: any) => {
+    if (link?.linkType === "href") {
+      console.log("sfdsf");
+      return link.href ?? "#";
+    } else if (link?.linkType === "path") {
+      return link.path ?? "#";
+    } else if (link?.linkType === "car") {
+      return `/${currentLocale}/car/${link.car.slug}`;
+    } else if (link?.page?.slug) {
+      let slug = link.page.slug;
+      // Remove locale prefix if it exists (e.g., "ar/pagelink" -> "pagelink")
+      if (slug.startsWith(`${currentLocale}/`)) {
+        slug = slug.replace(`${currentLocale}/`, "");
+      }
+      return `/${currentLocale}/${slug}`;
+    } else {
+      return "#";
+    }
+  };
+
   const handleTestDriveSelection = (testDriveIdOrName: string, type: string) => {
     setTestDrive(testDriveIdOrName)
     if (type === "getQuote") router.push(`/${currentLocale}/request-a-quote`)
@@ -162,12 +182,10 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
 
                 {/* CTAs */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-[21px]">
-                  {vehicle.exploreLink && (
+                   {(vehicle.exploreLink?.externalLink?.href || vehicle.exploreLink?.externalLink?.car || vehicle.exploreLink?.externalLink?.page) && (
                     <Link
-                      href={`/${currentLocale}/car/${(vehicle.exploreLink.link as any)?.slug
-                        ?.split("/")
-                        .filter((segment: string) => segment !== "")
-                        .pop()}`}
+                      href={getLinkHref(vehicle.exploreLink?.externalLink)}
+                      target={vehicle.exploreLink.externalLink?.href ? "_blank" : undefined}
                       className="w-full h-12 border border-black bg-transparent hover:bg-[#194BFF] hover:text-white hover:border-[#194BFF] rounded-[3px] font-medium transition-colors flex items-center justify-center"
                     >
                       {vehicle.exploreLink.text || "Explore"}
@@ -181,7 +199,7 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
                           "getQuote",
                         )
                       }
-                      className="w-full h-12 border border-black bg-transparent hover:bg-[#194BFF] hover:text-white hover:border-[#194BFF] rounded-[3px] font-medium transition-colors flex items-center justify-center"
+                      className="w-full h-12 getQuote border border-black bg-transparent hover:bg-[#194BFF] hover:text-white hover:border-[#194BFF] rounded-[3px] font-medium transition-colors flex items-center justify-center"
                     >
                       {vehicle.getQuoteLink.text || "Get Quote"}
                     </button>
@@ -194,7 +212,7 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
                           "testDrive",
                         )
                       }
-                      className="w-full h-12 bg-black hover:bg-[#194BFF] rounded-[3px] font-semibold text-white transition-colors flex items-center justify-center"
+                      className="w-full h-12 test bg-black hover:bg-[#194BFF] rounded-[3px] font-semibold text-white transition-colors flex items-center justify-center"
                     >
                       {vehicle.testDriveLink.text || "Test Drive"}
                     </button>

@@ -1,62 +1,70 @@
-"use server"
-import axios from 'axios';
+"use server";
+
+import axios, { AxiosError } from 'axios';
 import { SERVICE_BOOKING_API_TOKEN, SERVICE_BOOKING_API_URL } from './api';
 import { CommonResponse } from '@/app/types/common';
 
-export async function getVehicleDetailByVin(vin: string): Promise<CommonResponse> {
-    if (!vin) {
-        throw new Error("Invalid parameter: 'vin' is required.");
-    }
+/**
+ * Shared function to make GET request for vehicle details.
+ */
+const fetchVehicleDetails = async (params: Record<string, string>): Promise<CommonResponse> => {
+  const url = `${SERVICE_BOOKING_API_URL}/api/service/vehicle-details`;
 
-    const url = `${SERVICE_BOOKING_API_URL}/api/service/vehicle-details`;
-    const config = {
-        method: 'get',
-        url,
-        headers: {
-            'Authorization': SERVICE_BOOKING_API_TOKEN,
-        },
-        params: { vin },
+  const config = {
+    method: 'get',
+    url,
+    headers: {
+      Authorization: SERVICE_BOOKING_API_TOKEN,
+    },
+    params,
+  };
+
+  try {
+    console.log("Vehicle Details API Config:", config);
+    const response = await axios(config);
+    console.log("Vehicle Details API Response:", response.data);
+
+    return {
+      status: true,
+      message: "Vehicle details fetched successfully",
+      data: response.data,
     };
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    console.error('Axios Error:', {
+      message: axiosError.message,
+      code: axiosError.code,
+      status: axiosError.response?.status,
+      data: axiosError.response?.data,
+    });
+  
+    return {
+      status: false,
+      message: `Failed to fetch vehicle details: ${axiosError.response?.status} - ${axiosError.message}`,
+      data: null,
+    };
+  }
+  
+};
 
-    try {
-        const response = await axios(config);
-        console.log("getVehicleDetailByVin() API Response : ", response.data);
-        return {
-            status: true,
-            message: "Vehicle details fetched successfully",
-            data: response.data,
-        };
-    } catch (error) {
-        console.error('Error fetching vehicle details by VIN:', error);
-        throw new Error('Failed to fetch vehicle details by VIN.');
-    }
+/**
+ * Fetch vehicle details by VIN number.
+ */
+export async function getVehicleDetailByVin(vin: string): Promise<CommonResponse> {
+  if (!vin) {
+    throw new Error("Invalid parameter: 'vin' is required.");
+  }
+
+  return fetchVehicleDetails({ vin });
 }
 
+/**
+ * Fetch vehicle details by vehicle number (plate).
+ */
 export async function getVehicleDetailByVehicleNumber(vehicleNumber: string): Promise<CommonResponse> {
-    if (!vehicleNumber) {
-        throw new Error("Invalid parameter: 'vehicleNumber' is required.");
-    }
+  if (!vehicleNumber) {
+    throw new Error("Invalid parameter: 'vehicleNumber' is required.");
+  }
 
-    const url = `${SERVICE_BOOKING_API_URL}/api/service/vehicle-details`;
-    const config = {
-        method: 'get',
-        url,
-        headers: {
-            'Authorization': '43a33e25408884bc600652d8',
-        },
-        params: { vehicleNumber },
-    };
-
-    try {
-        const response = await axios(config);
-        console.log("getVehicleDetailByVehicleNumber() API Response : ", response.data);
-        return {
-            status: true,
-            message: "Vehicle details fetched successfully",
-            data: response.data,
-        };
-    } catch (error) {
-        console.error('Error fetching vehicle details by vehicle number:', error);
-        throw new Error('Failed to fetch vehicle details by vehicle number.');
-    }
+  return fetchVehicleDetails({ vehicleNumber });
 }
