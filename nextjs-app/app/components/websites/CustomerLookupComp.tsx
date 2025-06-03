@@ -190,7 +190,7 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
           </div>
           <form
             onSubmit={formik.handleSubmit}
-            className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-8 px-5 rounded-sm"
+            className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-8 px-12 rounded-sm"
           >
             <div className="md:flex md:justify-center gap-5 relative">
               {/* input fiels */}

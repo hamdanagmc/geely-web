@@ -109,19 +109,9 @@ export default defineType({
                   title : 'Link Text',
                 }),
                 defineField({
-                  name : 'link',
-                  type : 'reference',
-                  title : 'Select Car Detail Page',
-                  to : [{type : 'car'}],
-                  readOnly: true,
-                  deprecated: {
-                  reason: 'deprecated for future use',
-                  }
-                }),
-                defineField({
                   name: 'externalLink',
                   type: 'link',
-                  title: 'External Link'
+                  title: 'Link'
                 })
               ]
             }),
@@ -136,8 +126,8 @@ export default defineType({
                   title : 'Link Text',
                 }),
                 defineField({
-                  name : 'link',
-                  type : 'string',
+                  name : 'quoteLink',
+                  type : 'link',
                   title : 'Link',
                 }),
               ]
@@ -153,8 +143,8 @@ export default defineType({
                   title : 'Link Text',
                 }),
                 defineField({
-                  name : 'link',
-                  type : 'string',
+                  name : 'drivelink',
+                  type : 'link',
                   title : 'Link',
                 }),
               ]

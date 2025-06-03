@@ -9436,36 +9436,6 @@
                         },
                         "optional": true
                       },
-                      "link": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "object",
-                          "attributes": {
-                            "_ref": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "string"
-                              }
-                            },
-                            "_type": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "string",
-                                "value": "reference"
-                              }
-                            },
-                            "_weak": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "boolean"
-                              },
-                              "optional": true
-                            }
-                          },
-                          "dereferencesTo": "car"
-                        },
-                        "optional": true
-                      },
                       "externalLink": {
                         "type": "objectAttribute",
                         "value": {
@@ -9490,10 +9460,11 @@
                         },
                         "optional": true
                       },
-                      "link": {
+                      "quoteLink": {
                         "type": "objectAttribute",
                         "value": {
-                          "type": "string"
+                          "type": "inline",
+                          "name": "link"
                         },
                         "optional": true
                       }
@@ -9513,10 +9484,11 @@
                         },
                         "optional": true
                       },
-                      "link": {
+                      "drivelink": {
                         "type": "objectAttribute",
                         "value": {
-                          "type": "string"
+                          "type": "inline",
+                          "name": "link"
                         },
                         "optional": true
                       }
@@ -12680,6 +12652,71 @@
             }
           }
         ]
+      }
+    }
+  },
+  {
+    "name": "optOutLead",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "optOutLead"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "name": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "phone": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "stopMarketing": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       }
     }
   },

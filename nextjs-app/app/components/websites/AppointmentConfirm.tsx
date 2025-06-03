@@ -9,6 +9,7 @@ import useDeviceDetection from "../../hooks/useDeviceDetection"
 import { useEffect } from 'react';
 import type { PortableTextBlock } from "next-sanity"
 import PortableText from "@/app/components/PortableText"
+import Image from 'next/image';
 
 type appointmentBookedProps = {
     block: AppointmentBooked
@@ -56,7 +57,7 @@ export default function AppointmentBookedComp({ block }: appointmentBookedProps)
 
     useEffect(() => {
         if (!appointmentDetails?.appointmentId) {
-            window.location.href = `/${currentLocale}/customer-lookup`
+            window.location.href = `/${currentLocale}/service-booking`
         }
     }, [currentLocale])
 
@@ -100,7 +101,14 @@ export default function AppointmentBookedComp({ block }: appointmentBookedProps)
 
                         <div className="">
                             <p className="font-[500] text-[12px] leading-[20px] ">{center?.[2]?.key}</p>
-                            <Link target='_blank' href={`${mapUrl}`} className="md:font-[700] md:text-[18px] text-[16px] font-[600] leading-[20px mt-1">{center?.[2]?.value}</Link>
+                            <Link target='_blank' href={`${mapUrl}`} className="md:font-[700] md:text-[18px] text-[16px] font-[600] leading-[20px mt-1">
+                                <Image
+                                    src="/images/direction_updated.png"
+                                    alt="direction icon"
+                                    width={14}
+                                    height={15}
+                                    className="object-cover inline-block ltr:mr-2 rtl:ml-2"
+                                /> {center?.[2]?.value}</Link>
                         </div>
 
                     </div>

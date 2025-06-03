@@ -54,11 +54,23 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
     }
   };
 
-  const handleTestDriveSelection = (testDriveIdOrName: string, type: string) => {
-    setTestDrive(testDriveIdOrName)
-    if (type === "getQuote") router.push(`/${currentLocale}/request-a-quote`)
-    else router.push(`/${currentLocale}/request-test-drive`)
+
+const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
+  setTestDrive(testDriveIdOrName)
+  const { quoteLink, drivelink } = myUrl;
+  const link = quoteLink || drivelink;
+  
+  if (!link) return;
+
+  const url = getLinkHref(link);
+  
+  if (link.href) {
+    window.open(url, "_blank", "noopener,noreferrer");
+    console.log(quoteLink ? "external link" : "test drive external link", url);
+  } else if (link.page) {
+    router.push(url);
   }
+};
 
   return (
     <div className="w-full overflow-x-hidden pt-24 carItemlist">
@@ -182,7 +194,7 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
 
                 {/* CTAs */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-[21px]">
-                   {(vehicle.exploreLink?.externalLink?.href || vehicle.exploreLink?.externalLink?.car || vehicle.exploreLink?.externalLink?.page) && (
+                  {(vehicle.exploreLink?.externalLink?.href || vehicle.exploreLink?.externalLink?.car || vehicle.exploreLink?.externalLink?.page) && (
                     <Link
                       href={getLinkHref(vehicle.exploreLink?.externalLink)}
                       target={vehicle.exploreLink.externalLink?.href ? "_blank" : undefined}
@@ -194,10 +206,7 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
                   {vehicle.getQuoteLink && (
                     <button
                       onClick={() =>
-                        handleTestDriveSelection(
-                          (vehicle?.exploreLink?.link as unknown as { title?: string })?.title || "",
-                          "getQuote",
-                        )
+                        handleTestDriveSelection(vehicle?.title || "" ,vehicle.getQuoteLink)
                       }
                       className="w-full h-12 getQuote border border-black bg-transparent hover:bg-[#194BFF] hover:text-white hover:border-[#194BFF] rounded-[3px] font-medium transition-colors flex items-center justify-center"
                     >
@@ -207,10 +216,7 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
                   {vehicle.testDriveLink && (
                     <button
                       onClick={() =>
-                        handleTestDriveSelection(
-                          (vehicle.exploreLink?.link as unknown as { title?: string })?.title || "",
-                          "testDrive",
-                        )
+                        handleTestDriveSelection(vehicle?.title || "", vehicle.testDriveLink)
                       }
                       className="w-full h-12 test bg-black hover:bg-[#194BFF] rounded-[3px] font-semibold text-white transition-colors flex items-center justify-center"
                     >

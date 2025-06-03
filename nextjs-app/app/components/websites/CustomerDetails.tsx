@@ -250,7 +250,7 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
     }
     fetchServiceLocations()
     if (!vehicleDetails?.mobile) {
-      window.location.href = `/${currentLocale}/customer-lookup`
+      window.location.href = `/${currentLocale}/service-booking`
     }
   }, [currentLocale])
 

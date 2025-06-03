@@ -85,6 +85,9 @@ export default async function RootLayout({
       className={`${inter.className}`}
       suppressHydrationWarning
     >
+      <head>
+        <meta name="google-site-verification" content="Kw51pvZL9dlv0DegiXI7u66KBFORCZKkZkgzDwCiS6k" />
+      </head>
       <body>
         <>
           {isDraftMode && (
