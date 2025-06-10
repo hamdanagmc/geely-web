@@ -41,7 +41,13 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
     } else if (link?.linkType === "path") {
       return link.path ?? "#";
     } else if (link?.linkType === "car") {
-      return `/${currentLocale}/car/${link.car.slug}`;
+      let carSlug = link.car?.slug || "";
+      console.log("carSlug", carSlug);
+    // Remove locale prefix if it exists (e.g., "ar/car-slug" -> "car-slug")
+    if (carSlug.startsWith(`${currentLocale}/`)) {
+      carSlug = carSlug.replace(`${currentLocale}/`, "");
+    }
+    return `/${currentLocale}/car/${carSlug}`;
     } else if (link?.page?.slug) {
       let slug = link.page.slug;
       // Remove locale prefix if it exists (e.g., "ar/pagelink" -> "pagelink")
@@ -64,10 +70,10 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
 
   const url = getLinkHref(link);
   
-  if (link.href) {
+  if (link?.openInNewTab) {
     window.open(url, "_blank", "noopener,noreferrer");
     console.log(quoteLink ? "external link" : "test drive external link", url);
-  } else if (link.page) {
+  } else {
     router.push(url);
   }
 };
@@ -197,7 +203,7 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
                   {(vehicle.exploreLink?.externalLink?.href || vehicle.exploreLink?.externalLink?.car || vehicle.exploreLink?.externalLink?.page) && (
                     <Link
                       href={getLinkHref(vehicle.exploreLink?.externalLink)}
-                      target={vehicle.exploreLink.externalLink?.href ? "_blank" : undefined}
+                      target={vehicle.exploreLink.externalLink?.openInNewTab ? "_blank" : undefined}
                       className="w-full h-12 border border-black bg-transparent hover:bg-[#194BFF] hover:text-white hover:border-[#194BFF] rounded-[3px] font-medium transition-colors flex items-center justify-center"
                     >
                       {vehicle.exploreLink.text || "Explore"}
