@@ -106,20 +106,20 @@ export default function BrochureDownloadForm({
   }, []);
 
   const handleCheckboxChange = (title: string) => {
-    const newSelectedValues = selectedValues.includes(title)
-      ? selectedValues.filter((item) => item !== title)
-      : [...selectedValues, title];
+  const isSelected = selectedValues.includes(title);
+  const newSelectedValues = isSelected ? [] : [title];
 
-    setSelectedValues(newSelectedValues);
+  setSelectedValues(newSelectedValues);
 
-    // Update formik values to clear the error
-    formik.setFieldValue("brochure_check", newSelectedValues);
+  // Update Formik values
+  formik.setFieldValue("brochure_check", newSelectedValues);
 
-    // If at least one item is selected, clear the error
-    if (newSelectedValues.length > 0) {
-      formik.setFieldError("brochure_check", undefined);
-    }
-  };
+  // Clear the error if one item is selected
+  if (newSelectedValues.length > 0) {
+    formik.setFieldError("brochure_check", undefined);
+  }
+};
+
 
   const pathname = usePathname();
   const pathSegments = pathname.split("/");

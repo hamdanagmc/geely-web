@@ -1705,6 +1705,7 @@ text-align: center;
 }
 .cursor-grab{
     height: 140px!important;
+    max-width: 400px;
 }
 .height_auto img {
     object-position: center bottom;
