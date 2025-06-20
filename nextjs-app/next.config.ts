@@ -1560,7 +1560,7 @@ const nextConfig: NextConfig = {
                 https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com https://googleads.g.doubleclick.net
                 https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net 
                 https://www.googleadservices.com https://bat.bing.com https://trackback.gotrackier.com https://trk.betrck.com
-                https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com;
+                https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com  https://cdn.pixel.platformance.io;
               
               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
                 https://app-uae.freshmarketer.com https://www.google-analytics.com
@@ -1570,14 +1570,15 @@ const nextConfig: NextConfig = {
                 https://analytics.tiktok.com https://analytics.google.com  https://stats.g.doubleclick.net 
                 https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
                 https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
-                https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com;
+                https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com
+                https://cdn.pixel.platformance.io;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
                 https://*.ads.linkedin.com https://www.facebook.com https://tr.snapchat.com https://analytics.tiktok.com
                 https://www.google.co.in https://t.co https://analytics.twitter.com https://ad.doubleclick.net
                 https://www.google.com https://www.linkedin.com https://bat.bing.com https://googleads.g.doubleclick.net
-                https://www.googleadservices.com https://adservice.google.com;
+                https://www.googleadservices.com https://adservice.google.com  https://cdn.pixel.platformance.io;
         
               style-src 'self' 'unsafe-inline'
                 https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.gstatic.com;
