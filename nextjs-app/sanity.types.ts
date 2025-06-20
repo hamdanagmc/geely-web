@@ -1212,6 +1212,10 @@ export type ComfortSlider = {
     description?: string;
     image?: CustomImage;
     mobileImage?: CustomImage;
+    mediaType?: "image" | "video";
+    optionImage?: CustomImage;
+    optionMobileImage?: CustomImage;
+    videoId?: string;
     _key: string;
   }>;
   htmlId?: string;
@@ -1226,6 +1230,10 @@ export type OwlStageOuter = {
     description?: string;
     image?: CustomImage;
     mobileImage?: CustomImage;
+    mediaType?: "image" | "video";
+    optionImage?: CustomImage;
+    optionMobileImage?: CustomImage;
+    videoId?: string;
     _key: string;
   }>;
   htmlId?: string;
@@ -1263,6 +1271,10 @@ export type FeatureHighlightsComponent = {
     highlights?: Array<{
       image?: CustomImage;
       mobileImage?: CustomImage;
+      mediaType?: "image" | "video";
+      optionImage?: CustomImage;
+      optionMobileImage?: CustomImage;
+      videoId?: string;
       title?: string;
       description?: string;
       _type: "highlight";
@@ -4806,6 +4818,10 @@ export type GetCarsQueryResult = {
       description?: string;
       image?: CustomImage;
       mobileImage?: CustomImage;
+      mediaType?: "image" | "video";
+      optionImage?: CustomImage;
+      optionMobileImage?: CustomImage;
+      videoId?: string;
       _key: string;
     }>;
     htmlId?: string;
@@ -4820,6 +4836,10 @@ export type GetCarsQueryResult = {
       highlights?: Array<{
         image?: CustomImage;
         mobileImage?: CustomImage;
+        mediaType?: "image" | "video";
+        optionImage?: CustomImage;
+        optionMobileImage?: CustomImage;
+        videoId?: string;
         title?: string;
         description?: string;
         _type: "highlight";
@@ -4933,6 +4953,10 @@ export type GetCarsQueryResult = {
       description?: string;
       image?: CustomImage;
       mobileImage?: CustomImage;
+      mediaType?: "image" | "video";
+      optionImage?: CustomImage;
+      optionMobileImage?: CustomImage;
+      videoId?: string;
       _key: string;
     }>;
     htmlId?: string;

@@ -8040,6 +8040,46 @@
                     "name": "customImage"
                   },
                   "optional": true
+                },
+                "mediaType": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "image"
+                      },
+                      {
+                        "type": "string",
+                        "value": "video"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "optionImage": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "inline",
+                    "name": "customImage"
+                  },
+                  "optional": true
+                },
+                "optionMobileImage": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "inline",
+                    "name": "customImage"
+                  },
+                  "optional": true
+                },
+                "videoId": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  },
+                  "optional": true
                 }
               },
               "rest": {
@@ -8128,6 +8168,46 @@
                   "value": {
                     "type": "inline",
                     "name": "customImage"
+                  },
+                  "optional": true
+                },
+                "mediaType": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "string",
+                        "value": "image"
+                      },
+                      {
+                        "type": "string",
+                        "value": "video"
+                      }
+                    ]
+                  },
+                  "optional": true
+                },
+                "optionImage": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "inline",
+                    "name": "customImage"
+                  },
+                  "optional": true
+                },
+                "optionMobileImage": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "inline",
+                    "name": "customImage"
+                  },
+                  "optional": true
+                },
+                "videoId": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
                   },
                   "optional": true
                 }
@@ -8357,6 +8437,46 @@
                           "value": {
                             "type": "inline",
                             "name": "customImage"
+                          },
+                          "optional": true
+                        },
+                        "mediaType": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "union",
+                            "of": [
+                              {
+                                "type": "string",
+                                "value": "image"
+                              },
+                              {
+                                "type": "string",
+                                "value": "video"
+                              }
+                            ]
+                          },
+                          "optional": true
+                        },
+                        "optionImage": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "inline",
+                            "name": "customImage"
+                          },
+                          "optional": true
+                        },
+                        "optionMobileImage": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "inline",
+                            "name": "customImage"
+                          },
+                          "optional": true
+                        },
+                        "videoId": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string"
                           },
                           "optional": true
                         },

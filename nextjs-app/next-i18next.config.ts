@@ -1,6 +1,7 @@
 export const i18n = {
   locales: ["en", "ar"],
   defaultLocale: "en",
+  localePrefix: 'always',
 };
 
 export type I18nConfig = typeof i18n;

@@ -38,12 +38,46 @@ export default {
               name: 'image',
               title: 'Image',
               type: 'customImage',
+              readOnly:true,
+              deprecated: { reason: 'This field will be removed in future versions.' }
             },
             {
               name: 'mobileImage',
               title: 'Mobile Image (Optional)',
               type: 'customImage',
+              readOnly:true,
+              deprecated: { reason: 'This field will be removed in future versions.' }
             },
+            defineField({
+              name: 'mediaType',
+              title: 'Media Type',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Image', value: 'image' },
+                  { title: 'Video', value: 'video' },
+                ],
+                layout: 'radio',
+              },
+            }),
+            defineField({
+              name: 'optionImage',
+              title: 'Image',
+              type: 'customImage',
+              hidden: ({ parent }) => parent?.mediaType !== 'image',
+            }),
+            defineField({
+              name: 'optionMobileImage',
+              title: 'Mobile Image (Optional)',
+              type: 'customImage',
+              hidden: ({ parent }) => parent?.mediaType !== 'image',
+            }),
+            defineField({
+              name: 'videoId',
+              title: 'Video ID',
+              type: 'string',
+              hidden: ({ parent }) => parent?.mediaType !== 'video',
+            }),
           ],
         },
       ],

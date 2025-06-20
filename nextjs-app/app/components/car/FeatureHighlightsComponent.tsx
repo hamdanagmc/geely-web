@@ -10,6 +10,7 @@ import type { FeatureHighlightsComponent } from "@/sanity.types";
 import type { Swiper as SwiperType } from "swiper";
 import ImageComp from "../CustomImage";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
+import Vimeo from "@u-wave/react-vimeo"
 
 type FeatureHighlightsComponentProps = {
   block: FeatureHighlightsComponent;
@@ -36,13 +37,13 @@ export default function FeatureHighlightsComp({
         <div className="relative">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
-            slidesPerView={1} 
-            centeredSlides={false} 
-            spaceBetween={0} 
+            slidesPerView={1}
+            centeredSlides={false}
+            spaceBetween={0}
             breakpoints={{
               768: {
-                slidesPerView: "auto", 
-                centeredSlides: true, 
+                slidesPerView: "auto",
+                centeredSlides: true,
                 spaceBetween: 20,
               },
             }}
@@ -55,7 +56,8 @@ export default function FeatureHighlightsComp({
             {block?.tabs?.[0]?.highlights?.map((slide, index) => (
               <SwiperSlide key={slide._key} className="!w-auto">
                 <div className="relative h-[540px] bg-gray-900 rounded-lg overflow-hidden">
-                  {slide?.image?.altText && !isMobileDevice && (
+
+                  {!slide?.mediaType && slide?.image?.altText && !isMobileDevice && (
                     <ImageComp
                       block={slide?.image}
                       imageClassName="object-cover w-full h-full"
@@ -63,7 +65,7 @@ export default function FeatureHighlightsComp({
                       height={500}
                     />
                   )}
-                  {slide?.mobileImage?.altText && isMobileDevice && (
+                  {!slide?.mediaType && slide?.mobileImage?.altText && isMobileDevice && (
                     <ImageComp
                       block={slide?.mobileImage}
                       imageClassName="object-cover w-full h-full"
@@ -71,12 +73,47 @@ export default function FeatureHighlightsComp({
                       height={624}
                     />
                   )}
+
+                  {slide?.mediaType == 'image' && slide?.optionImage?.altText && (
+                    <ImageComp
+                      block={slide?.optionImage}
+                      imageClassName="object-cover w-full h-full"
+                      width={620}
+                      height={500}
+                    />
+                  )}
+                  {slide?.mediaType == 'image' && slide?.optionMobileImage?.altText && isMobileDevice && (
+                    <ImageComp
+                      block={slide?.optionMobileImage}
+                      imageClassName="object-cover w-full h-full"
+                      width={620}
+                      height={624}
+                    />
+                  )}
+
+                  {slide?.mediaType == 'video' && slide?.videoId && (
+                    <Vimeo
+                      video={slide.videoId}
+                      autoplay
+                      loop
+                      muted
+                      controls={false}
+                      responsive
+                      background={true}
+                      dnt={true}
+                      className="w-[600px] h-[624px] static inset-0 object-cover"
+                      onError={(error) => {
+                        console.error("Vimeo Player Error:", error)
+                      }}
+                    />
+                  )}
+
+
                   <div
-                    className={`absolute inset-0 ${
-                      activeIndex === index
-                        ? "bg-transparent"
-                        : "bg-gradient-to-t from-black/80 to-transparent"
-                    }`}
+                    className={`absolute inset-0 ${activeIndex === index
+                      ? "bg-transparent"
+                      : "bg-gradient-to-t from-black/80 to-transparent"
+                      }`}
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
                     <h3 className="text-xl geelyBold uppercase md:text-[26px] font-bold mb-2 md:mb-3 tracking-wider leading-8">
@@ -97,9 +134,8 @@ export default function FeatureHighlightsComp({
               <button
                 key={index}
                 onClick={() => swiper?.slideToLoop(index)}
-                className={`h-[3px] transition-all duration-300 ${
-                  activeIndex === index ? "w-6 bg-white" : "w-5 bg-white/40"
-                }`}
+                className={`h-[3px] transition-all duration-300 ${activeIndex === index ? "w-6 bg-white" : "w-5 bg-white/40"
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}

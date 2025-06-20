@@ -1351,6 +1351,13 @@ h2.react-datepicker__current-month {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.uniFeatureSlider iframe,.owlStageVideo iframe{
+    transform: scale(2.3);
+}
+.owlStageVideo img,.owlStageVideo iframe{
+    height: 83vh;
+    object-fit: cover;
+}
 @media (min-width: 768px) and (max-height: 700px) {
     .consentPopup {
         min-height: 600px;

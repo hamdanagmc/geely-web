@@ -12,6 +12,7 @@ import "swiper/css/pagination"
 import "swiper/css/autoplay"
 import ImageComp from "../CustomImage"
 import useDeviceDetection from "../../hooks/useDeviceDetection"
+import Vimeo from "@u-wave/react-vimeo"
 
 type OwlStageOuterProps = {
   block: OwlStageOuter
@@ -50,9 +51,8 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
           <button
             key={i}
             onClick={() => imageSwiper?.slideTo(i)}
-            className={`w-6 h-[3px] transition-all duration-300 ${
-              activeIndex === i ? "bg-white" : "bg-white/40 hover:bg-white/60"
-            }`}
+            className={`w-6 h-[3px] transition-all duration-300 ${activeIndex === i ? "bg-white" : "bg-white/40 hover:bg-white/60"
+              }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
@@ -63,7 +63,7 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
   return (
     <section
       id={`${block?.htmlId}`}
-      className={`${block?.title ? "sectTileAb" : "sectTile"} sectTileMain relative bg-gradient-to-b from-neutral-800 to-neutral-900 text-white overflow-hidden`}
+      className={`${block?.title ? "sectTileAb" : "sectTile"} sectTileMain owlStageVideo relative bg-gradient-to-b from-neutral-800 to-neutral-900 text-white overflow-hidden`}
     >
       <div className="absolute secTileTop md:top-[60px] top-[25px] text-center z-10 left-1/2 -translate-x-1/2 mb-8 md:mb-12">
         {block?.title && (
@@ -78,7 +78,7 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
         )}
       </div>
 
-      
+
 
       {/* Image Swiper */}
       <Swiper
@@ -92,10 +92,10 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
       >
         {block.slides?.map((slide, slideIndex) => (
           <SwiperSlide key={slide._key}>
-            {slide?.image?.altText && !isMobileDevice && (
+            {!slide?.mediaType && slide?.image?.altText && !isMobileDevice && (
               <ImageComp block={slide.image} imageClassName="object-cover w-full h-full" width={1600} height={800} />
             )}
-            {slide?.mobileImage?.altText && isMobileDevice && (
+            {!slide?.mediaType && slide?.mobileImage?.altText && isMobileDevice && (
               <ImageComp
                 block={slide.mobileImage}
                 imageClassName="object-cover w-full h-full"
@@ -103,6 +103,39 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
                 height={800}
               />
             )}
+
+            {slide?.mediaType == 'image' && slide?.optionImage?.altText && (
+              <ImageComp
+                block={slide?.optionImage}
+                imageClassName="object-cover w-full h-full" width={1600} height={800}
+              />
+            )}
+            {slide?.mediaType == 'image' && slide?.optionMobileImage?.altText && isMobileDevice && (
+              <ImageComp
+                block={slide?.optionMobileImage}
+                imageClassName="object-cover w-full h-full"
+                width={1600}
+                height={800}
+              />
+            )}
+
+            {slide?.mediaType == 'video' && slide?.videoId && (
+              <Vimeo
+                video={slide.videoId}
+                autoplay
+                loop
+                muted
+                controls={false}
+                responsive
+                background={true}
+                dnt={true}
+                className="w-full h-[83vh] static inset-0 object-cover"
+                onError={(error) => {
+                  console.error("Vimeo Player Error:", error)
+                }}
+              />
+            )}
+
             {/* Footer */}
             <div className="mt-8 md:mt-12 absolute footertxtBtm ltr:md:left-[60px] ltr:left-[10px] rtl:md:right-[60px] rtl:right-[10px] bottom-10">
               <div className="max-w-3xl">

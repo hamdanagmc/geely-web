@@ -6,7 +6,7 @@ export default defineType({
   type: 'object',
   title: 'Slider with heading',
   fields: [
-    
+
     defineField({
       name: 'title',
       type: 'string',
@@ -42,12 +42,48 @@ export default defineType({
                       type: 'customImage',
                       title: 'Image',
                       options: { hotspot: true },
+                      readOnly:true,
+                      deprecated: { reason: 'This field will be removed in future versions.' }
                     }),
                     defineField({
                       name: 'mobileImage', // Separate mobile image
                       type: 'customImage',
                       title: 'Mobile Image',
                       options: { hotspot: true },
+                      readOnly:true,
+                      deprecated: { reason: 'This field will be removed in future versions.' }
+                    }),
+                    defineField({
+                      name: 'mediaType',
+                      title: 'Media Type',
+                      type: 'string',
+                      options: {
+                        list: [
+                          { title: 'Image', value: 'image' },
+                          { title: 'Video', value: 'video' },
+                        ],
+                        layout: 'radio',
+                      },
+                    }),
+                    defineField({
+                      name: 'optionImage',
+                      title: 'Image',
+                      type: 'customImage',
+                      description: 'image size should be auto width and height 540 pixels ',
+                      hidden: ({ parent }) => parent?.mediaType !== 'image',
+                    }),
+                    defineField({
+                      name: 'optionMobileImage',
+                      title: 'Mobile Image (Optional)',
+                      type: 'customImage',
+                      description: 'image size should be auto width and height 540 pixels ',
+                      hidden: ({ parent }) => parent?.mediaType !== 'image',
+                    }),
+                    defineField({
+                      name: 'videoId',
+                      title: 'Video ID',
+                      type: 'string',
+                      hidden: ({ parent }) => parent?.mediaType !== 'video',
                     }),
                     defineField({
                       name: 'title',
@@ -68,10 +104,10 @@ export default defineType({
       ],
     }),
     defineField({
-      name : 'htmlId',
-      type : 'string',
-      title : 'ID Attribute',
-      description : 'Unique identifier for the banner component'
+      name: 'htmlId',
+      type: 'string',
+      title: 'ID Attribute',
+      description: 'Unique identifier for the banner component'
     }),
   ],
   preview: {
