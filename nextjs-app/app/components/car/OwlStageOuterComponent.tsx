@@ -86,7 +86,7 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
         onSwiper={setImageSwiper}
         onSlideChange={handleSlideChange}
         slidesPerView={1}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={{ delay: 7000, disableOnInteraction: false }}
         loop={true}
         className="h-full"
       >
@@ -104,7 +104,7 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
               />
             )}
 
-            {slide?.mediaType == 'image' && slide?.optionImage?.altText && (
+            {slide?.mediaType == 'image' && slide?.optionImage?.altText && !isMobileDevice && (
               <ImageComp
                 block={slide?.optionImage}
                 imageClassName="object-cover w-full h-full" width={1600} height={800}
@@ -119,9 +119,26 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
               />
             )}
 
-            {slide?.mediaType == 'video' && slide?.videoId && (
+            {slide?.mediaType == 'video' && !isMobileDevice && slide?.videoId && (
               <Vimeo
                 video={slide.videoId}
+                autoplay
+                loop
+                muted
+                controls={false}
+                responsive
+                background={true}
+                dnt={true}
+                className="w-full h-[83vh] static inset-0 object-cover"
+                onError={(error) => {
+                  console.error("Vimeo Player Error:", error)
+                }}
+              />
+            )}
+
+            {slide?.mediaType == 'video' && isMobileDevice && slide?.mobileVideoId && (
+              <Vimeo
+                video={slide.mobileVideoId}
                 autoplay
                 loop
                 muted

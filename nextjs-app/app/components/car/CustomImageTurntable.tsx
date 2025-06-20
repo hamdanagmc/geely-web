@@ -92,7 +92,7 @@ export function CustomImageTurntable({
     const sensitivity = dragSensitivity * 10
 
     if (Math.abs(deltaX) > sensitivity) {
-      const direction = deltaX > 0 ? -1 : 1
+      const direction = deltaX > 0 ? 1 : -1
       const totalImages = images.length
 
       setCurrentIndex((prev) => {

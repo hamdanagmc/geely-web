@@ -48,7 +48,7 @@ export default function FeatureHighlightsComp({
               },
             }}
             loop={true}
-            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            autoplay={{ delay: 7000, disableOnInteraction: false }}
             onSwiper={setSwiper}
             onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
             className="!overflow-visible"
@@ -74,7 +74,7 @@ export default function FeatureHighlightsComp({
                     />
                   )}
 
-                  {slide?.mediaType == 'image' && slide?.optionImage?.altText && (
+                  {slide?.mediaType == 'image' && slide?.optionImage?.altText && !isMobileDevice && (
                     <ImageComp
                       block={slide?.optionImage}
                       imageClassName="object-cover w-full h-full"
@@ -101,7 +101,7 @@ export default function FeatureHighlightsComp({
                       responsive
                       background={true}
                       dnt={true}
-                      className="w-[600px] h-[624px] static inset-0 object-cover"
+                      className="w-[720px] h-[540px] static inset-0 object-cover"
                       onError={(error) => {
                         console.error("Vimeo Player Error:", error)
                       }}

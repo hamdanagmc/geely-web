@@ -78,8 +78,16 @@ export const owlStageOuter = defineType({
             }),
             defineField({
               name: 'videoId',
-              title: 'Video ID',
+              title: 'Vimeo Video ID',
               type: 'string',
+              description: "video size should be 1560x750 pixels",
+              hidden: ({ parent }) => parent?.mediaType !== 'video',
+            }),
+            defineField({
+              name: 'mobileVideoId',
+              title: 'Vimeo Mobile Video ID',
+              type: 'string',
+              description: "video size should be 375x600 pixels",
               hidden: ({ parent }) => parent?.mediaType !== 'video',
             }),
           ],

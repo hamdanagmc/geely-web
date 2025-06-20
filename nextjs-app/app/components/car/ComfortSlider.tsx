@@ -37,7 +37,7 @@ export default function ComfortSliderComponent({ block }: ComfortSliderProps) {
             modules={[Navigation, Pagination, Autoplay]}
             slidesPerView={"auto"} // 👈 Auto width slides
             loop={true}
-            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            autoplay={{ delay: 7000, disableOnInteraction: false }}
             centeredSlides={true}
             spaceBetween={20}
             onSwiper={setSwiper}
@@ -64,7 +64,7 @@ export default function ComfortSliderComponent({ block }: ComfortSliderProps) {
                     />
                   )}
 
-                  {slide?.mediaType == 'image' && slide?.optionImage?.altText && (
+                  {slide?.mediaType == 'image' && slide?.optionImage?.altText && !isMobileDevice &&(
                     <ImageComp
                       block={slide?.optionImage}
                       imageClassName="object-cover w-full h-full"
@@ -91,7 +91,7 @@ export default function ComfortSliderComponent({ block }: ComfortSliderProps) {
                       responsive
                       background={true}
                       dnt={true}
-                      className="w-[600px] h-[540px] static inset-0 object-cover"
+                      className="w-[720px] h-[540px] static inset-0 object-cover"
                       onError={(error) => {
                         console.error("Vimeo Player Error:", error)
                       }}

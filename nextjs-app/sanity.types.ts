@@ -1234,6 +1234,7 @@ export type OwlStageOuter = {
     optionImage?: CustomImage;
     optionMobileImage?: CustomImage;
     videoId?: string;
+    mobileVideoId?: string;
     _key: string;
   }>;
   htmlId?: string;
@@ -4957,6 +4958,7 @@ export type GetCarsQueryResult = {
       optionImage?: CustomImage;
       optionMobileImage?: CustomImage;
       videoId?: string;
+      mobileVideoId?: string;
       _key: string;
     }>;
     htmlId?: string;

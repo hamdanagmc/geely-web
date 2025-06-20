@@ -81,8 +81,9 @@ export default defineType({
                     }),
                     defineField({
                       name: 'videoId',
-                      title: 'Video ID',
+                      title: 'Vimeo Video ID',
                       type: 'string',
+                      description: "video size should be 720x540 pixels",
                       hidden: ({ parent }) => parent?.mediaType !== 'video',
                     }),
                     defineField({
