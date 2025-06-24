@@ -42,7 +42,7 @@ export default defineType({
                       type: 'customImage',
                       title: 'Image',
                       options: { hotspot: true },
-                      readOnly:true,
+                      readOnly: true,
                       deprecated: { reason: 'This field will be removed in future versions.' }
                     }),
                     defineField({
@@ -50,7 +50,7 @@ export default defineType({
                       type: 'customImage',
                       title: 'Mobile Image',
                       options: { hotspot: true },
-                      readOnly:true,
+                      readOnly: true,
                       deprecated: { reason: 'This field will be removed in future versions.' }
                     }),
                     defineField({
@@ -69,23 +69,38 @@ export default defineType({
                       name: 'optionImage',
                       title: 'Image',
                       type: 'customImage',
-                      description: 'image size should be auto width and height 540 pixels ',
+                      description: 'Image size should be auto width and height 540 pixels',
                       hidden: ({ parent }) => parent?.mediaType !== 'image',
                     }),
                     defineField({
                       name: 'optionMobileImage',
                       title: 'Mobile Image (Optional)',
                       type: 'customImage',
-                      description: 'image size should be auto width and height 540 pixels ',
+                      description: 'Image size should be auto width and height 540 pixels',
                       hidden: ({ parent }) => parent?.mediaType !== 'image',
                     }),
                     defineField({
                       name: 'videoId',
                       title: 'Vimeo Video ID',
                       type: 'string',
-                      description: "video size should be 720x540 pixels",
+                      description: 'Provide the Vimeo video ID',
                       hidden: ({ parent }) => parent?.mediaType !== 'video',
                     }),
+                    defineField({
+                      name: 'videoSize',
+                      title: 'Video Size',
+                      type: 'string',
+                      options: {
+                        list: [
+                          { title: '334x540 pixels', value: '334x540' },
+                          { title: '720x540 pixels', value: '720x540' },
+                        ],
+                        layout: 'radio',
+                      },
+                      description: 'Select the video display size',
+                      hidden: ({ parent }) => parent?.mediaType !== 'video',
+                    }),
+
                     defineField({
                       name: 'title',
                       type: 'string',

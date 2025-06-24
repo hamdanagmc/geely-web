@@ -37,6 +37,19 @@ export default defineType({
       title: 'ID Attribute',
       description: 'Unique identifier for the banner component',
     }),
+    defineField({
+      name: 'backgroundColor',
+      type: 'string',
+      title: 'Background Color',
+      description: 'Choose a background color for the section',
+      options: {
+        list: [
+          { title: 'White', value: 'white' },
+          { title: 'Black', value: 'black' },
+        ],
+        layout: 'radio', // optional: use 'dropdown' if you prefer
+      },
+    }),
   ],
   preview: {
     select: {

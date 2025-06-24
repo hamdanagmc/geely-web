@@ -1276,6 +1276,7 @@ export type FeatureHighlightsComponent = {
       optionImage?: CustomImage;
       optionMobileImage?: CustomImage;
       videoId?: string;
+      videoSize?: "334x540" | "720x540";
       title?: string;
       description?: string;
       _type: "highlight";
@@ -1778,6 +1779,7 @@ export type RichTextheadingPara = {
     _key: string;
   }>;
   htmlId?: string;
+  backgroundColor?: "white" | "black";
 };
 
 export type BannerCarousel = {
@@ -4451,6 +4453,7 @@ export type GetPageQueryResult = {
       _key: string;
     }>;
     htmlId?: string;
+    backgroundColor?: "black" | "white";
   } | {
     _key: string;
     _type: "serviceBookingForm";
@@ -4841,6 +4844,7 @@ export type GetCarsQueryResult = {
         optionImage?: CustomImage;
         optionMobileImage?: CustomImage;
         videoId?: string;
+        videoSize?: "334x540" | "720x540";
         title?: string;
         description?: string;
         _type: "highlight";
@@ -4993,6 +4997,7 @@ export type GetCarsQueryResult = {
       _key: string;
     }>;
     htmlId?: string;
+    backgroundColor?: "black" | "white";
     link: null;
     brochurePageLink: null;
   } | {

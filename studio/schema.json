@@ -8487,6 +8487,23 @@
                           },
                           "optional": true
                         },
+                        "videoSize": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "union",
+                            "of": [
+                              {
+                                "type": "string",
+                                "value": "334x540"
+                              },
+                              {
+                                "type": "string",
+                                "value": "720x540"
+                              }
+                            ]
+                          },
+                          "optional": true
+                        },
                         "title": {
                           "type": "objectAttribute",
                           "value": {
@@ -11695,6 +11712,23 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "backgroundColor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "white"
+              },
+              {
+                "type": "string",
+                "value": "black"
+              }
+            ]
           },
           "optional": true
         }

@@ -91,7 +91,7 @@ export default function FeatureHighlightsComp({
                     />
                   )}
 
-                  {slide?.mediaType == 'video' && slide?.videoId && (
+                  {slide?.mediaType === 'video' && slide?.videoId && (
                     <Vimeo
                       video={slide.videoId}
                       autoplay
@@ -101,12 +101,14 @@ export default function FeatureHighlightsComp({
                       responsive
                       background={true}
                       dnt={true}
-                      className="w-[720px] h-[540px] static inset-0 object-cover"
+                      className={`video-player ${slide.videoSize === '334x540' ? 'md:w-[334px] w-full h-[540px]' : 'w-[720px] h-[540px]'
+                        } static inset-0 object-cover`}
                       onError={(error) => {
-                        console.error("Vimeo Player Error:", error)
+                        console.error("Vimeo Player Error:", error);
                       }}
                     />
                   )}
+
 
 
                   <div
