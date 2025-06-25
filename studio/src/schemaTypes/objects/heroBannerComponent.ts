@@ -81,14 +81,14 @@ export default defineType({
       name: 'brochurePageLink',
       title: 'Select Page Link',
       type: 'reference', // Using the existing link schema
+      readOnly: true,
+      deprecated: { reason: "This field will be removed in future versions as direct PDF download functionality has been enabled." },
       to : [{type : 'page'}]
        }),
     defineField({
       name: 'brochureFile',
       type: 'file',
       title: 'Brochure File',
-      readOnly: true,
-      deprecated: { reason: "Use the Vimeo Video ID field instead. This field will be removed in future versions!" },
       options: {
         accept: 'application/pdf',
       },
