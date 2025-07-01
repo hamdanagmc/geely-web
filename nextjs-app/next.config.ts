@@ -1560,7 +1560,7 @@ const nextConfig: NextConfig = {
                 https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com https://googleads.g.doubleclick.net
                 https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net 
                 https://www.googleadservices.com https://bat.bing.com https://trackback.gotrackier.com https://trk.betrck.com
-                https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com https://d1v2u6by4izioz.cloudfront.net;
+                https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com https://d1v2u6by4izioz.cloudfront.net
                 https://cdn.pixel.platformance.io https://us-assets.i.posthog.com/ https://us.i.posthog.com/;
               
               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
@@ -1571,8 +1571,8 @@ const nextConfig: NextConfig = {
                 https://analytics.tiktok.com https://analytics.google.com  https://stats.g.doubleclick.net 
                 https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
                 https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
-                https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com;
-                https://cdn.pixel.platformance.io https://us.i.posthog.com/;
+                https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com
+                https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
