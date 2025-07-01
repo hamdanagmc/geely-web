@@ -12,6 +12,7 @@ import PortableText from "@/app/components/PortableText"
 import { useTestDrive } from "../../context/TestDriveContext"
 import { useRouter } from "next/navigation"
 
+
 type CarModelComponentProps = {
   block: CarModelComponent
   index: number
@@ -103,6 +104,7 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
               )}
             </div>
 
+
             {/* Content Section */}
             <div
               className={`w-full lg:w-[38%] carRightTxt flex items-center justify-center relative`}
@@ -124,6 +126,7 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
                   />
                 </div>
               )}
+             
 
               <div
                 className="flex flex-col carRightTxt-inn justify-between py-16 w-full px-[60px] relative z-10"
@@ -131,7 +134,7 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
               >
                 {/* Header */}
                 <div>
-                  <div className="flex items-start gap-[10px] mb-5">
+                  <div className="flex items-start gap-[10px] mb-0">
                     <div className="relative max-w-[160px] w-full h-[27px]">
                       {vehicle.carTitleLogo && (
                         <Image
@@ -145,6 +148,13 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
                     </div>
                     <p className="md:text-xl text-[15px]">{vehicle.subtitle}</p>
                   </div>
+
+                   {vehicle?.priceBox && (
+                        <PortableText
+                          className="md:text-[14px] mt-1 md:leading-[21px] text-[13px] leading-[20px]"
+                          value={vehicle?.priceBox as PortableTextBlock[]}
+                        />
+                      )}
 
                   {/* Separator */}
                   <div className="w-full h-px bg-black my-5" />

@@ -34,45 +34,50 @@ export function CustomImageTurntable({
     )
   }, [])
 
-  // Preload images
-  useEffect(() => {
-    if (images.length === 0 || typeof window === "undefined") return
+  const widthImage = 1200
+  const quality = 90
 
-    const preloadImages = async () => {
-      const loadedImages: Record<number, boolean> = {}
+const optimizedUrl = (src: string) =>
+  `/_next/image?url=${encodeURIComponent(src)}&w=${widthImage}&q=${quality}`
 
-      await Promise.all(
-        images.map((src, index) => {
-          return new Promise<void>((resolve) => {
-            const img = new window.Image()
-            // Try direct loading first for better iOS performance
-            img.src = src
-            img.onload = () => {
-              loadedImages[index] = true
-              setImagesLoaded((prev) => ({ ...prev, [index]: true }))
-              resolve()
-            }
-            img.onerror = () => {
-              // Fallback to Next.js image loader if direct load fails
-              const nextImageUrl = `/_next/image?url=${encodeURIComponent(src)}&w=1200&q=90`
-              const fallbackImg = new window.Image()
-              fallbackImg.src = nextImageUrl
-              fallbackImg.onload = () => {
-                loadedImages[index] = true
-                setImagesLoaded((prev) => ({ ...prev, [index]: true }))
-                resolve()
-              }
-              fallbackImg.onerror = () => resolve()
-            }
-          })
-        }),
-      )
+// Preload images
+useEffect(() => {
+  if (images.length === 0 || typeof window === "undefined") return;
 
-      setAllImagesLoaded(true)
-    }
+  const preloadImages = async () => {
+    const loadedImages: Record<number, boolean> = {};
 
-    preloadImages()
-  }, [images])
+    await Promise.all(
+      images.map((src, index) => {
+        return new Promise<void>((resolve) => {
+          const isOptimized = src.startsWith("/_next/image");
+
+          // Ensure image is optimized only once
+          const finalUrl = isOptimized
+            ? src
+            : `/_next/image?url=${encodeURIComponent(src)}&w=1200&q=90`;
+
+          const img = new window.Image();
+          img.src = finalUrl;
+          img.onload = () => {
+            loadedImages[index] = true;
+            setImagesLoaded((prev) => ({ ...prev, [index]: true }));
+            resolve();
+          };
+          img.onerror = () => {
+            console.warn("Image preload failed for", finalUrl);
+            resolve(); // Fail silently
+          };
+        });
+      })
+    );
+
+    setAllImagesLoaded(true);
+  };
+
+  preloadImages();
+}, [images]);
+
 
   // Pointer events for non-iOS devices
   const handlePointerDown = (e: React.PointerEvent) => {

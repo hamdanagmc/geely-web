@@ -31,16 +31,22 @@ export default defineType({
             defineField({
               name: 'carTitleLogo',
               type: 'image',
-              description:"image size should be 1070x184 pixels",
+              description: "image size should be 1070x184 pixels",
               title: 'Car Title Logo',
               options: { hotspot: true },
             }),
             defineField({
               name: 'carTitleLogoHover',
               type: 'image',
-              description:"image size should be 679x117 pixels",
+              description: "image size should be 679x117 pixels",
               title: 'Car Title Logo Hover',
               options: { hotspot: true },
+            }),
+            defineField({
+              name: 'priceBox',
+              type: 'array', // Array of blocks for rich text
+              title: 'Price Box Text',
+              of: [{ type: 'block' }],
             }),
             defineField({
               name: 'title',
@@ -77,7 +83,7 @@ export default defineType({
                   fields: [
                     defineField({
                       name: 'icon',
-                      description:'icon size should be 30x30 pixels',
+                      description: 'icon size should be 30x30 pixels',
                       type: 'image',
                       title: 'Icon',
                       options: { hotspot: true },
@@ -86,8 +92,8 @@ export default defineType({
                       name: 'description',
                       type: 'string',
                       title: 'Description',
-                      readOnly : true,
-                      deprecated : {reason : 'Use Rich Text field instead! This field will be removed in future version.'}
+                      readOnly: true,
+                      deprecated: { reason: 'Use Rich Text field instead! This field will be removed in future version.' }
                     }),
                     defineField({
                       name: 'richText',
@@ -102,11 +108,11 @@ export default defineType({
               name: 'exploreLink',
               type: 'object',
               title: 'Explore Link',
-              fields : [
+              fields: [
                 defineField({
-                  name : 'text',
-                  type : 'string',
-                  title : 'Link Text',
+                  name: 'text',
+                  type: 'string',
+                  title: 'Link Text',
                 }),
                 defineField({
                   name: 'externalLink',
@@ -119,16 +125,16 @@ export default defineType({
               name: 'getQuoteLink',
               type: 'object',
               title: 'Get Quote Link',
-              fields : [
+              fields: [
                 defineField({
-                  name : 'text',
-                  type : 'string',
-                  title : 'Link Text',
+                  name: 'text',
+                  type: 'string',
+                  title: 'Link Text',
                 }),
                 defineField({
-                  name : 'quoteLink',
-                  type : 'link',
-                  title : 'Link',
+                  name: 'quoteLink',
+                  type: 'link',
+                  title: 'Link',
                 }),
               ]
             }),
@@ -136,16 +142,16 @@ export default defineType({
               name: 'testDriveLink',
               type: 'object',
               title: 'Test Drive Link',
-              fields : [
+              fields: [
                 defineField({
-                  name : 'text',
-                  type : 'string',
-                  title : 'Link Text',
+                  name: 'text',
+                  type: 'string',
+                  title: 'Link Text',
                 }),
                 defineField({
-                  name : 'drivelink',
-                  type : 'link',
-                  title : 'Link',
+                  name: 'drivelink',
+                  type: 'link',
+                  title: 'Link',
                 }),
               ]
             }),

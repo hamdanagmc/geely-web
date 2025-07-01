@@ -96,7 +96,7 @@ export default async function RootLayout({
               <VisualEditing />
             </>
           )}
-          <SanityLive onError={handleError} />
+          {/* <SanityLive onError={handleError} /> */}
           <main className="">
           <StoreProvider>
             <TestDriveProvider>
