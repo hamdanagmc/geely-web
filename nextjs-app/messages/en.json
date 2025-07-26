@@ -76,5 +76,17 @@
     "privacyPolicyText" : "privacy policy",
     "readText2" : "and agree",
     "submit": "Send"
+  },
+
+  "customerLookup":{
+    "alert": "We couldn't find the vehicle number. Try using the last six digits of the Chasis Number instead",
+    "notFound": "We could not find a vehicle matching the data you entered. Please try again.",
+    "plateNumberMsg": "Plate number is required",
+    "plateCodeMsg" : "Plate code is required",
+    "chasisNumberMsg": "Please enter last 6 digits of the chassis number.",
+    "chasisNumberLengthMsg": "Please enter last 6 digits of the chassis number.",
+    "locationCodeMsg": "Please select Location Code",
+    "agreeMsg": "You must accept the terms and conditions",
+    "onlyNumbersAllowed" : "Only numbers are allowed"
   }
 }

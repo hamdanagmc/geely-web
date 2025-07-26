@@ -9,6 +9,7 @@ import { FilterProps, getLeadFilters } from './util';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "../styles/leads-list.module.css";
 import { page } from '../../../schemaTypes/documents/page';
+import { useCurrentUser } from 'sanity';
 
 export type Lead = {
   _id: string;
@@ -35,8 +36,10 @@ export type Lead = {
   pageUrl?: string;
 };
 
-export default function LeadsTool() {
+const ALLOWED_USERS = "Abdulrahman.Zakout@agmc.ae"
 
+export default function LeadsTool() {
+  const currentUser = useCurrentUser();
   const [models, setModels] = useState<string[]>([]);
   const [locations, setLocations] = useState<string[]>([]);
   const [landingPage, setLandingPage] = useState('');
@@ -156,6 +159,18 @@ export default function LeadsTool() {
     }
   });
 
+  function handleExport(exportData: any, exportName: string): void {
+    if (!currentUser || !ALLOWED_USERS.includes(currentUser.email)) {
+      alert('Access denied! You do not have permission to export data.');
+      return;
+    }
+    if (!exportData || exportData.length === 0) {
+      alert('No data available to export.');
+      return;
+    }
+    exportToExcel(exportData, exportName);
+  }
+
   return (
     <ToastProvider>
       <Container className="mainContainer" style={{ marginTop: '60px', maxWidth: '100%', overflow: 'scroll' }}>
@@ -170,7 +185,7 @@ export default function LeadsTool() {
               tone="positive"
               className='btn btn-success exportToExcel'
               radius="full"
-              onClick={() => exportToExcel(orderedLeads, 'GeelyLeads')}
+              onClick={() => handleExport(orderedLeads, 'GeelyLeads')}
             />
           </Card>
         </div>

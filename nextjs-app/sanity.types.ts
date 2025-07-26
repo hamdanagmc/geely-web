@@ -221,6 +221,7 @@ export type CustomerLookup = {
     orLabel?: string;
     vinNumberLabel?: string;
     vinNoPlaceholder?: string;
+    vinNoAlertMsg?: string;
     termsAndCondition?: string;
     termsAndConditionColor?: string;
     termsAndConditionLink?: {
@@ -3669,6 +3670,7 @@ export type GetPageQueryResult = {
       orLabel?: string;
       vinNumberLabel?: string;
       vinNoPlaceholder?: string;
+      vinNoAlertMsg?: string;
       termsAndCondition?: string;
       termsAndConditionColor?: string;
       termsAndConditionLink: {

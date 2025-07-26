@@ -12,7 +12,8 @@ import { useDispatch } from "react-redux"
 import useDeviceDetection from "../../hooks/useDeviceDetection"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-
+import { useTranslations } from "next-intl"
+import { customStyles } from "@/app/utils/customSelectStyles";
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
   loading: () => <p>Loading...</p>,
@@ -21,35 +22,6 @@ const Select = dynamic(() => import("react-select"), {
 type customerLookupProps = {
   block: CustomerLookup
   index: number
-}
-
-const customStyles = {
-  control: (provided: any, state: any) => ({
-    ...provided,
-    borderColor: "transparent",
-    boxShadow: "none",
-    fontSize: "14px",
-    borderRadius: "0",
-    border: 0,
-    padding: "4px 15px",
-    "&:hover": {
-      borderColor: "transparent",
-    },
-  }),
-  placeholder: (provided: any) => ({
-    ...provided,
-    color: "gray",
-  }),
-  menu: (provided: any) => ({
-    ...provided,
-    zIndex: 9999,
-    padding: "8px",
-  }),
-  option: (provided: any, state: any) => ({
-    ...provided,
-    cursor: "pointer",
-    outline: 0,
-  }),
 }
 
 const sourceOptions = [
@@ -70,36 +42,38 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
   const { currentLocale } = useDeviceDetection()
   const [isMounted, setIsMounted] = useState(false)
   const [formErrorMessegeStatus, setFormErrorMessegeStatus] = useState(false)
+  const [showVin, setShowVin] = useState(false);
+  const [vinAlert, setVinAlert] = useState(false);
+  const t = useTranslations("customerLookup");
 
-  const validationSchema = Yup.object({
-    /*vinNo: Yup.string()
-      .matches(/^[A-HJ-NPR-Z0-9]{17}$/, "VIN must be 17 alphanumeric characters")
-      .optional(),*/
 
-    plateNumber: Yup.string().required("Plate number is required"),
+  const validationSchema = (showVin: boolean) =>
+    Yup.object().shape({
+      plateNumber: showVin
+        ? Yup.string().notRequired()
+        : Yup.string().required(t('plateNumberMsg')),
 
-    plateCode: Yup.string().required("Plate code is required"),
+      plateCode: showVin
+        ? Yup.string().notRequired()
+        : Yup.string().required(t('plateCodeMsg')),
 
-    source: Yup.string().required("Please select Source"),
+      source: showVin
+        ? Yup.string().notRequired()
+        : Yup.string().required(t('locationCodeMsg')),
 
-    agreed: Yup.boolean().oneOf([true], "You must accept the terms and conditions").required(),
+      vinNo: showVin
+  ? Yup.string()
+      .trim()
+      .required(t('chasisNumberMsg'))
+      .length(6, t('chasisNumberLengthMsg'))
+      .matches(/^\d{6}$/, t('onlyNumbersAllowed')) // exactly 6 digits
+  : Yup.string().notRequired(),
+      agreed: Yup.boolean()
+        .oneOf([true], t('agreeMsg'))
+        .required('Required'),
+    });
 
-    /*formLevelCheck: Yup.mixed().test(
-      'vin-or-plate-group',
-      'Please Enter Plate Number Plate Code and Source dropdown',
-      function (_, context) {
-        const { vinNo, plateNumber, plateCode, source } = context.parent;
 
-    const vinValid = /^[A-HJ-NPR-Z0-9]{17}$/.test(vinNo || '');
-        const plateValid =
-          /^\d{5}$/.test(plateNumber || '') &&
-          /^[A-Z]{1}$/.test(plateCode || '') &&
-          /^[A-Z]{3}$/.test(source || '');
-
-        return plateValid;
-      }
-    )*/
-  })
 
   const formik = useFormik({
     initialValues: {
@@ -110,13 +84,16 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
       formLevelCheck: "",
       agreed: false,
     },
-    validationSchema,
+    validationSchema: validationSchema(showVin),
     onSubmit: (values) => {
-      console.log(values)
       const { vinNo, plateNumber, plateCode, source } = values
-      if (vinNo) {
-        setVinNo(vinNo)
-      } else if (plateNumber && plateCode && source) {
+      if (vinNo && showVin) {
+        setVinNo(vinNo);
+      }
+      else if (vinNo && !showVin) {
+        setVinNo('');
+      }
+      else if (plateNumber && plateCode && source) {
         const vehiclePlateNumber = `${plateNumber}-${plateCode}-${source}`
         setVehiclePlateNumber(vehiclePlateNumber)
       }
@@ -128,6 +105,7 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
       setSubmitting(true)
       try {
         if (vinNo) {
+          console.log(vinNo, "new vin no")
           const vehicleDetails = await getVehicleDetailByVin(vinNo)
           console.log(vehicleDetails)
           if (vehicleDetails?.status) {
@@ -142,6 +120,7 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
           } else {
             formik.setFieldError("formLevelCheck", vehicleDetails?.message)
             setFormErrorMessegeStatus(true)
+            setShowVin(false);
           }
         } else if (vehiclePlateNumber.length > 0) {
           console.log(vehiclePlateNumber)
@@ -157,8 +136,9 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
               window.location.href = `/${currentLocale}/customer-details`;
             }*/
           } else {
-            formik.setFieldError("formLevelCheck", vehicleDetails?.message)
-             setFormErrorMessegeStatus(true)
+            setVinAlert(true)
+            setShowVin(true);
+            // formik.setFieldError("formLevelCheck", vehicleDetails?.message)
           }
         }
       } catch (error) {
@@ -173,7 +153,6 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
       fetchVehicleDetails()
     }
   }, [vinNo, vehiclePlateNumber])
-  console.log(block)
 
   return (
     <>
@@ -192,102 +171,107 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
             onSubmit={formik.handleSubmit}
             className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-8 px-12 rounded-sm"
           >
+
             <div className="md:flex md:justify-center gap-5 relative">
               {/* input fiels */}
-              <div className="flex flex-col flex-1 items-start">
-                <label htmlFor="numberPlate" className="block text-sm font-medium text-gray-700 text-[#383D51]">
-                  {block.form?.licensePlateLabel}
-                  <span className="text-red-500">*</span>
-                </label>
+              {!showVin &&
+                <div className="flex flex-col flex-1 items-start">
+                  <label htmlFor="numberPlate" className="block text-sm font-medium text-gray-700 text-[#383D51]">
+                    {block.form?.licensePlateLabel}
+                    <span className="text-red-500">*</span>
+                  </label>
 
-                <div className="md:flex gap-2 w-full justify-between">
-                  {/* input source */}
-                  <div className="md:w-[30%] w-full mb-5 md:mb-0">
-                    <Select
-                      id="source"
-                      name="source"
-                      options={sourceOptions}
-                      styles={customStyles}
-                      placeholder={block.form?.sourcePlaceholder || "Select source"}
-                      className="flex w-full input-style borderBlueFocus"
-                      onChange={(newValue: unknown, _actionMeta: any) => {
-                        const option = newValue as { value: string; label: string } | null
-                        formik.setFieldValue("source", option?.value || "")
-                      }}
-                      onBlur={() => formik.setFieldTouched("source", true)}
-                      value={sourceOptions.find((option) => option.value === formik.values.source) || null}
-                    />
-                    {formik.touched.source && formik.errors.source ? (
-                      <div className="error-field" style={{ color: "red" }}>
-                        {formik.errors.source}
-                      </div>
-                    ) : null}
-                  </div>
-                  {/* Plate Code */}
-                  <div className="md:w-[30%] w-full mb-5 md:mb-0">
-                    <input
-                      type="text"
-                      id="plateCode"
-                      name="plateCode"
-                      placeholder={block.form?.plateNoPlaceholder}
-                      className=" flex w-full input-style borderBlueFocus px-4 placeholder:text-[14px] placeholder:font-[400] leading-[21px] "
-                      onChange={(e) => {
-                        formik.setFieldValue("plateCode", e.target.value.toUpperCase())
-                      }}
-                      value={formik.values.plateCode}
-                    />
-                    {formik.touched.plateCode && formik.errors.plateCode ? (
-                      <div className="error-field" style={{ color: "red" }}>
-                        {formik.errors.plateCode}
-                      </div>
-                    ) : null}
-                  </div>
+                  <div className="md:flex gap-2 w-full justify-between">
+                    {/* input source */}
+                    <div className="md:w-[30%] w-full mb-5 md:mb-0">
+                      <Select
+                        id="source"
+                        name="source"
+                        options={sourceOptions}
+                        styles={customStyles}
+                        placeholder={block.form?.sourcePlaceholder || "Select source"}
+                        className="flex w-full input-style borderBlueFocus"
+                        onChange={(newValue: unknown, _actionMeta: any) => {
+                          const option = newValue as { value: string; label: string } | null
+                          formik.setFieldValue("source", option?.value || "")
+                        }}
+                        onBlur={() => formik.setFieldTouched("source", true)}
+                        value={sourceOptions.find((option) => option.value === formik.values.source) || null}
+                      />
+                      {formik.touched.source && formik.errors.source ? (
+                        <div className="error-field" style={{ color: "red" }}>
+                          {formik.errors.source}
+                        </div>
+                      ) : null}
+                    </div>
+                    {/* Plate Code */}
+                    <div className="md:w-[30%] w-full mb-5 md:mb-0">
+                      <input
+                        type="text"
+                        id="plateCode"
+                        name="plateCode"
+                        placeholder={block.form?.plateNoPlaceholder}
+                        className=" flex w-full input-style borderBlueFocus px-4 placeholder:text-[14px] placeholder:font-[400] leading-[21px] "
+                        onChange={(e) => {
+                          formik.setFieldValue("plateCode", e.target.value.toUpperCase())
+                        }}
+                        value={formik.values.plateCode}
+                      />
+                      {formik.touched.plateCode && formik.errors.plateCode ? (
+                        <div className="error-field" style={{ color: "red" }}>
+                          {formik.errors.plateCode}
+                        </div>
+                      ) : null}
+                    </div>
 
-                  {/* Plate number */}
-                  <div className="md:w-[30%] w-full mb-2 md:mb-0">
-                    <input
-                      type="text"
-                      id="plateNumber"
-                      name="plateNumber"
-                      placeholder={block.form?.licensePlatePlaceholder}
-                      className=" flex w-full input-style borderBlueFocus px-4 placeholder:text-[14px] placeholder:font-[400] leading-[21px] "
-                      onChange={formik.handleChange}
-                      value={formik.values.plateNumber}
-                    />
-                    {formik.touched.plateNumber && formik.errors.plateNumber ? (
-                      <div className="error-field" style={{ color: "red" }}>
-                        {formik.errors.plateNumber}
-                      </div>
-                    ) : null}
+                    {/* Plate number */}
+                    <div className="md:w-[30%] w-full mb-2 md:mb-0">
+                      <input
+                        type="text"
+                        id="plateNumber"
+                        name="plateNumber"
+                        placeholder={block.form?.licensePlatePlaceholder}
+                        className=" flex w-full input-style borderBlueFocus px-4 placeholder:text-[14px] placeholder:font-[400] leading-[21px] "
+                        onChange={formik.handleChange}
+                        value={formik.values.plateNumber}
+                      />
+                      {formik.touched.plateNumber && formik.errors.plateNumber ? (
+                        <div className="error-field" style={{ color: "red" }}>
+                          {formik.errors.plateNumber}
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
-              </div>
+              }
 
               <span className="flex hidden justify-center items-center pt-7 md:pb-0 pb-7 text-sm font-medium text-gray-700 text-[#383D51]">
                 {block.form?.orLabel}
               </span>
-
-              <div className="flex flex-col flex-1 items-start hidden">
-                {/* Vin Number */}
-                <label htmlFor="vinNo" className="block text-sm font-medium text-gray-700 text-[#383D51]">
-                  {block?.form?.vinNumberLabel}
-                  <span className="text-red-500">*</span>
-                </label>
-                <input
-                  className="flex w-full input-style borderBlueFocus px-4 placeholder:text-[14px] placeholder:font-[400] leading-[21px]"
-                  type="text"
-                  name="vinNo"
-                  id="vinNo"
-                  placeholder={block.form?.vinNoPlaceholder}
-                  onChange={formik.handleChange}
-                  value={formik.values.vinNo}
-                />
-                {formik.touched.vinNo && formik.errors.vinNo ? (
-                  <div className="error-field" style={{ color: "red" }}>
-                    {formik.errors.vinNo}
-                  </div>
-                ) : null}
-              </div>
+              {showVin &&
+                <div className="flex flex-col flex-1 items-start">
+                  <p className="text-[1.1rem] geelyBold uppercase font-bold text-center mb-6">{block?.form?.vinNoAlertMsg}</p>
+                  {/* Vin Number */}
+                  <label htmlFor="vinNo" className="block text-sm font-medium text-gray-700 text-[#383D51]">
+                    {block?.form?.vinNumberLabel}
+                    <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="flex w-full input-style borderBlueFocus px-4 placeholder:text-[14px] placeholder:font-[400] leading-[21px]"
+                    type="text"
+                    name="vinNo"
+                    id="vinNo"
+                    placeholder={block.form?.vinNoPlaceholder}
+                    onChange={formik.handleChange}
+                    value={formik.values.vinNo}
+                  />
+                  {formik.touched.vinNo && formik.errors.vinNo ? (
+                    <div className="error-field" style={{ color: "red" }}>
+                      {formik.errors.vinNo}
+                    </div>
+                  ) : null}
+                </div>
+              }
             </div>
 
             <div className="my-4">
@@ -352,11 +336,11 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
             />
             <div className="errorMsg-top relative">
               <Image src="/images/website-error.svg" alt="errorIcon" className="" width={54} height={48} />
-              <h3 className="text-[#00285F] md:text-[1.8rem] text-[1.5rem] font-bold mt-[1.2rem]">We could not find a vehicle matching the data you entered. Please try again.</h3>
+              <h3 className="text-[#00285F] md:text-[1.8rem] text-[1.5rem] font-bold mt-[1.2rem]">{t('notFound')}</h3>
             </div>
             <div className="errorMsg-btm mt-10">
               <Image
-                className="absolute ltr:right-[0px] rtl:left-[0px] bottom-0"
+                className="absolute ltr:right-[0px] rtl:left-[-1px] bottom-0 rtl:scale-x-[-1]"
                 src="/images/red-car.png"
                 width={347}
                 height={147}
@@ -366,7 +350,6 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
           </div>
         </div>
       )}
-
     </>
   )
 }

@@ -17,6 +17,55 @@ export default function LeadsList({ leads }: LeadsListProps) {
   );
 }
 
+function maskPhone(phone: string): string {
+  if (!phone) return "N/A";
+  if (phone.length <= 4) return "****";
+  return phone.slice(0, -4) + "****";
+}
+
+function maskEmail(email: string): string {
+  if (!email.includes("@")) return "N/A";
+
+  const [local, domain] = email.split("@");
+
+  // Mask local part (before @)
+  let maskedLocal = "";
+  if (local.length < 5) {
+    maskedLocal = "*".repeat(local.length);
+  } else if (local.length <= 8) {
+    maskedLocal = local.slice(0, 2) + "..." + local.slice(-2);
+  } else {
+    maskedLocal = local.slice(0, 4) + "..." + local.slice(-4);
+  }
+
+  // Domain masking logic
+  const domainParts = domain.split(".");
+  if (domainParts.length < 2) return "N/A";
+
+  const domainName = domainParts[0];
+  const domainExt = domainParts.slice(1).join(".");
+
+  // Get middle character(s) from domainName
+  let middle = "";
+  const len = domainName.length;
+
+  if (len === 0) {
+    middle = "";
+  } else if (len % 2 === 1) {
+    // odd length – 1 middle character
+    const mid = Math.floor(len / 2);
+    middle = domainName[mid];
+  } else {
+    // even length – 2 middle characters
+    const mid = len / 2;
+    middle = domainName[mid - 1] + domainName[mid];
+  }
+
+  const maskedDomain = `**${middle}**`;
+
+  return `${maskedLocal}@${maskedDomain}.${domainExt}`;
+}
+
 // Define the LeadsTable component
 function LeadsTable({ leads }: LeadsListProps) {
   return (
@@ -55,8 +104,12 @@ function LeadsTable({ leads }: LeadsListProps) {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{name || "N/A"}</td>
-                    <td>{email || "N/A"}</td>
-                    <td>{phone || "N/A"}</td>
+                    <td>{email
+                        ? maskEmail(email)
+                        : "N/A"}</td>
+                    <td>{phone
+                        ? maskPhone(phone)
+                        : "N/A"}</td>
                     <td>{stopMarketing || "N/A"}</td>
                     <td>{new Date(_createdAt).toLocaleString() || "N/A"}</td>
                   </tr>

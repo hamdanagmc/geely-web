@@ -8,6 +8,7 @@ import LeadsList from './leads-list';
 import { FilterProps, getLeadFilters } from './util';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "../styles/leads-list.module.css";
+import { useCurrentUser } from 'sanity';
 
 export type Lead = {
   _id: string;
@@ -21,8 +22,10 @@ export type Lead = {
   stopMarketing?: string;
 };
 
-export default function LeadsTool() {
+const ALLOWED_USERS = "Abdulrahman.Zakout@agmc.ae"
 
+export default function LeadsTool() {
+  const currentUser = useCurrentUser();
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const q = `*[_type == 'optOutLead'] | order(_createdAt desc)`;
@@ -57,7 +60,7 @@ export default function LeadsTool() {
       const tD = toDate + "T23:59:59Z";
       conditions.push(`_createdAt <= "${tD}"`);
     }
-    
+
 
     const whereClause = conditions.length > 0 ? ` && ${conditions.join(' && ')}` : '';
     const sortClause = sortBy === "newest" ? "_createdAt desc"
@@ -98,6 +101,18 @@ export default function LeadsTool() {
     }
   });
 
+  function handleExport(exportData: any, exportName: string): void {
+    if (!currentUser || !ALLOWED_USERS.includes(currentUser.email)) {
+      alert('Access denied! You do not have permission to export data.');
+      return;
+    }
+    if (!exportData || exportData.length === 0) {
+      alert('No data available to export.');
+      return;
+    }
+    exportToExcel(exportData, exportName);
+  }
+
   return (
     <ToastProvider>
       <Container className="mainContainer" style={{ marginTop: '60px', maxWidth: '100%', overflow: 'scroll' }}>
@@ -112,13 +127,13 @@ export default function LeadsTool() {
               tone="positive"
               className='btn btn-success exportToExcel'
               radius="full"
-              onClick={() => exportToExcel(orderedLeads, 'GeelyOptOutLeads')}
+              onClick={() => handleExport(orderedLeads, 'GeelyOptOutLeads')}
             />
           </Card>
         </div>
         <Flex align="center" className='d-flex justify-content-center formFields gap-3'>
 
-          
+
           <Card>
             <Label size={4} >From Date : </Label>
           </Card>

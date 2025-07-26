@@ -1417,6 +1417,13 @@
                 },
                 "optional": true
               },
+              "vinNoAlertMsg": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
               "termsAndCondition": {
                 "type": "objectAttribute",
                 "value": {

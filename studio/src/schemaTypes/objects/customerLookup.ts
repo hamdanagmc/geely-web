@@ -47,12 +47,17 @@ export default defineType({
                 }),
                 defineField({
                     name: 'vinNumberLabel',
-                    title: 'Vin Number Lable',
+                    title: 'Chassis Number Lable',
                     type: 'string',
                 }),
                 defineField({
                     name: 'vinNoPlaceholder',
-                    title: 'Vin No ',
+                    title: 'Chassis No Placeholder',
+                    type: 'string'
+                }),
+                defineField({
+                    name: 'vinNoAlertMsg',
+                    title: 'Chassis No Alert Message',
                     type: 'string'
                 }),
                 defineField({
