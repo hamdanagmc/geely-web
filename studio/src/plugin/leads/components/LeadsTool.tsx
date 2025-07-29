@@ -36,7 +36,7 @@ export type Lead = {
   pageUrl?: string;
 };
 
-const ALLOWED_USERS = "Abdulrahman.Zakout@agmc.ae"
+const ALLOWED_USERS = "abdulrahman.zakout@agmc.ae"
 
 export default function LeadsTool() {
   const currentUser = useCurrentUser();
