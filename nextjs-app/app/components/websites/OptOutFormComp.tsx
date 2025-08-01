@@ -143,6 +143,16 @@ export default function OptOutFormComp({ block }: OptOutFormProps) {
           phone: values.countrymobileNoCode + values.phone,
           stopMarketing: values.stopMarketing,
         });
+
+        //zapier logic
+        await fetch("/api/zap/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            formName: "Opt-Out Form",
+            ...values,
+          }),
+        });
         const slug = (block?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;
         resetForm();

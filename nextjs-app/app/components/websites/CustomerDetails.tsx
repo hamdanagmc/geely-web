@@ -180,7 +180,7 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
     mileageUnit: '',
     serviceProductIds: [],
     startDate: '',
-    startDateTime : '',
+    startDateTime: '',
     vehicleId: 0
   })
 
@@ -224,7 +224,7 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
         serviceProductIds: [values.serviceType],
         startDate: values.dateAndTime,
         vehicleId: vehicleDetails?.sabVehicleId,
-        startDateTime : values.startDateTime,
+        startDateTime: values.startDateTime,
       })
       setFinalSubmit(true)
     },
@@ -351,7 +351,7 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
               label: slot.timeSlot,
               value: slot.timeSlot,
               advisorId: slot.advisorId,
-              startDateTime : slot.startDateTime,
+              startDateTime: slot.startDateTime,
             }))
             setTimeSlots(slots)
           }
@@ -413,7 +413,7 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
           }
           const customerEmailProps = {
             bookingId: referenceNumber,
-            licensePlateNo : vehicleDetails?.plateNumber,
+            licensePlateNo: vehicleDetails?.plateNumber,
             serviceName: serviceEmailData?.recommendedService,
             startDate: serviceEmailData?.dateAndTime,
             time: serviceEmailData?.timeSlot,
@@ -423,6 +423,16 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
           const crmEmailProps = serviceEmailData as ServiceBookingProps;
           const pageUrl = window.location.href;
           await sendCRMServideBookingEmail(crmEmailProps, currentLocale, "Service Booking Form", pageUrl);
+          //zapier logic
+          await fetch("/api/zap/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              formName: "Service Booking Form",
+              lname : vehicleDetails?.familyName,
+              ...crmEmailProps,
+            }),
+          });
           window.location.href = `/${currentLocale}/appointment-booked`
         } else {
           /*window.location.href = `/${currentLocale}/appointment-not-found`;*/
@@ -599,7 +609,7 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
                     id="timeSlot"
                     value={timeSlots.find((option) => option.value === formik.values.timeSlot)}
                     onChange={(selectedOption) => {
-                      const selected = selectedOption as { value: string; advisorId: string; startDateTime : string } | null
+                      const selected = selectedOption as { value: string; advisorId: string; startDateTime: string } | null
                       console.log("Selected Time Slot: ", selected)
                       formik.setFieldValue("timeSlot", selected?.value || "")
                       formik.setFieldValue("advisorId", selected?.advisorId || "")
@@ -672,35 +682,35 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
       </div>
 
       {formErrorMessegeStatus && (
-              <div>
-                <div className="errorMessge-layer fixed top-0 left-0 w-full h-[100%]"></div>
-                <div
-                  className="w-full errorMessge rounded-3xl bg-[#ffffff42] border-2 border-white/50 p-10"
-                >
-                  <Image
-                    className="absolute ltr:right-6 rtl:left-6 top-[1.5rem] cursor-pointer"
-                    src="/images/close-icon.svg"
-                    width={24}
-                    height={24}
-                    alt=""
-                    onClick={() => setFormErrorMessegeStatus(false)}
-                  />
-                  <div className="errorMsg-top relative">
-                    <Image src="/images/website-error.svg" alt="errorIcon" className="" width={54} height={48} />
-                    <h3 className="text-[#00285F] md:text-[1.4rem] text-[1.2rem] font-bold mt-[1.2rem]">{appointmentErrorMessage}</h3>
-                  </div>
-                  <div className="errorMsg-btm mt-10">
-                    <Image
-                      className="absolute ltr:right-[0px] rtl:left-[0px] bottom-0"
-                      src="/images/red-car.png"
-                      width={347}
-                      height={147}
-                      alt="result not found"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
+        <div>
+          <div className="errorMessge-layer fixed top-0 left-0 w-full h-[100%]"></div>
+          <div
+            className="w-full errorMessge rounded-3xl bg-[#ffffff42] border-2 border-white/50 p-10"
+          >
+            <Image
+              className="absolute ltr:right-6 rtl:left-6 top-[1.5rem] cursor-pointer"
+              src="/images/close-icon.svg"
+              width={24}
+              height={24}
+              alt=""
+              onClick={() => setFormErrorMessegeStatus(false)}
+            />
+            <div className="errorMsg-top relative">
+              <Image src="/images/website-error.svg" alt="errorIcon" className="" width={54} height={48} />
+              <h3 className="text-[#00285F] md:text-[1.4rem] text-[1.2rem] font-bold mt-[1.2rem]">{appointmentErrorMessage}</h3>
+            </div>
+            <div className="errorMsg-btm mt-10">
+              <Image
+                className="absolute ltr:right-[0px] rtl:left-[0px] bottom-0"
+                src="/images/red-car.png"
+                width={347}
+                height={147}
+                alt="result not found"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
     </>
   )
