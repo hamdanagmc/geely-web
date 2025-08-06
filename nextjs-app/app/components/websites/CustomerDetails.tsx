@@ -314,6 +314,9 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
             })
             setAvailableDates(dates)
           }
+          else{
+            setAvailableDates([])
+          }
         } catch (error) {
           console.error("Error fetching available dates: ", error)
         } finally {
