@@ -13,11 +13,15 @@ export async function POST(req: Request) {
     if (!zapierWebhookUrl) {
       throw new Error('Zapier Webhook URL is missing in env');
     }
+    const newBody = {
+      ...body,
+      created_at: new Date().toISOString(),
+    };
 
     const zapRes = await fetch(zapierWebhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: JSON.stringify(newBody),
     });
 
     if (!zapRes.ok) {
