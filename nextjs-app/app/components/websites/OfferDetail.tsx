@@ -156,6 +156,7 @@ export default function OfferDetail({ offer }: OfferListProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             formName: "Offer Form",
+            utmUrl : pageUrl,
             ...values,
           }),
         });

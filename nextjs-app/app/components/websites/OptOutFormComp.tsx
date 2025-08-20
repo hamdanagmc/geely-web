@@ -150,6 +150,7 @@ export default function OptOutFormComp({ block }: OptOutFormProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             formName: "Opt-Out Form",
+            utmUrl : pageUrl,
             ...values,
           }),
         });

@@ -433,6 +433,7 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
             body: JSON.stringify({
               formName: "Service Booking Form",
               lname : vehicleDetails?.familyName,
+              utmUrl : pageUrl,
               ...crmEmailProps,
             }),
           });

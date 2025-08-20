@@ -222,6 +222,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             formName: formType.title,
+            utmUrl : pageUrl,
             ...values,
           }),
         });

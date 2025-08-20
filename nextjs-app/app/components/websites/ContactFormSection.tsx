@@ -185,6 +185,7 @@ export default function ContactFormSectionComp({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             formName: "Contact Form",
+            utmUrl : pageUrl,
             ...values,
           }),
         });
