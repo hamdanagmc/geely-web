@@ -426,17 +426,7 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
           const crmEmailProps = serviceEmailData as ServiceBookingProps;
           const pageUrl = window.location.href;
           await sendCRMServideBookingEmail(crmEmailProps, currentLocale, "Service Booking Form", pageUrl);
-          //zapier logic
-          await fetch("/api/zap/send", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              formName: "Service Booking Form",
-              lname : vehicleDetails?.familyName,
-              utmUrl : pageUrl,
-              ...crmEmailProps,
-            }),
-          });
+          
           window.location.href = `/${currentLocale}/appointment-booked`
         } else {
           /*window.location.href = `/${currentLocale}/appointment-not-found`;*/
