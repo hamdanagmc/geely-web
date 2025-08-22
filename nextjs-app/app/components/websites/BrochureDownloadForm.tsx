@@ -106,19 +106,19 @@ export default function BrochureDownloadForm({
   }, []);
 
   const handleCheckboxChange = (title: string) => {
-  const isSelected = selectedValues.includes(title);
-  const newSelectedValues = isSelected ? [] : [title];
+    const isSelected = selectedValues.includes(title);
+    const newSelectedValues = isSelected ? [] : [title];
 
-  setSelectedValues(newSelectedValues);
+    setSelectedValues(newSelectedValues);
 
-  // Update Formik values
-  formik.setFieldValue("brochure_check", newSelectedValues);
+    // Update Formik values
+    formik.setFieldValue("brochure_check", newSelectedValues);
 
-  // Clear the error if one item is selected
-  if (newSelectedValues.length > 0) {
-    formik.setFieldError("brochure_check", undefined);
-  }
-};
+    // Clear the error if one item is selected
+    if (newSelectedValues.length > 0) {
+      formik.setFieldError("brochure_check", undefined);
+    }
+  };
 
 
   const pathname = usePathname();
@@ -210,8 +210,8 @@ export default function BrochureDownloadForm({
           lastName: values.lname || "",
           email: values.email || "",
           phone: `${values.countrymobileNoCode || ""} ${values.phone || ""}`,
-          fleetSize:  "",
-          companyName:  "",
+          fleetSize: "",
+          companyName: "",
           comments: values.comments || "",
           formType: "Brochure Download Form",
           vehicleMake: "",
@@ -225,9 +225,19 @@ export default function BrochureDownloadForm({
         };
         await saveLeads(leadData);
 
+        //zapier logic
+        await fetch("/api/zap/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            utmUrl: pageUrl,
+            ...leadData,
+          }),
+        });
+
         //redirect to thankyou page
         const slug = (block?.form?.link as any)?.slug || "";
-        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
+        window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
         setSubmitting(false);
       }
 
