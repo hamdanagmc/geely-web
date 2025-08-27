@@ -230,8 +230,10 @@ export default function BrochureDownloadForm({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            formName: "Brochure Download Form",
+            vehicleModel: values.brochure_check.join(", ") || "",
             utmUrl: pageUrl,
-            ...leadData,
+            ...values,
           }),
         });
 
