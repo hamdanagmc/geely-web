@@ -150,7 +150,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
       carTypes: ["SEDAN", "SUV"],
       selectedFilter: "ALL",
       selectedModel: "",
-      selectedModelTitle: "",
+      selectedModelTitle: selectedTestDrive || "",
       fname: "",
       lname: "",
       title: "",
