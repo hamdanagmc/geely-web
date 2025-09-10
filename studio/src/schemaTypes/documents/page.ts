@@ -45,15 +45,8 @@ export const page = defineType({
     }),
     defineField({
       name: 'redirect',
-      type: 'object',
+      type: 'url',
       title: 'Redirection Url',
-      fields: [
-        defineField({
-          name: 'redirectlink',
-          type: 'link',
-          title: 'Link',
-        }),
-      ],
       group: 'advanced',
     }),
     defineField({

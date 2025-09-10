@@ -38,25 +38,7 @@ export const getPageQuery = defineQuery(`
     heading,
     subheading,
     seo,
-    redirect{
-              redirectlink{
-                type,
-                linkType,
-                openInNewTab,
-                href,
-                path,
-                "car": car->{
-                  _id,
-                  title,
-                  "slug": slug.current
-                },
-                "page": page->{
-                  _id,
-                  title,
-                  "slug": slug.current
-                }
-              } 
-            },
+    redirect,
     "pageBuilder": pageBuilder[]{
       ...,
       _type == "callToAction" => {

@@ -46,6 +46,7 @@ export default async function Page(props: Props) {
   const { locale, slug } = params;
   const updatedSlug = locale === "ar" ? `ar/${slug}` : slug;
 
+  
   const [headerData, footerData, sideQuickData,siteSettingData, page] = await Promise.all([
     getHeader(locale),
     getFooter(locale),
@@ -62,17 +63,10 @@ export default async function Page(props: Props) {
     return notFound();
   }
 
-  if (page?.redirect?.redirectlink?.page?.slug) {
-    //redirect to internal page
-    redirect(`/${locale}/${page?.redirect?.redirectlink?.page?.slug}`);
-  } else if (page?.redirect?.redirectlink?.href) {
-    //redirect to external link
-    redirect(page?.redirect?.redirectlink?.href);
-  }
-  else if (page?.redirect?.redirectlink?.car?.slug) {
-    //redirect to car pages
-    redirect(`/${locale}/car/${page?.redirect?.redirectlink?.car.slug}`);
-  }
+  if (page?.redirect) {
+    //redirect to page
+    redirect(page?.redirect);
+  } 
 
   return (
     <div className={`main_page innerPage ${page?.blackBackground ? "textBlack" : ""}`}>
