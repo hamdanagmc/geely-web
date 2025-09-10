@@ -7,7 +7,7 @@ import { sanityFetchCustom } from "@/sanity/lib/client";
 import Footer from "@/app/components/websites/Footer";
 import Header from "@/app/components/websites/Header";
 import { getHeader, getFooter, getSideQuickData,getSiteSettingData } from "@/app/actions/common/sanityData";
-import { notFound } from "next/navigation";
+import { notFound,redirect  } from "next/navigation";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -60,6 +60,18 @@ export default async function Page(props: Props) {
 
   if (!page?._id) {
     return notFound();
+  }
+
+  if (page?.redirect?.redirectlink?.page?.slug) {
+    //redirect to internal page
+    redirect(`/${locale}/${page?.redirect?.redirectlink?.page?.slug}`);
+  } else if (page?.redirect?.redirectlink?.href) {
+    //redirect to external link
+    redirect(page?.redirect?.redirectlink?.href);
+  }
+  else if (page?.redirect?.redirectlink?.car?.slug) {
+    //redirect to car pages
+    redirect(`/${locale}/car/${page?.redirect?.redirectlink?.car.slug}`);
   }
 
   return (
