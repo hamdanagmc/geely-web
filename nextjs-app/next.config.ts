@@ -1572,7 +1572,7 @@ const nextConfig: NextConfig = {
                 https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
                 https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
                 https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com
-                https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io;
+                https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io https://events.data.platformance.io;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
