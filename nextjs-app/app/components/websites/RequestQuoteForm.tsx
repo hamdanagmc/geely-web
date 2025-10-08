@@ -1,5 +1,6 @@
 "use client"
 import { saveRequestQuoteForm } from "@/app/actions/keyloop/requestQuote"
+import { saveLeads } from "@/app/actions/sanity/leads"
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions"
 import { sendContactCustomerEmail } from "@/app/services/email/contact"
 import { sendCRMRequestQuoteEmail } from "@/app/services/email/crm"
@@ -20,7 +21,6 @@ import { Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import * as Yup from "yup"
 import { useTestDrive } from "../../context/TestDriveContext"
-import { saveLeads } from "@/app/actions/sanity/leads"
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
@@ -150,7 +150,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
       carTypes: ["SEDAN", "SUV"],
       selectedFilter: "ALL",
       selectedModel: "",
-      selectedModelTitle: "",
+      selectedModelTitle: selectedTestDrive || "",
       fname: "",
       lname: "",
       title: "",
@@ -200,7 +200,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
           firstName: values.fname || "",
           lastName: values.lname || "",
           email: values.email || "",
-          phone: `${values.countrymobileNoCode} ${values.phone}`, 
+          phone: `${values.countrymobileNoCode} ${values.phone}`,
           fleetSize: "",
           companyName: "",
           comments: values.comments || "",
@@ -216,9 +216,20 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
         };
         await saveLeads(leadData);
 
+        //zapier logic
+        await fetch("/api/zap/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            formName: formType.title,
+            utmUrl : pageUrl,
+            ...values,
+          }),
+        });
+
         setSubmitting(false);
         const slug = (block?.link as any)?.slug || "";
-        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
+        window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
       }
 
       resetForm()

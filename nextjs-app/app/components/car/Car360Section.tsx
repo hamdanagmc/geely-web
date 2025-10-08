@@ -193,6 +193,8 @@ export default function Car360Comp({ block }: Car360Props) {
             >
               {block?.exteriorLabel || "Exterior"}
             </button>
+            {interiorImageUrl != '/images/panorama.webp' && (
+              <>
             <span className="text-black mt-[6px] h-[18px] text-xl">|</span>
             <button
               onClick={() => {
@@ -203,6 +205,8 @@ export default function Car360Comp({ block }: Car360Props) {
             >
               {block?.interiorLabel || "Interior"}
             </button>
+            </>
+            )}
           </div>
         )}
 

@@ -143,6 +143,7 @@ export default function OptOutFormComp({ block }: OptOutFormProps) {
           phone: values.countrymobileNoCode + values.phone,
           stopMarketing: values.stopMarketing,
         });
+
         const slug = (block?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;
         resetForm();

@@ -15,6 +15,7 @@ export const page = defineType({
   groups: [
     { name: 'basic', title: 'Basic' },
     { name: 'seo', title: 'SEO Metadata' },
+    { name: 'advanced', title: 'Advanced' },
   ],
   fields: [
     defineField({
@@ -41,6 +42,12 @@ export const page = defineType({
       title: "Active White Background",
       description: "Toggle to enable Text black and white Background",
       initialValue: false, // Default value (optional)
+    }),
+    defineField({
+      name: 'redirect',
+      type: 'url',
+      title: 'Redirection Url',
+      group: 'advanced',
     }),
     defineField({
       name: 'pageBuilder',
@@ -102,10 +109,10 @@ export const page = defineType({
         { type: 'thankyouRichText' },
         { type: 'thankyouBanner' },
         { type: 'optOutForm' },
-        {type: 'customerLookup'},
-        {type: 'customerDetails'},
-        {type: 'appointmentBooked'},
-        {type : 'appointmentError'}
+        { type: 'customerLookup' },
+        { type: 'customerDetails' },
+        { type: 'appointmentBooked' },
+        { type: 'appointmentError' }
       ],
 
       options: {

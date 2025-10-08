@@ -17206,6 +17206,13 @@
         },
         "optional": true
       },
+      "redirect": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "pageBuilder": {
         "type": "objectAttribute",
         "value": {

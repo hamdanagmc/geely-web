@@ -177,7 +177,18 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
           contactYou: "",
           pageUrl,
         };
-        await saveLeads(leadData)
+        await saveLeads(leadData);
+
+        //zapier logic
+        await fetch("/api/zap/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            formName: "Fleet Sales Form",
+            utmUrl : pageUrl,
+            ...values,
+          }),
+        });
         
         setSubmitting(false);
         const slug = (block?.form?.link as any)?.slug || "";

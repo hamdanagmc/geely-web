@@ -7,7 +7,7 @@ import { sanityFetchCustom } from "@/sanity/lib/client";
 import Footer from "@/app/components/websites/Footer";
 import Header from "@/app/components/websites/Header";
 import { getHeader, getFooter, getSideQuickData,getSiteSettingData } from "@/app/actions/common/sanityData";
-import { notFound } from "next/navigation";
+import { notFound,redirect  } from "next/navigation";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -46,6 +46,7 @@ export default async function Page(props: Props) {
   const { locale, slug } = params;
   const updatedSlug = locale === "ar" ? `ar/${slug}` : slug;
 
+  
   const [headerData, footerData, sideQuickData,siteSettingData, page] = await Promise.all([
     getHeader(locale),
     getFooter(locale),
@@ -61,6 +62,11 @@ export default async function Page(props: Props) {
   if (!page?._id) {
     return notFound();
   }
+
+  if (page?.redirect) {
+    //redirect to page
+    redirect(page?.redirect);
+  } 
 
   return (
     <div className={`main_page innerPage ${page?.blackBackground ? "textBlack" : ""}`}>

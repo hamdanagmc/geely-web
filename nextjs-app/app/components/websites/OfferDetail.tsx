@@ -148,7 +148,18 @@ export default function OfferDetail({ offer }: OfferListProps) {
           contactYou: "",
           pageUrl
         };
-        await saveLeads(leadData)
+        await saveLeads(leadData);
+
+        //zapier logic
+        await fetch("/api/zap/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            formName: "Offer Form",
+            utmUrl : pageUrl,
+            ...values,
+          }),
+        });
 
         setSubmitting(false);
         const slug = (offer?.link as any)?._ref || "";

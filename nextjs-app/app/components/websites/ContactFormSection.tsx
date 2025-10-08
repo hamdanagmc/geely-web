@@ -4,7 +4,6 @@ import { saveLeads } from "@/app/actions/sanity/leads";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMContactEmail } from "@/app/services/email/crm";
-import { CRMEmailProps } from "@/app/types/common";
 import { ContactEmailFields } from "@/app/types/email";
 import { ContactFormSection } from "@/sanity.types";
 import axios from "axios";
@@ -147,6 +146,7 @@ export default function ContactFormSectionComp({
         console.log("CSRF token not found");
         return;
       }
+      
       const response = await saveContactForm(values, csrfToken, token, currentLocale);
       console.log(response);
       const responseData = response.data as KeyloopResponse;
@@ -163,7 +163,7 @@ export default function ContactFormSectionComp({
           firstName: values.fname,
           lastName: values.lname,
           email: values.email,
-          phone: values.countrymobileNoCode +" " + values.phone,
+          phone: values.countrymobileNoCode + " " + values.phone,
           fleetSize: "",
           companyName: "",
           comments: values.comments,
@@ -179,8 +179,19 @@ export default function ContactFormSectionComp({
         };
         await saveLeads(leadData);
 
+        //zapier logic
+        await fetch("/api/zap/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            formName: "Contact Form",
+            utmUrl : pageUrl,
+            ...values,
+          }),
+        });
+
         const slug = (block?.form?.link as any)?.slug || "";
-        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
+        window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
         setSubmitting(false);
       }
       resetForm();

@@ -35,9 +35,9 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
   };
 
   return (
-    <section className={`relative w-full heroBannerComp min-h-[928px] bg-[#BFBFCB] overflow-hidden`}>
+    <section className={`${block?.videoId ? '' : 'heroImgCmp'} relative w-full heroBannerComp min-h-[928px] bg-[#BFBFCB] overflow-hidden`}>
       {/* Layer 1: Bottom Rectangle */}
-      <div className="absolute inset-x-0 bottom-0 h-[40%] bg-[#BFBFCB] z-[11] opacity-99" />
+      <div className="absolute heroImgCmpLayer inset-x-0 bottom-0 h-[40%] bg-[#BFBFCB] z-[11] opacity-99" />
 
       {/* Video Layer */}
       {block?.videoId && !videoError && (
@@ -105,10 +105,9 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
                 {block?.testDriveTitle}
               </button>
             )}
-            {block.brochureFile && (
+            {block.brochurePageLink && (
                 <Link
-                href={urlForPDF(block.brochureFile) || ""}
-                target="_blank"
+                href={`/${currentLocale}/${(block?.brochurePageLink as any)?.slug?.replace(/^ar\//, "") || ""}`}
                 className="px-[18px] py-3 text-[17px] font-medium leading-5 bg-black hover:bg-[#194bff] text-white rounded-[3px]"
                 >
                 {block?.brochureTitle}
