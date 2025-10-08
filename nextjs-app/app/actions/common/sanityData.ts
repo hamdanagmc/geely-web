@@ -51,7 +51,7 @@ export async function getGeelyNetwork(locale: string) {
   const { data } = await sanityFetch({
     query: getGeelyNetworkQuery(locale),
     params: { locale },
-    perspective: "published"
+    tags : ['geelyNetwork' ]
   });
   return data;
 }
