@@ -48,7 +48,7 @@ export async function getFooter(locale : string) : Promise<any> {
 }
 
 export async function getGeelyNetwork(locale: string) {
-  const { data } = await sanityFetchCustom({
+  const data  = await sanityFetchCustom({
     query: getGeelyNetworkQuery(locale),
     params: { locale },
     tags : ['geelyNetwork' ]
