@@ -501,7 +501,7 @@ export const getCarsQuery = defineQuery(`
 `);
 
 export const getOfferDetailQuery = defineQuery(`
-  *[_type == 'offer' && slug.current == $slug && isHidden != true][0]{
+  *[_type == 'offer' && slug.current == $slug][0]{
      ...,
      link -> {
               "slug": slug.current
