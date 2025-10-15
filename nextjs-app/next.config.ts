@@ -1561,7 +1561,7 @@ const nextConfig: NextConfig = {
                 https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net 
                 https://www.googleadservices.com https://bat.bing.com https://trackback.gotrackier.com https://trk.betrck.com
                 https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com https://d1v2u6by4izioz.cloudfront.net
-                https://cdn.pixel.platformance.io https://us-assets.i.posthog.com/ https://us.i.posthog.com/ https://pixel.data.platformrce.io https://gmt.gotrackier.com https://pixel.data.platformance.io;
+                https://cdn.pixel.platformance.io https://us-assets.i.posthog.com/ https://us.i.posthog.com/ https://pixel.data.platformrce.io https://gmt.gotrackier.com https://pixel.data.platformance.io https://events.data.platformance.io;
               
               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
                 https://app-uae.freshmarketer.com https://www.google-analytics.com
@@ -1572,14 +1572,14 @@ const nextConfig: NextConfig = {
                 https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
                 https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
                 https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com
-                https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io https://events.data.platformance.io;
+                https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
                 https://*.ads.linkedin.com https://www.facebook.com https://tr.snapchat.com https://analytics.tiktok.com
                 https://www.google.co.in https://t.co https://analytics.twitter.com https://ad.doubleclick.net
                 https://www.google.com https://www.linkedin.com https://bat.bing.com https://googleads.g.doubleclick.net
-                https://www.googleadservices.com https://adservice.google.com https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://adscholars10770037.o18.click https://connect.facebook.net;
+                https://www.googleadservices.com https://adservice.google.com https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://adscholars10770037.o18.click https://connect.facebook.net https://trackback.gotrackier.com;
         
               style-src 'self' 'unsafe-inline'
                 https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.gstatic.com;

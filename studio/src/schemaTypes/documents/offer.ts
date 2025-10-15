@@ -11,6 +11,10 @@ export const offer = defineType({
       title: 'Basic',
     },
     {
+      name: 'advanced',
+      title: 'Advanced',
+    },
+    {
       name: 'form',
       title: 'Offer Detail Form',
     },
@@ -87,6 +91,15 @@ export const offer = defineType({
       group: 'form',
     }),
 
+    //hide from the site
+    defineField({
+      name: 'isHidden',
+      title: 'Hide Offer from the site',
+      type: 'boolean',
+      initialValue: false,
+      group : 'advanced',
+    }),
+
     defineField({
       name: 'language',
       title: 'Language',
@@ -96,8 +109,9 @@ export const offer = defineType({
         layout: 'dropdown',
       },
       readOnly: true,
-      
+      group : 'advanced',
     }),
+
   ],
   preview: {
     select: {

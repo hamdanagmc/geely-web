@@ -25,6 +25,8 @@ import { media } from 'sanity-plugin-media';
 import { seoMetaFields } from "sanity-plugin-seo";
 import { leadPlugin } from './src/plugin/leads/plugin'
 import { optOutLeadPlugin } from './src/plugin/optOutLeads/plugin'
+import { DeleteByDateRangeTool } from './src/tools/DeleteByDateRange'
+import { TrashIcon } from '@sanity/icons'
 
 // Environment variables for project configuration
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-projectID'
@@ -181,4 +183,15 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
   },
+  /*tools: (prevTools) => {
+    return [
+      ...prevTools, // Keep the existing tools like Structure and Vision
+      {
+        name: 'bulk-delete-by-date',
+        title: 'Bulk Delete',
+        component: DeleteByDateRangeTool,
+        icon: TrashIcon, // Assign the icon
+      },
+    ]
+  },*/
 })

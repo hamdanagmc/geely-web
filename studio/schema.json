@@ -16438,6 +16438,13 @@
           ]
         },
         "optional": true
+      },
+      "isHidden": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
       }
     }
   },
