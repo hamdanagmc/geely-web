@@ -1536,7 +1536,6 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
   },
   env: {
-    // Matches the behavior of `sanity dev` which sets styled-components to use the fastest way of inserting CSS rules in both dev and production. It's default behavior is to disable it in dev mode.
     SC_DISABLE_SPEEDY: "false",
   },
   async headers() {
@@ -1611,7 +1610,6 @@ const nextConfig: NextConfig = {
         ]
         
       },
-      // Cache fonts for 1 year
     {
       source: '/fonts/(.*)',
       headers: [
@@ -1621,7 +1619,6 @@ const nextConfig: NextConfig = {
         },
       ],
     },
-    // Cache images for 1 year (you wrote 7 days, but max-age shows 1 year)
     {
       source: '/images/(.*)',
       headers: [
@@ -1631,7 +1628,6 @@ const nextConfig: NextConfig = {
         },
       ],
     },
-    // Cache Google Fonts for 1 year (can also reduce to 30 days if desired)
     {
       source: '/:path*{/}fonts.googleapis.com/:rest*',
       headers: [
