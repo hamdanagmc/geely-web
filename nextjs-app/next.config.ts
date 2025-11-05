@@ -1582,7 +1582,9 @@ const nextConfig: NextConfig = {
                 https://www.googleadservices.com https://adservice.google.com https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://adscholars10770037.o18.click https://connect.facebook.net https://trackback.gotrackier.com;
         
               style-src 'self' 'unsafe-inline'
-                https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.gstatic.com;
+                https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.gstatic.com
+                https://www.googletagmanager.com
+                https://fonts.googleapis.com;
         
               font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com data:;
         
