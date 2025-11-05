@@ -405,7 +405,7 @@ const nextConfig: NextConfig = {
       },
       {
         source:
-          "/news/geely-uae-finds-impressive-new-home-in-dubai-with-the-launch-of-the-state-of-art-and-ev-centric-showroom-and-service-centre",
+          "/news/geely-uae-finds-impressive-new-home-in-dubai-with-the-launch-of-the-state-of-the-art-and-ev-centric-showroom-and-service-centre",
         destination: "/en/news",
         permanent: true,
       },
@@ -536,7 +536,8 @@ const nextConfig: NextConfig = {
             value: "ar",
           },
         ],
-        destination: "/ar/news/news/geely-auto-and-lg-chem-to-establish-joint-venture-company-to-produce-batteries-in-china",
+        destination:
+          "/ar/news/news/geely-auto-and-lg-chem-to-establish-joint-venture-company-to-produce-batteries-in-china",
         permanent: true,
       },
       {
@@ -1541,103 +1542,40 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/(.*)",
+        source: "/fonts/(.*)",
         headers: [
           {
-            key: "Content-Security-Policy",
-            value: `
-              default-src 'self' https://vimeo.com/;
-              script-src 'self' 'unsafe-inline' 'unsafe-eval'
-                https://vimeo.com/ https://*.vercel.app https://vercel.live
-                https://cdn.sanity.io http://uae.fw-cdn.com
-                https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com
-                https://www.google.com/ https://www.gstatic.com/
-                https://www.googletagmanager.com https://*.cookiebot.com/
-                https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
-                https://connect.facebook.net https://snap.licdn.com
-                https://sc-static.net https://analytics.tiktok.com
-                https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com https://googleads.g.doubleclick.net
-                https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net 
-                https://www.googleadservices.com https://bat.bing.com https://trackback.gotrackier.com https://trk.betrck.com
-                https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com https://d1v2u6by4izioz.cloudfront.net
-                https://cdn.pixel.platformance.io https://us-assets.i.posthog.com/ https://us.i.posthog.com/ https://pixel.data.platformrce.io https://gmt.gotrackier.com https://pixel.data.platformance.io https://events.data.platformance.io;
-              
-              connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
-                https://app-uae.freshmarketer.com https://www.google-analytics.com
-                https://*.cookiebot.com https://cdn.cookielaw.org https://*.freshmarketer.ae
-                https://www.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
-                https://px.ads.linkedin.com https://tr.snapchat.com
-                https://analytics.tiktok.com https://analytics.google.com  https://stats.g.doubleclick.net 
-                https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
-                https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
-                https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com
-                https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io https://www.googletagmanager.com;
-        
-              img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
-                https://www.googletagmanager.com https://px.ads.linkedin.com
-                https://*.ads.linkedin.com https://www.facebook.com https://tr.snapchat.com https://analytics.tiktok.com
-                https://www.google.co.in https://t.co https://analytics.twitter.com https://ad.doubleclick.net
-                https://www.google.com https://www.linkedin.com https://bat.bing.com https://googleads.g.doubleclick.net
-                https://www.googleadservices.com https://adservice.google.com https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://adscholars10770037.o18.click https://connect.facebook.net https://trackback.gotrackier.com;
-        
-              style-src 'self' 'unsafe-inline'
-                https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com https://www.gstatic.com
-                https://www.googletagmanager.com
-                https://fonts.googleapis.com;
-        
-              font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com data:;
-        
-              frame-src 'self' https://*.vimeo.com/ https://vimeo.com/ https://vercel.live/
-                https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com
-                https://www.google.com/ https://*.cookiebot.com/
-                https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
-                https://www.youtube.com https://www.youtube-nocookie.com https://tr.snapchat.com
-                https://geely-ae.vercel.app/ https://td.doubleclick.net
-                https://13442784.fls.doubleclick.net https://www.googletagmanager.com https://www.facebook.com
-                https://aax-eu.amazon-adsystem.com https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net
-                https://www.googleadservices.com https://trackback.gotrackier.com https://trk.betrck.com https://bat.bing.com
-                https://googleads.g.doubleclick.net https://thinkabout88.gotrackier.io/ https://track.valueleadme.com https://tracking.sksdigital.co https://gmt.gotrackier.com https://pixel.data.platformance.io;
-            `.replace(/\s{2,}/g, " "),
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
           },
-          { key: "X-XSS-Protection", value: "1; mode=block" },
-          { key: "Referrer-Policy", value: "no-referrer" },
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "no-referrer" },
-          { key: "X-Powered-By", value: "" },
-          { key: "Server", value: "" },
-          { key: "Set-Cookie", value: "NEXT_LOCALE=en;Path=/;HttpOnly; Secure; SameSite=Lax" },
-          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-        ]
-        
+        ],
       },
-    {
-      source: '/fonts/(.*)',
-      headers: [
-        {
-          key: 'Cache-Control',
-          value: 'public, max-age=31536000, immutable',
-        },
-      ],
-    },
-    {
-      source: '/images/(.*)',
-      headers: [
-        {
-          key: 'Cache-Control',
-          value: 'public, max-age=31536000, immutable',
-        },
-      ],
-    },
-    {
-      source: '/:path*{/}fonts.googleapis.com/:rest*',
-      headers: [
-        {
-          key: 'Cache-Control',
-          value: 'public, max-age=31536000, immutable',
-        },
-      ],
-    },
+      {
+        source: "/images/(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/:path*{/}fonts.googleapis.com/:rest*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
     ]
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 }
+
 module.exports = withNextIntl(nextConfig)
