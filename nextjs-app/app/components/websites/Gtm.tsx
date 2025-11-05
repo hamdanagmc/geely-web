@@ -12,7 +12,12 @@ declare global {
   }
 }
 
-// Define pageview function
+function gtag(...args: any[]) {
+  if (typeof window !== "undefined" && window.dataLayer) {
+    window.dataLayer.push(args);
+  }
+}
+
 function pageview(url: string) {
   if (typeof window !== "undefined" && window.dataLayer) {
     window.dataLayer.push({
@@ -27,20 +32,23 @@ export default function Gtm() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (pathname) {
-      pageview(pathname);
+    if (!window.dataLayer) {
+      window.dataLayer = [];
     }
 
-    function gtag(...args: any[]) {
-      if (typeof window !== "undefined" && window.dataLayer) {
-        window.dataLayer.push(args);
-      }
-    }
+    if (pathname) pageview(pathname);
 
-    const consentGiven = getCookie("consent");
+    const consentGiven = getCookie("consent") === "true";
 
-    if (consentGiven === "true") {
-      console.log("consentGiven");
+    gtag("consent", consentGiven ? "update" : "default", {
+      ad_storage: consentGiven ? "granted" : "denied",
+      analytics_storage: consentGiven ? "granted" : "denied",
+      functionality_storage: consentGiven ? "granted" : "denied",
+      personalization_storage: consentGiven ? "granted" : "denied",
+      security_storage: consentGiven ? "granted" : "denied",
+    });
+
+    const handleGTMConsentUpdate = () => {
       gtag("consent", "update", {
         ad_storage: "granted",
         analytics_storage: "granted",
@@ -48,32 +56,10 @@ export default function Gtm() {
         personalization_storage: "granted",
         security_storage: "granted",
       });
-    } else {
-      console.log("consentNotGiven");
-      gtag("consent", "default", {
-        ad_storage: "denied",
-        analytics_storage: "denied",
-        functionality_storage: "denied",
-        personalization_storage: "denied",
-        security_storage: "denied",
-      });
-    }
-
-    const handleGTMConsentUpdate = () => {
-      if (window.dataLayer) {
-        gtag("consent", "update", {
-          ad_storage: "granted",
-          analytics_storage: "granted",
-          functionality_storage: "granted",
-          personalization_storage: "granted",
-          security_storage: "granted",
-        });
-        window.dataLayer.push({ event: "cookie_consent_given" });
-      }
+      window.dataLayer?.push({ event: "cookie_consent_given" });
     };
 
     window.addEventListener("updateGTMConsent", handleGTMConsentUpdate);
-
     return () => {
       window.removeEventListener("updateGTMConsent", handleGTMConsentUpdate);
     };
@@ -90,7 +76,7 @@ export default function Gtm() {
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer', "GTM-KW6G4TZ2");
+            })(window,document,'script','dataLayer',"GTM-KW6G4TZ2");
           `,
         }}
       />
