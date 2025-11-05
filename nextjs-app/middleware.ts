@@ -57,7 +57,8 @@ export default function middleware(request: NextRequest) {
       https://*.ads.linkedin.com https://www.facebook.com https://tr.snapchat.com https://analytics.tiktok.com
       https://www.google.co.in https://t.co https://analytics.twitter.com https://ad.doubleclick.net
       https://www.google.com https://www.linkedin.com https://bat.bing.com https://googleads.g.doubleclick.net
-      https://www.googleadservices.com https://adservice.google.com https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://adscholars10770037.o18.click https://connect.facebook.net https://trackback.gotrackier.com;
+      https://www.googleadservices.com https://adservice.google.com https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://adscholars10770037.o18.click https://connect.facebook.net https://trackback.gotrackier.com
+      https://fonts.gstatic.com;
 
     style-src 'self' 'unsafe-inline'
       https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com 
@@ -76,7 +77,8 @@ export default function middleware(request: NextRequest) {
       https://13442784.fls.doubleclick.net https://www.googletagmanager.com https://www.facebook.com
       https://aax-eu.amazon-adsystem.com https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net
       https://www.googleadservices.com https://trackback.gotrackier.com https://trk.betrck.com https://bat.bing.com
-      https://googleads.g.doubleclick.net https://thinkabout88.gotrackier.io/ https://track.valueleadme.com https://tracking.sksdigital.co https://gmt.gotrackier.com https://pixel.data.platformance.io;
+      https://googleads.g.doubleclick.net https://thinkabout88.gotrackier.io/ https://track.valueleadme.com https://tracking.sksdigital.co https://gmt.gotrackier.com https://pixel.data.platformance.io
+      https://*.fls.doubleclick.net;
   `
     .replace(/\s{2,}/g, " ")
     .trim()
