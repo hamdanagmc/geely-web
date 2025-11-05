@@ -1563,7 +1563,7 @@ const nextConfig: NextConfig = {
                 https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com https://d1v2u6by4izioz.cloudfront.net
                 https://cdn.pixel.platformance.io https://us-assets.i.posthog.com/ https://us.i.posthog.com/ https://pixel.data.platformrce.io https://gmt.gotrackier.com https://pixel.data.platformance.io https://events.data.platformance.io;
               
-              connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
+               connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
                 https://app-uae.freshmarketer.com https://www.google-analytics.com
                 https://*.cookiebot.com https://cdn.cookielaw.org https://*.freshmarketer.ae
                 https://www.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
@@ -1572,7 +1572,8 @@ const nextConfig: NextConfig = {
                 https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
                 https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
                 https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com
-                https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io;
+                https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io
+                https://www.googletagmanager.com;
         
               img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
                 https://www.googletagmanager.com https://px.ads.linkedin.com
