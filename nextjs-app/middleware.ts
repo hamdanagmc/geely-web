@@ -78,7 +78,7 @@ export default function middleware(request: NextRequest) {
       https://aax-eu.amazon-adsystem.com https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net
       https://www.googleadservices.com https://trackback.gotrackier.com https://trk.betrck.com https://bat.bing.com
       https://googleads.g.doubleclick.net https://thinkabout88.gotrackier.io/ https://track.valueleadme.com https://tracking.sksdigital.co https://gmt.gotrackier.com https://pixel.data.platformance.io
-      https://*.fls.doubleclick.net;
+      https://*.fls.doubleclick.net https://adevolve.gotrackier.com;
   `
     .replace(/\s{2,}/g, " ")
     .trim()
