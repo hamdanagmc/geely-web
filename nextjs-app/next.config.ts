@@ -1533,6 +1533,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "geelyksa.com",
       },
+      {
+        protocol: "https",
+        hostname: "adevolve.gotrackier.com",
+      },
     ],
     dangerouslyAllowSVG: true,
   },

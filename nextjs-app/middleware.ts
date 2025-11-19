@@ -58,7 +58,7 @@ export default function middleware(request: NextRequest) {
       https://www.google.co.in https://t.co https://analytics.twitter.com https://ad.doubleclick.net
       https://www.google.com https://www.linkedin.com https://bat.bing.com https://googleads.g.doubleclick.net
       https://www.googleadservices.com https://adservice.google.com https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://adscholars10770037.o18.click https://connect.facebook.net https://trackback.gotrackier.com
-      https://fonts.gstatic.com;
+      https://fonts.gstatic.com https://adevolve.gotrackier.com;
 
     style-src 'self' 'unsafe-inline'
       https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com 
