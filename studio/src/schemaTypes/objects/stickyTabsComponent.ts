@@ -40,8 +40,19 @@ export default defineType({
               name: 'downloadLink',
               type: 'url',
               title: 'Download Link',
-              hidden: ({ parent }) =>  parent?.downloadType !== 'link', 
+              hidden: ({ parent }) => parent?.downloadType !== 'link',
             }),
+            defineField({
+              name: 'linkOpenInNewTab',
+              type: 'boolean',
+              title: 'Open in new tab?',
+              options: {
+                layout: 'switch'
+              },
+              hidden: ({ parent }) => parent?.downloadType !== 'link',
+            }),
+
+
             defineField({
               name: 'downloadFile',
               type: 'file',

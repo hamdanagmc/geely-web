@@ -495,7 +495,8 @@ export const getCarsQuery = defineQuery(`
               _id,
               title,
               "slug": slug.current
-            }
+            },
+            linkOpenInNewTab
     }
   }
 `);

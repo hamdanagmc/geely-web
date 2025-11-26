@@ -8639,6 +8639,13 @@
                   },
                   "optional": true
                 },
+                "linkOpenInNewTab": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "boolean"
+                  },
+                  "optional": true
+                },
                 "downloadFile": {
                   "type": "objectAttribute",
                   "value": {

@@ -125,7 +125,7 @@ export default function StickyTabsComponentComp({ block }: StickyTabsComponentPr
               tab.label=="Detailed Specifications" ?
               <Link 
                 href={tab.downloadLink ? tab?.downloadLink : urlForPDF(tab.downloadFile) || "#"}
-                target={tab.downloadFile || tab?.downloadLink ? "_blank" : undefined}
+                target={tab.downloadFile || tab?.linkOpenInNewTab ? "_blank" : undefined}
                 key={tab._key}
                 className={`whitespace-nowrap text-[14px] leading-7 hover:font-semibold transition-colors flex items-center gap-2 ${
                   activeItem === (tab.label || "") ? "font-semibold text-black" : "text-gray-600 hover:text-black"
