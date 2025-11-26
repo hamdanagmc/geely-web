@@ -16422,6 +16422,13 @@
         },
         "optional": true
       },
+      "isHidden": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "language": {
         "type": "objectAttribute",
         "value": {
@@ -16436,13 +16443,6 @@
               "value": "ar"
             }
           ]
-        },
-        "optional": true
-      },
-      "isHidden": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
         },
         "optional": true
       }

@@ -26,35 +26,30 @@ export default function StickyTabsComponentComp({ block }: StickyTabsComponentPr
   const [originalOffset, setOriginalOffset] = useState<number | null>(null)
 
   const tabRef = useRef<HTMLDivElement>(null)
-   
-  console.log("pdf", block)
-  // Set initial active tab
+
   useEffect(() => {
     if (block?.tabs?.length) {
       setActiveItem(block.tabs[0].label || "")
     }
   }, [block?.tabs])
 
-  // Handle click to scroll or download
   const handleTabClick = (tab: Tab) => {
     if (!tab) return
 
     setActiveItem(tab.label || "")
 
-    // Handle download link
     if (tab.isDownloadLink && tab.downloadLink) {
       window.open(tab.downloadLink, "_blank")
       return
     }
 
-    // Handle scroll to section with offset
     if (tab.scrollToId) {
       setIsScrolling(true)
 
       const scrollToElement = () => {
         const element = tab.scrollToId ? document.getElementById(tab.scrollToId) : null
         if (element) {
-          const yOffset = -50 // 👈 Offset from top
+          const yOffset = -50 
           const y = element.getBoundingClientRect().top + window.scrollY + yOffset
           window.scrollTo({ top: y, behavior: "smooth" })
 
@@ -129,8 +124,8 @@ export default function StickyTabsComponentComp({ block }: StickyTabsComponentPr
             {block?.tabs?.map((tab) => (
               tab.label=="Detailed Specifications" ?
               <Link 
-                href={urlForPDF(tab.downloadFile) || "#"}
-                target={tab.downloadFile ? "_blank" : undefined}
+                href={tab.downloadLink ? tab?.downloadLink : urlForPDF(tab.downloadFile) || "#"}
+                target={tab.downloadFile || tab?.downloadLink ? "_blank" : undefined}
                 key={tab._key}
                 className={`whitespace-nowrap text-[14px] leading-7 hover:font-semibold transition-colors flex items-center gap-2 ${
                   activeItem === (tab.label || "") ? "font-semibold text-black" : "text-gray-600 hover:text-black"
