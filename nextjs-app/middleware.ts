@@ -38,7 +38,8 @@ export default function middleware(request: NextRequest) {
       https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net 
       https://www.googleadservices.com https://bat.bing.com https://trackback.gotrackier.com https://trk.betrck.com
       https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com https://d1v2u6by4izioz.cloudfront.net
-      https://cdn.pixel.platformance.io https://us-assets.i.posthog.com/ https://us.i.posthog.com/ https://pixel.data.platformrce.io https://gmt.gotrackier.com https://pixel.data.platformance.io https://events.data.platformance.io;
+      https://cdn.pixel.platformance.io https://us-assets.i.posthog.com/ https://us.i.posthog.com/ https://pixel.data.platformrce.io https://gmt.gotrackier.com https://pixel.data.platformance.io https://events.data.platformance.io
+      https://server-side-tagging-prod-1057871630518.me-central1.run.app/;
     
     connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
       https://app-uae.freshmarketer.com https://www.google-analytics.com
@@ -50,7 +51,7 @@ export default function middleware(request: NextRequest) {
       https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
       https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com
       https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io
-      https://www.googletagmanager.com;
+      https://www.googletagmanager.com https://server-side-tagging-prod-1057871630518.me-central1.run.app/;
 
     img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
       https://www.googletagmanager.com https://px.ads.linkedin.com
@@ -58,13 +59,13 @@ export default function middleware(request: NextRequest) {
       https://www.google.co.in https://t.co https://analytics.twitter.com https://ad.doubleclick.net
       https://www.google.com https://www.linkedin.com https://bat.bing.com https://googleads.g.doubleclick.net
       https://www.googleadservices.com https://adservice.google.com https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://adscholars10770037.o18.click https://connect.facebook.net https://trackback.gotrackier.com
-      https://fonts.gstatic.com https://adevolve.gotrackier.com;
+      https://fonts.gstatic.com https://adevolve.gotrackier.com https://server-side-tagging-prod-1057871630518.me-central1.run.app/;
 
     style-src 'self' 'unsafe-inline'
       https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com 
       https://www.gstatic.com
       https://www.googletagmanager.com
-      https://fonts.googleapis.com;
+      https://fonts.googleapis.com https://server-side-tagging-prod-1057871630518.me-central1.run.app/;
 
     font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com data:;
 
@@ -78,7 +79,7 @@ export default function middleware(request: NextRequest) {
       https://aax-eu.amazon-adsystem.com https://c.amazon-adsystem.com https://ad.doubleclick.net https://15181648.fls.doubleclick.net
       https://www.googleadservices.com https://trackback.gotrackier.com https://trk.betrck.com https://bat.bing.com
       https://googleads.g.doubleclick.net https://thinkabout88.gotrackier.io/ https://track.valueleadme.com https://tracking.sksdigital.co https://gmt.gotrackier.com https://pixel.data.platformance.io
-      https://*.fls.doubleclick.net https://adevolve.gotrackier.com;
+      https://*.fls.doubleclick.net https://adevolve.gotrackier.com https://server-side-tagging-prod-1057871630518.me-central1.run.app/;
   `
     .replace(/\s{2,}/g, " ")
     .trim()
