@@ -1,5 +1,6 @@
 import type { NextConfig } from "next"
-const withNextIntl = require("next-intl/plugin")()
+import createNextIntlPlugin from 'next-intl/plugin'
+const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -498,7 +499,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/news/dubai-police-expands-its-fleet-with-geely-tugella/#!",
+        source: "/news/dubai-police-expands-its-fleet-with-geely-tugella",
         destination: "/en/news",
         permanent: true,
       },
@@ -1515,15 +1516,16 @@ const nextConfig: NextConfig = {
         permanent: true,
         locale: false,
       },
-      // Handle URLs with hash fragments
-      {
-        source: "/:path*/#:hash*",
-        destination: "/:path*",
-        permanent: true,
-      },
+      // // Handle URLs with hash fragments
+      // {
+      //   source: "/:path*/#:hash*",
+      //   destination: "/:path*",
+      //   permanent: true,
+      // },
     ]
   },
   images: {
+    qualities: [75, 90],
     remotePatterns: [
       {
         protocol: "https",
@@ -1574,9 +1576,7 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+ 
   typescript: {
     ignoreBuildErrors: true,
   },
