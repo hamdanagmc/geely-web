@@ -25,6 +25,7 @@ import { media } from 'sanity-plugin-media';
 import { seoMetaFields } from "sanity-plugin-seo";
 import { leadPlugin } from './src/plugin/leads/plugin'
 import { optOutLeadPlugin } from './src/plugin/optOutLeads/plugin'
+import { table } from '@sanity/table'
 import { DeleteByDateRangeTool } from './src/tools/DeleteByDateRange'
 import { TrashIcon } from '@sanity/icons'
 
@@ -67,7 +68,7 @@ export default defineConfig({
     // internationalization
     documentInternationalization({
       supportedLanguages: i18n.languages,
-      schemaTypes: [`page`, `fragment`,'car', 'news', 'offer' ], 
+      schemaTypes: [`page`, `fragment`,'car', 'news', 'offer', 'models', 'serviceCost', 'sparePart' ], 
       // Optional
       // Customizes the name of the language field
       languageField: `language`, // defauts to "language"
@@ -80,7 +81,7 @@ export default defineConfig({
     languageFilter({
       supportedLanguages: i18n.languages,
       defaultLanguages: [i18n.base ? i18n.base : 'en'],
-      documentTypes: [`page`, `fragment`, 'car', 'carColor','news', 'offer'],
+      documentTypes: [`page`, `fragment`, 'car', 'carColor','news', 'offer', 'models', 'serviceCost', 'sparePart'],
       filterField: (enclosingType, member, selectedLanguageIds) => {
         if (
           enclosingType.jsonType === 'object' &&
@@ -177,6 +178,7 @@ export default defineConfig({
     seoMetaFields(),
     leadPlugin(),
     optOutLeadPlugin(),
+    table(),
   ],
 
   // Schema configuration, imported from ./src/schemaTypes/index.ts
