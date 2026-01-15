@@ -18,6 +18,7 @@ import * as Yup from "yup";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
 import ImageComp from "../CustomImage";
 import { saveLeads } from "@/app/actions/sanity/leads";
+import { getCookie } from "cookies-next";
 
 type OfferListProps = {
   offer: Offer;
@@ -34,6 +35,7 @@ interface FormValues {
   comment: string;
   privacyPolicy: boolean;
   pageUrl: string;
+  referring_url?: string;
 }
 
 const validationSchema = Yup.object().shape({
@@ -44,9 +46,9 @@ const validationSchema = Yup.object().shape({
   location: Yup.string().required("Location is required"),
   vehicle: Yup.string().required("Vehicle is required"),
   phoneNo: Yup.string()
-        .matches(/^[0-9]+$/, "Phone number must be only digits")
-        .min(9, "Phone number must be at least 9 digits")
-        .required("Phone number is required"),
+    .matches(/^[0-9]+$/, "Phone number must be only digits")
+    .min(9, "Phone number must be at least 9 digits")
+    .required("Phone number is required"),
   comment: Yup.string(),
   privacyPolicy: Yup.boolean().oneOf(
     [true],
@@ -62,11 +64,22 @@ export default function OfferDetail({ offer }: OfferListProps) {
   const { currentLocale } = useDeviceDetection();
   const [isSubmitting, setSubmitting] = useState(false);
   const pathname = usePathname();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const vehicleTypeOptions = offer?.offerDetailForm?.vehicleDropdownValues?.map((option) => ({ value: option, label: option }));
   const titleOptions = offer?.offerDetailForm?.titleDropdownValues?.map((option) => ({ value: option, label: option })) || [];
   const locationOption = offer?.offerDetailForm?.locationDropdownValues?.map((option) => ({ value: option, label: option }));
 
+  useEffect(() => {
+    const savedRef = getCookie('referring_url');
+    if (savedRef) {
+      formik.setFieldValue("referring_url", savedRef);
+    }
+  }, [isMounted]);
 
   //generate and set csrf token
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
@@ -95,7 +108,8 @@ export default function OfferDetail({ offer }: OfferListProps) {
       phoneNo: '',
       comment: "",
       privacyPolicy: false,
-      pageUrl: pathname
+      pageUrl: pathname,
+      referring_url: ''
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
@@ -146,7 +160,8 @@ export default function OfferDetail({ offer }: OfferListProps) {
           serviceCenter: "",
           type: "",
           contactYou: "",
-          pageUrl
+          pageUrl,
+          referring_url: values.referring_url || "",
         };
         await saveLeads(leadData);
 
@@ -156,14 +171,14 @@ export default function OfferDetail({ offer }: OfferListProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             formName: "Offer Form",
-            utmUrl : pageUrl,
+            utmUrl: pageUrl,
             ...values,
           }),
         });
 
         setSubmitting(false);
         const slug = (offer?.link as any)?._ref || "";
-        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
+        window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
       }
       setSubmitting(false);
       resetForm();
@@ -207,6 +222,12 @@ export default function OfferDetail({ offer }: OfferListProps) {
           <div className="lg:sticky lg:top-8 self-start">
             <div className="bg-[#E9E9E9] p-[30px] rounded-sm">
               <form onSubmit={formik.handleSubmit} className="space-y-6">
+                {/* referring url hidden field */}
+                <input
+                  type="hidden"
+                  name="referring_url"
+                  value={formik.values.referring_url}
+                />
                 <select
                   name="title"
                   value={formik.values.title}

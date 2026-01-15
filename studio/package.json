@@ -19,6 +19,7 @@
     "@sanity/assist": "^4.4.8",
     "@sanity/document-internationalization": "^3.3.3",
     "@sanity/icons": "^3.7.4",
+    "@sanity/table": "^2.0.1",
     "@sanity/vision": "^4.22.0",
     "bootstrap": "^5.3.5",
     "date-fns": "^3.6.0",

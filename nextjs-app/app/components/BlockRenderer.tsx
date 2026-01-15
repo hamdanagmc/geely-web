@@ -55,6 +55,8 @@ import CustomerDetails from "./websites/CustomerDetails";
 import CustomerLookupComp from "./websites/CustomerLookupComp";
 import AppointmentConfirm from "./websites/AppointmentConfirm";
 import AppointmentBookingError from "./websites/AppointmentBookingError";
+import SpareModel from "./websites/SpareModel";
+import ServiceModel from "./websites/ServiceModel";
 
 type BlocksType = {
   [key: string]: React.FC<any>;
@@ -126,6 +128,8 @@ const Blocks: BlocksType = {
   customerDetails : CustomerDetails,
   appointmentBooked : AppointmentConfirm,
   appointmentError : AppointmentBookingError,
+  sparePartsModel : SpareModel,
+  serviceCostModel : ServiceModel,
 };
 
 /**

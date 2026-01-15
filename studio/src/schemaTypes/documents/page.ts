@@ -112,7 +112,9 @@ export const page = defineType({
         { type: 'customerLookup' },
         { type: 'customerDetails' },
         { type: 'appointmentBooked' },
-        { type: 'appointmentError' }
+        { type: 'appointmentError' },
+        { type: 'sparePartsModel' },
+        { type: 'serviceCostModel' },
       ],
 
       options: {

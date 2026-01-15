@@ -13,37 +13,26 @@
  */
 
 // Source: schema.json
-export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
-  background?: string;
-  foreground?: string;
-  population?: number;
+export type ServiceCostModel = {
+  _type: "serviceCostModel";
   title?: string;
+  bgImage?: CustomImage;
+  selectModelPlaceholder?: string;
+  displayDataText?: string;
+  termAndConditionText?: BlockContent;
+  pdfLabel?: string;
+  downloadButtonText?: string;
+  buttonText?: string;
 };
 
-export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
-  darkMuted?: SanityImagePaletteSwatch;
-  lightVibrant?: SanityImagePaletteSwatch;
-  darkVibrant?: SanityImagePaletteSwatch;
-  vibrant?: SanityImagePaletteSwatch;
-  dominant?: SanityImagePaletteSwatch;
-  lightMuted?: SanityImagePaletteSwatch;
-  muted?: SanityImagePaletteSwatch;
-};
-
-export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
-  height?: number;
-  width?: number;
-  aspectRatio?: number;
-};
-
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
+export type SparePartsModel = {
+  _type: "sparePartsModel";
+  title?: string;
+  bgImage?: CustomImage;
+  selectTrimPlaceholder?: string;
+  selectModelPlaceholder?: string;
+  displayDataText?: string;
+  buttonText?: string;
 };
 
 export type AppointmentError = {
@@ -63,51 +52,7 @@ export type AppointmentError = {
 
 export type AppointmentBooked = {
   _type: "appointmentBooked";
-  subHeading?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      linkType?: "href" | "page" | "car";
-      href?: string;
-      page?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "page";
-      };
-      post?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "post";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    caption?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  subHeading?: BlockContent;
   confirmationDetails?: {
     bookingIDLabel?: string;
     licensePlateNoLabel?: string;
@@ -168,51 +113,7 @@ export type CustomerDetails = {
 export type CustomerLookup = {
   _type: "customerLookup";
   Heading?: string;
-  subHeading?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      linkType?: "href" | "page" | "car";
-      href?: string;
-      page?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "page";
-      };
-      post?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "post";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    caption?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  subHeading?: BlockContent;
   form?: {
     licensePlateLabel?: string;
     licensePlatePlaceholder?: string;
@@ -256,6 +157,29 @@ export type OptOutForm = {
   };
 };
 
+export type OfferDetailForm = {
+  _type: "offerDetailForm";
+  titlePlaceholder?: string;
+  titleDropdownValues?: Array<string>;
+  firstNamePlaceholder?: string;
+  lastNamePlaceholder?: string;
+  emailPlaceholder?: string;
+  locationPlaceholder?: string;
+  locationDropdownValues?: Array<string>;
+  vehiclePlaceholder?: string;
+  vehicleDropdownValues?: Array<string>;
+  phonePlaceholder?: string;
+  commentsPlaceholder?: string;
+  privacyPolicyLabel?: BlockContent;
+  submitButtonLabel?: string;
+  link?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+};
+
 export type ThankyouBanner = {
   _type: "thankyouBanner";
   backgroundImage?: CustomImage;
@@ -264,51 +188,7 @@ export type ThankyouBanner = {
 
 export type ThankyouRichText = {
   _type: "thankyouRichText";
-  content?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      linkType?: "href" | "page" | "car";
-      href?: string;
-      page?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "page";
-      };
-      post?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "post";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    caption?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  content?: BlockContent;
   callToActionButton?: CallToAction;
 };
 
@@ -330,6 +210,7 @@ export type BrochureDownloadFormSection = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
         };
+        media?: unknown;
         _type: "file";
       };
       _key: string;
@@ -398,51 +279,7 @@ export type FleetContactFormSection = {
     companyNamePlaceholder?: string;
     commentsLabel?: string;
     commentsPlaceholder?: string;
-    termsAndConditionsLabel?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        linkType?: "href" | "page" | "car";
-        href?: string;
-        page?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "page";
-        };
-        post?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "post";
-        };
-        openInNewTab?: boolean;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      caption?: string;
-      _type: "image";
-      _key: string;
-    }>;
+    termsAndConditionsLabel?: BlockContent;
     submitButtonLabel?: string;
     link?: {
       _ref: string;
@@ -453,8 +290,20 @@ export type FleetContactFormSection = {
   };
 };
 
+export type LocaleBlockContent = {
+  _type: "localeBlockContent";
+  en?: BlockContent;
+  ar?: BlockContent;
+};
+
 export type LocaleText = {
   _type: "localeText";
+  en?: string;
+  ar?: string;
+};
+
+export type LocaleString = {
+  _type: "localeString";
   en?: string;
   ar?: string;
 };
@@ -481,51 +330,7 @@ export type ContactInfo = {
   _type: "contactInfo";
   heading?: string;
   subHeading?: string;
-  contactMessage?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      linkType?: "href" | "page" | "car";
-      href?: string;
-      page?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "page";
-      };
-      post?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "post";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    caption?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  contactMessage?: BlockContent;
   emailLabel?: string;
   email?: string;
   phoneLabel?: string;
@@ -573,56 +378,13 @@ export type OrderServiceSection = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
     };
     link?: string;
-    instructions?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        linkType?: "href" | "page" | "car";
-        href?: string;
-        page?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "page";
-        };
-        post?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "post";
-        };
-        openInNewTab?: boolean;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      caption?: string;
-      _type: "image";
-      _key: string;
-    }>;
+    instructions?: BlockContent;
   };
   contactDetails?: {
     website?: {
@@ -633,6 +395,7 @@ export type OrderServiceSection = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -648,6 +411,7 @@ export type OrderServiceSection = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -666,6 +430,7 @@ export type OrderServiceSection = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -680,6 +445,7 @@ export type OrderServiceSection = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -707,96 +473,8 @@ export type HistoryItem = {
 export type TermsAndConditionSection = {
   _type: "termsAndConditionSection";
   title?: string;
-  richText1?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      linkType?: "href" | "page" | "car";
-      href?: string;
-      page?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "page";
-      };
-      post?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "post";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    caption?: string;
-    _type: "image";
-    _key: string;
-  }>;
-  richText2?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      linkType?: "href" | "page" | "car";
-      href?: string;
-      page?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "page";
-      };
-      post?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "post";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    caption?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  richText1?: BlockContent;
+  richText2?: BlockContent;
 };
 
 export type ImagesAndVideosSection = {
@@ -819,6 +497,7 @@ export type ModelGallery = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -831,6 +510,7 @@ export type ModelGallery = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
@@ -939,6 +619,13 @@ export type VehicleListSection = {
   limit?: number;
 };
 
+export type SideKickSection = {
+  _type: "sideKickSection";
+  logo?: CustomImage;
+  iconLinkList1?: IconLinkList;
+  iconLinkList2?: IconLinkList;
+};
+
 export type ReferenceComponent = {
   _type: "referenceComponent";
   type?: "page" | "car" | "news";
@@ -1042,6 +729,7 @@ export type HeroCenteredHeading = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -1053,6 +741,7 @@ export type HeroCenteredHeading = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -1110,6 +799,7 @@ export type IconsWithBackground = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -1122,6 +812,7 @@ export type IconsWithBackground = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1197,11 +888,28 @@ export type ImageComponent = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
   alt?: string;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type ComfortSlider = {
@@ -1304,6 +1012,7 @@ export type StickyTabsComponent = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
       };
+      media?: unknown;
       _type: "file";
     };
     _type: "tab";
@@ -1321,6 +1030,7 @@ export type HeroBannerComponent = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -1332,6 +1042,7 @@ export type HeroBannerComponent = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -1345,6 +1056,7 @@ export type HeroBannerComponent = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -1373,6 +1085,7 @@ export type HeroBannerComponent = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
     };
+    media?: unknown;
     _type: "file";
   };
 };
@@ -1389,6 +1102,7 @@ export type HeroVideoComponent = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -1414,6 +1128,7 @@ export type CarModelComponent = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1425,6 +1140,7 @@ export type CarModelComponent = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1436,6 +1152,7 @@ export type CarModelComponent = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1471,6 +1188,7 @@ export type CarModelComponent = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -1503,6 +1221,7 @@ export type CarModelComponent = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1533,6 +1252,7 @@ export type HeroImageSlider = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1544,6 +1264,7 @@ export type HeroImageSlider = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1555,6 +1276,7 @@ export type HeroImageSlider = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1573,6 +1295,7 @@ export type ParallaxWithRichText = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -1635,12 +1358,19 @@ export type BackgroundWithCaption = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
   preTitle?: string;
   title?: string;
+};
+
+export type RichText = {
+  _type: "richText";
+  content?: BlockContent;
+  htmlId?: string;
 };
 
 export type ParallaxSection = {
@@ -1666,6 +1396,7 @@ export type SpotlightSection = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1695,6 +1426,7 @@ export type ImageGallery = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
@@ -1735,6 +1467,7 @@ export type ShoppingTools = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -1761,6 +1494,7 @@ export type HistoryVision = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
     };
+    media?: unknown;
     _type: "file";
   };
   visionImage?: CustomImage;
@@ -1774,6 +1508,7 @@ export type HistoryVision = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
     };
+    media?: unknown;
     _type: "file";
   };
 };
@@ -1825,6 +1560,13 @@ export type BannerCarousel = {
   }>;
 };
 
+export type Navigation = {
+  _type: "navigation";
+  navItems?: Array<{
+    _key: string;
+  } & NavItem>;
+};
+
 export type NavItem = {
   _type: "navItem";
   title?: string;
@@ -1834,11 +1576,39 @@ export type NavItem = {
   navigation?: Navigation;
 };
 
-export type Navigation = {
-  _type: "navigation";
-  navItems?: Array<{
+export type Footer = {
+  _type: "footer";
+  copyrightText?: string;
+  footerLogo?: CustomImage;
+  footerLogo2?: CustomImage;
+  linkList?: LinkList;
+  linkList1?: LinkList;
+  linkList2?: LinkList;
+  linkList3?: LinkList;
+  imageLinkArray?: Array<{
+    image?: CustomImage;
+    title?: string;
+    pageLink?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
     _key: string;
-  } & NavItem>;
+  }>;
+};
+
+export type Header = {
+  _type: "header";
+  logo?: CustomImage;
+  blackLogo?: CustomImage;
+  navigation?: Navigation;
+  searchIcon?: CustomImage;
+  searchIconBlack?: CustomImage;
+  mapIcon?: CustomImage;
+  mapIconBlack?: CustomImage;
+  toggleMenuIcon?: CustomImage;
+  toggleMenuIconBlack?: CustomImage;
 };
 
 export type LinkList = {
@@ -1855,6 +1625,44 @@ export type LinkItem = {
   link?: Link;
 };
 
+export type CustomImage = {
+  _type: "customImage";
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  altText?: string;
+  isImageFullWidth?: boolean;
+};
+
+export type Link = {
+  _type: "link";
+  linkType?: "href" | "page" | "car" | "path";
+  href?: string;
+  page?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+  car?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "car";
+  };
+  path?: string;
+  openInNewTab?: boolean;
+};
+
 export type CallToAction = {
   _type: "callToAction";
   buttonText?: string;
@@ -1865,51 +1673,7 @@ export type InfoSection = {
   _type: "infoSection";
   heading?: string;
   subheading?: string;
-  content?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      linkType?: "href" | "page" | "car";
-      href?: string;
-      page?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "page";
-      };
-      post?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "post";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    caption?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  content?: BlockContent;
 };
 
 export type BlockContent = Array<{
@@ -1950,6 +1714,7 @@ export type BlockContent = Array<{
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
   };
+  media?: unknown;
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
   alt?: string;
@@ -2010,6 +1775,7 @@ export type GeelyNetwork = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -2025,18 +1791,6 @@ export type GeelyNetwork = {
   showroomTimingsIcon?: CustomImage;
   showroomTimings?: BlockContent;
   showroomTimingsLocale?: LocaleBlockContent;
-};
-
-export type LocaleBlockContent = {
-  _type: "localeBlockContent";
-  en?: BlockContent;
-  ar?: BlockContent;
-};
-
-export type LocaleString = {
-  _type: "localeString";
-  en?: string;
-  ar?: string;
 };
 
 export type Vehicle = {
@@ -2060,6 +1814,7 @@ export type Vehicle = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -2075,6 +1830,7 @@ export type Vehicle = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -2097,11 +1853,18 @@ export type Color = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
   slug?: Slug;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type Showrooms = {
@@ -2115,6 +1878,7 @@ export type Showrooms = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -2145,6 +1909,7 @@ export type Model = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -2185,6 +1950,7 @@ export type Settings = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -2197,29 +1963,16 @@ export type Settings = {
   youtubeLink?: string;
 };
 
-export type MetaTag = {
-  _type: "metaTag";
-  metaAttributes?: Array<{
+export type Table = {
+  _type: "table";
+  rows?: Array<{
     _key: string;
-  } & MetaAttribute>;
+  } & TableRow>;
 };
 
-export type MetaAttribute = {
-  _type: "metaAttribute";
-  attributeKey?: string;
-  attributeType?: "string" | "image";
-  attributeValueImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  attributeValueString?: string;
+export type TableRow = {
+  _type: "tableRow";
+  cells?: Array<string>;
 };
 
 export type Twitter = {
@@ -2240,6 +1993,7 @@ export type OpenGraph = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -2247,6 +2001,57 @@ export type OpenGraph = {
   title?: string;
   description?: string;
   siteName?: string;
+};
+
+export type MetaTag = {
+  _type: "metaTag";
+  metaAttributes?: Array<{
+    _key: string;
+  } & MetaAttribute>;
+};
+
+export type MetaAttribute = {
+  _type: "metaAttribute";
+  attributeKey?: string;
+  attributeType?: "string" | "image";
+  attributeValueImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  attributeValueString?: string;
+};
+
+export type SeoMetaFields = {
+  _type: "seoMetaFields";
+  nofollowAttributes?: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  seoKeywords?: Array<string>;
+  openGraph?: OpenGraph;
+  additionalMetaTags?: Array<{
+    _key: string;
+  } & MetaTag>;
+  twitter?: Twitter;
 };
 
 export type MuxVideo = {
@@ -2260,7 +2065,11 @@ export type MuxVideo = {
 };
 
 export type MuxVideoAsset = {
+  _id: string;
   _type: "mux.videoAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
   status?: string;
   assetId?: string;
   playbackId?: string;
@@ -2279,6 +2088,7 @@ export type MuxAssetData = {
   max_stored_resolution?: string;
   passthrough?: string;
   encoding_tier?: string;
+  video_quality?: string;
   master_access?: string;
   aspect_ratio?: string;
   duration?: number;
@@ -2304,12 +2114,18 @@ export type MuxStaticRenditions = {
 
 export type MuxStaticRenditionFile = {
   _type: "mux.staticRenditionFile";
-  ext?: string;
   name?: string;
+  ext?: string;
+  height?: number;
   width?: number;
   bitrate?: number;
-  filesize?: number;
-  height?: number;
+  filesize?: string;
+  type?: string;
+  status?: string;
+  resolution_tier?: string;
+  resolution?: string;
+  id?: string;
+  passthrough?: string;
 };
 
 export type MuxPlaybackId = {
@@ -2482,11 +2298,13 @@ export type TranslationMetadata = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  translations?: Array<{
-    _key: string;
-  } & InternationalizedArrayReferenceValue>;
+  translations?: InternationalizedArrayReference;
   schemaTypes?: Array<string>;
 };
+
+export type InternationalizedArrayReference = Array<{
+  _key: string;
+} & InternationalizedArrayReferenceValue>;
 
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
@@ -2515,7 +2333,69 @@ export type InternationalizedArrayReferenceValue = {
     _type: "reference";
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "offer";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "models";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "serviceCost";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sparePart";
   };
+};
+
+export type SparePart = {
+  _id: string;
+  _type: "sparePart";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  modelName?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "models";
+  };
+  hasTrim?: boolean;
+  trimName?: string;
+  sparePartTable?: Table;
+  language?: "en" | "ar";
+};
+
+export type ServiceCost = {
+  _id: string;
+  _type: "serviceCost";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  modelName?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "models";
+  };
+  serviceCostTable?: Table;
+  language?: "en" | "ar";
+};
+
+export type Models = {
+  _id: string;
+  _type: "models";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  modelName?: string;
+  slug?: Slug;
+  trimCheck?: "trim";
+  names?: Array<string>;
+  language?: "en" | "ar";
 };
 
 export type Offer = {
@@ -2542,29 +2422,6 @@ export type Offer = {
   language?: "en" | "ar";
 };
 
-export type OfferDetailForm = {
-  _type: "offerDetailForm";
-  titlePlaceholder?: string;
-  titleDropdownValues?: Array<string>;
-  firstNamePlaceholder?: string;
-  lastNamePlaceholder?: string;
-  emailPlaceholder?: string;
-  locationPlaceholder?: string;
-  locationDropdownValues?: Array<string>;
-  vehiclePlaceholder?: string;
-  vehicleDropdownValues?: Array<string>;
-  phonePlaceholder?: string;
-  commentsPlaceholder?: string;
-  privacyPolicyLabel?: BlockContent;
-  submitButtonLabel?: string;
-  link?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  };
-};
-
 export type News = {
   _id: string;
   _type: "news";
@@ -2584,6 +2441,7 @@ export type News = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -2605,48 +2463,6 @@ export type Fragment = {
   footer?: Footer;
   sideKickSection?: SideKickSection;
   language?: "en" | "ar";
-};
-
-export type SideKickSection = {
-  _type: "sideKickSection";
-  logo?: CustomImage;
-  iconLinkList1?: IconLinkList;
-  iconLinkList2?: IconLinkList;
-};
-
-export type Footer = {
-  _type: "footer";
-  copyrightText?: string;
-  footerLogo?: CustomImage;
-  footerLogo2?: CustomImage;
-  linkList?: LinkList;
-  linkList1?: LinkList;
-  linkList2?: LinkList;
-  linkList3?: LinkList;
-  imageLinkArray?: Array<{
-    image?: CustomImage;
-    title?: string;
-    pageLink?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "page";
-    };
-    _key: string;
-  }>;
-};
-
-export type Header = {
-  _type: "header";
-  logo?: CustomImage;
-  blackLogo?: CustomImage;
-  navigation?: Navigation;
-  searchIcon?: CustomImage;
-  searchIconBlack?: CustomImage;
-  mapIcon?: CustomImage;
-  mapIconBlack?: CustomImage;
-  toggleMenuIcon?: CustomImage;
-  toggleMenuIconBlack?: CustomImage;
 };
 
 export type Page = {
@@ -2704,6 +2520,7 @@ export type Page = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -2782,35 +2599,13 @@ export type Page = {
     _key: string;
   } & AppointmentBooked | {
     _key: string;
-  } & AppointmentError>;
+  } & AppointmentError | {
+    _key: string;
+  } & SparePartsModel | {
+    _key: string;
+  } & ServiceCostModel>;
   seo?: SeoMetaFields;
   language?: "en" | "ar";
-};
-
-export type Link = {
-  _type: "link";
-  linkType?: "href" | "page" | "car" | "path";
-  href?: string;
-  page?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  };
-  car?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "car";
-  };
-  path?: string;
-  openInNewTab?: boolean;
-};
-
-export type RichText = {
-  _type: "richText";
-  content?: BlockContent;
-  htmlId?: string;
 };
 
 export type Car = {
@@ -2844,69 +2639,6 @@ export type Car = {
   language?: "en" | "ar";
 };
 
-export type SeoMetaFields = {
-  _type: "seoMetaFields";
-  nofollowAttributes?: boolean;
-  metaTitle?: string;
-  metaDescription?: string;
-  metaImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  seoKeywords?: Array<string>;
-  openGraph?: OpenGraph;
-  additionalMetaTags?: Array<{
-    _key: string;
-  } & MetaTag>;
-  twitter?: Twitter;
-};
-
-export type SanityFileAsset = {
-  _id: string;
-  _type: "sanity.fileAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  source?: SanityAssetSourceData;
-};
-
-export type CustomImage = {
-  _type: "customImage";
-  image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  altText?: string;
-  isImageFullWidth?: boolean;
-};
-
 export type Post = {
   _id: string;
   _type: "post";
@@ -2924,6 +2656,7 @@ export type Post = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -2953,6 +2686,7 @@ export type Person = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -2960,20 +2694,70 @@ export type Person = {
   };
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+export type SanityImagePaletteSwatch = {
+  _type: "sanity.imagePaletteSwatch";
+  background?: string;
+  foreground?: string;
+  population?: number;
+  title?: string;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
+export type SanityImagePalette = {
+  _type: "sanity.imagePalette";
+  darkMuted?: SanityImagePaletteSwatch;
+  lightVibrant?: SanityImagePaletteSwatch;
+  darkVibrant?: SanityImagePaletteSwatch;
+  vibrant?: SanityImagePaletteSwatch;
+  dominant?: SanityImagePaletteSwatch;
+  lightMuted?: SanityImagePaletteSwatch;
+  muted?: SanityImagePaletteSwatch;
+};
+
+export type SanityImageDimensions = {
+  _type: "sanity.imageDimensions";
   height?: number;
   width?: number;
+  aspectRatio?: number;
+};
+
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
+};
+
+export type SanityFileAsset = {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -2999,35 +2783,14 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type InternationalizedArrayReference = Array<{
-  _key: string;
-} & InternationalizedArrayReferenceValue>;
-
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | AppointmentError | AppointmentBooked | CustomerDetails | CustomerLookup | OptOutForm | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleText | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | NavItem | Navigation | LinkList | LinkItem | CallToAction | InfoSection | BlockContent | OptOutLead | Lead | GeelyNetwork | LocaleBlockContent | LocaleString | Vehicle | Color | Showrooms | Model | Settings | MetaTag | MetaAttribute | Twitter | OpenGraph | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReferenceValue | Offer | OfferDetailForm | News | Fragment | SideKickSection | Footer | Header | Page | Link | RichText | Car | SeoMetaFields | SanityFileAsset | CustomImage | Post | Person | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | InternationalizedArrayReference;
+export type AllSanitySchemaTypes = ServiceCostModel | SparePartsModel | AppointmentError | AppointmentBooked | CustomerDetails | CustomerLookup | OptOutForm | OfferDetailForm | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleBlockContent | LocaleText | LocaleString | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | SideKickSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | SanityImageCrop | SanityImageHotspot | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | RichText | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | Navigation | NavItem | Footer | Header | LinkList | LinkItem | CustomImage | Link | CallToAction | InfoSection | BlockContent | OptOutLead | Lead | GeelyNetwork | Vehicle | Color | Slug | Showrooms | Model | Settings | Table | TableRow | Twitter | OpenGraph | MetaTag | MetaAttribute | SeoMetaFields | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReference | InternationalizedArrayReferenceValue | SparePart | ServiceCost | Models | Offer | News | Fragment | Page | Car | Post | Person | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -3066,6 +2829,7 @@ export type SettingsQueryResult = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -3092,51 +2856,7 @@ export type GetPageQueryResult = {
   pageBuilder: Array<{
     _key: string;
     _type: "appointmentBooked";
-    subHeading?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        linkType?: "car" | "href" | "page";
-        href?: string;
-        page?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "page";
-        };
-        post?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "post";
-        };
-        openInNewTab?: boolean;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      caption?: string;
-      _type: "image";
-      _key: string;
-    }>;
+    subHeading?: BlockContent;
     confirmationDetails?: {
       bookingIDLabel?: string;
       licensePlateNoLabel?: string;
@@ -3200,6 +2920,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -3248,6 +2969,7 @@ export type GetPageQueryResult = {
             _weak?: boolean;
             [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
           };
+          media?: unknown;
           _type: "file";
         };
         _key: string;
@@ -3330,6 +3052,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -3341,6 +3064,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -3352,6 +3076,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -3387,6 +3112,7 @@ export type GetPageQueryResult = {
             _weak?: boolean;
             [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
           };
+          media?: unknown;
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           _type: "image";
@@ -3468,6 +3194,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -3513,51 +3240,7 @@ export type GetPageQueryResult = {
     _type: "contactInfo";
     heading?: string;
     subHeading?: string;
-    contactMessage?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        linkType?: "car" | "href" | "page";
-        href?: string;
-        page?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "page";
-        };
-        post?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "post";
-        };
-        openInNewTab?: boolean;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      caption?: string;
-      _type: "image";
-      _key: string;
-    }>;
+    contactMessage?: BlockContent;
     emailLabel?: string;
     email?: string;
     phoneLabel?: string;
@@ -3621,51 +3304,7 @@ export type GetPageQueryResult = {
     _key: string;
     _type: "customerLookup";
     Heading?: string;
-    subHeading?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        linkType?: "car" | "href" | "page";
-        href?: string;
-        page?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "page";
-        };
-        post?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "post";
-        };
-        openInNewTab?: boolean;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      caption?: string;
-      _type: "image";
-      _key: string;
-    }>;
+    subHeading?: BlockContent;
     form: {
       licensePlateLabel?: string;
       licensePlatePlaceholder?: string;
@@ -3694,6 +3333,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -3724,51 +3364,7 @@ export type GetPageQueryResult = {
       companyNamePlaceholder?: string;
       commentsLabel?: string;
       commentsPlaceholder?: string;
-      termsAndConditionsLabel?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          linkType?: "car" | "href" | "page";
-          href?: string;
-          page?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "page";
-          };
-          post?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "post";
-          };
-          openInNewTab?: boolean;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        caption?: string;
-        _type: "image";
-        _key: string;
-      }>;
+      termsAndConditionsLabel?: BlockContent;
       submitButtonLabel?: string;
       link: {
         _id: string;
@@ -3814,6 +3410,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -3825,6 +3422,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -3867,6 +3465,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -3878,6 +3477,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -3889,6 +3489,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -3902,7 +3503,11 @@ export type GetPageQueryResult = {
     htmlId?: string;
     videoId?: string;
     video: {
-      asset: null;
+      asset: {
+        playbackId: string | null;
+        assetId: string | null;
+        filename: string | null;
+      } | null;
     } | null;
     posterImage?: {
       asset?: {
@@ -3911,6 +3516,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -3944,6 +3550,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
       };
+      media?: unknown;
       _type: "file";
     };
     visionImage?: CustomImage;
@@ -3957,6 +3564,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
       };
+      media?: unknown;
       _type: "file";
     };
   } | {
@@ -3977,6 +3585,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -3989,6 +3598,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -4015,6 +3625,7 @@ export type GetPageQueryResult = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -4030,6 +3641,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       altText?: string;
@@ -4054,6 +3666,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -4066,6 +3679,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         altText?: string;
@@ -4158,6 +3772,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
@@ -4234,56 +3849,13 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
       };
       link?: string;
-      instructions?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          linkType?: "car" | "href" | "page";
-          href?: string;
-          page?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "page";
-          };
-          post?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "post";
-          };
-          openInNewTab?: boolean;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        caption?: string;
-        _type: "image";
-        _key: string;
-      }>;
+      instructions?: BlockContent;
     };
     contactDetails?: {
       website?: {
@@ -4294,6 +3866,7 @@ export type GetPageQueryResult = {
             _weak?: boolean;
             [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
           };
+          media?: unknown;
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           _type: "image";
@@ -4309,6 +3882,7 @@ export type GetPageQueryResult = {
             _weak?: boolean;
             [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
           };
+          media?: unknown;
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           _type: "image";
@@ -4327,6 +3901,7 @@ export type GetPageQueryResult = {
             _weak?: boolean;
             [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
           };
+          media?: unknown;
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           _type: "image";
@@ -4341,6 +3916,7 @@ export type GetPageQueryResult = {
             _weak?: boolean;
             [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
           };
+          media?: unknown;
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           _type: "image";
@@ -4374,6 +3950,7 @@ export type GetPageQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -4532,6 +4109,17 @@ export type GetPageQueryResult = {
     } | null;
   } | {
     _key: string;
+    _type: "serviceCostModel";
+    title?: string;
+    bgImage?: CustomImage;
+    selectModelPlaceholder?: string;
+    displayDataText?: string;
+    termAndConditionText?: BlockContent;
+    pdfLabel?: string;
+    downloadButtonText?: string;
+    buttonText?: string;
+  } | {
+    _key: string;
     _type: "shoppingTools";
     title?: string;
     tools?: Array<{
@@ -4542,6 +4130,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -4560,6 +4149,15 @@ export type GetPageQueryResult = {
     iconLinkList2?: IconLinkList;
   } | {
     _key: string;
+    _type: "sparePartsModel";
+    title?: string;
+    bgImage?: CustomImage;
+    selectTrimPlaceholder?: string;
+    selectModelPlaceholder?: string;
+    displayDataText?: string;
+    buttonText?: string;
+  } | {
+    _key: string;
     _type: "spotlightSection";
     title?: string;
     cards?: Array<{
@@ -4573,6 +4171,7 @@ export type GetPageQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
         };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
@@ -4610,96 +4209,8 @@ export type GetPageQueryResult = {
     _key: string;
     _type: "termsAndConditionSection";
     title?: string;
-    richText1?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        linkType?: "car" | "href" | "page";
-        href?: string;
-        page?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "page";
-        };
-        post?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "post";
-        };
-        openInNewTab?: boolean;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      caption?: string;
-      _type: "image";
-      _key: string;
-    }>;
-    richText2?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        linkType?: "car" | "href" | "page";
-        href?: string;
-        page?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "page";
-        };
-        post?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "post";
-        };
-        openInNewTab?: boolean;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      caption?: string;
-      _type: "image";
-      _key: string;
-    }>;
+    richText1?: BlockContent;
+    richText2?: BlockContent;
   } | {
     _key: string;
     _type: "thankyouBanner";
@@ -4708,51 +4219,7 @@ export type GetPageQueryResult = {
   } | {
     _key: string;
     _type: "thankyouRichText";
-    content?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        linkType?: "car" | "href" | "page";
-        href?: string;
-        page?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "page";
-        };
-        post?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "post";
-        };
-        openInNewTab?: boolean;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      caption?: string;
-      _type: "image";
-      _key: string;
-    }>;
+    content?: BlockContent;
     callToActionButton: {
       _type: "callToAction";
       buttonText?: string;
@@ -4793,6 +4260,7 @@ export type GetNewsDetailQueryResult = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -4912,6 +4380,7 @@ export type GetCarsQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -4923,13 +4392,18 @@ export type GetCarsQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
     };
     videoId?: string;
     video: {
-      asset: null;
+      asset: {
+        playbackId: string | null;
+        assetId: string | null;
+        filename: string | null;
+      } | null;
     } | null;
     titleLogo?: {
       asset?: {
@@ -4938,6 +4412,7 @@ export type GetCarsQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -4964,6 +4439,7 @@ export type GetCarsQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
       };
+      media?: unknown;
       _type: "file";
     };
     linkOpenInNewTab: null;
@@ -4980,6 +4456,7 @@ export type GetCarsQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -5066,6 +4543,7 @@ export type GetCarsQueryResult = {
           _weak?: boolean;
           [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
         };
+        media?: unknown;
         _type: "file";
       };
       _type: "tab";
@@ -5124,6 +4602,7 @@ export type AllPostsQueryResult = Array<{
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -5140,6 +4619,7 @@ export type AllPostsQueryResult = Array<{
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
@@ -5162,6 +4642,7 @@ export type MorePostsQueryResult = Array<{
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -5178,6 +4659,7 @@ export type MorePostsQueryResult = Array<{
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
@@ -5217,6 +4699,7 @@ export type PostQueryResult = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -5237,6 +4720,7 @@ export type PostQueryResult = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -5253,6 +4737,7 @@ export type PostQueryResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
@@ -5523,6 +5008,40 @@ export type SideQuickQueryResult = {
 // Variable: getCarListQuery
 // Query: *[_type == "carList"][0] {  ...,  "cars": cars[]{    ...,    "carData": @->{      name,      image,      "slug": slug.current    }  }}
 export type GetCarListQueryResult = null;
+// Variable: getAllModelsQuery
+// Query: *[_type == "models" && language == $locale] {    modelName  }
+export type GetAllModelsQueryResult = Array<{
+  modelName: string | null;
+}>;
+// Variable: getServiceTableQuery
+// Query: *[_type == "serviceCost" && language == $locale && modelName->modelName == $model][0] {    _type,    serviceCostTable{      rows[]{        _key,        cells      }    }   }
+export type GetServiceTableQueryResult = {
+  _type: "serviceCost";
+  serviceCostTable: {
+    rows: Array<{
+      _key: string;
+      cells: Array<string> | null;
+    }> | null;
+  } | null;
+} | null;
+// Variable: getSparePartsTableQuery
+// Query: *[_type == "sparePart" && language == $locale && modelName->modelName == $model][0] {    _type,    sparePartTable{      rows[]{        _key,        cells      }    }  }
+export type GetSparePartsTableQueryResult = {
+  _type: "sparePart";
+  sparePartTable: {
+    rows: Array<{
+      _key: string;
+      cells: Array<string> | null;
+    }> | null;
+  } | null;
+} | null;
+// Variable: getAllSparePartsForModelQuery
+// Query: *[_type == "sparePart" && language == $locale && modelName->modelName == $model] {    _id,    hasTrim,    trimName  }
+export type GetAllSparePartsForModelQueryResult = Array<{
+  _id: string;
+  hasTrim: boolean | null;
+  trimName: string | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -5544,5 +5063,9 @@ declare module "@sanity/client" {
     "\n  *[_type == \"fragment\" && type == \"Footer\" && language == $language][0] {\n    footer {\n      copyrightText,\n      footerLogo {\n        altText,\n        image {\n          asset {\n            _ref\n          }\n        }\n      },\n      footerLogo2 {\n        altText,\n        image {\n          asset {\n            _ref\n          }\n        }\n      },\n      linkList {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"page\": page->{\n            _id,\n            title,\n            \"slug\": slug.current\n          }\n          }\n        }\n      },\n      linkList1 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n      linkList2 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n      imageLinkArray[]{\n      ...,\n      pageLink -> {\n              _id,\n              title,\n              \"slug\": slug.current\n            }\n      },\n      linkList3 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      }\n    }\n  }\n": FooterQueryResult;
     "\n  *[_type == \"fragment\" && type == \"SideKick\" && language == $language][0] {\n    sideKickSection {\n...,\n      iconLinkList1 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          ...,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n      iconLinkList2 {\n        title,\n        links[] {\n          _key,\n          linkText,\n          ...,\n          link {\n            _type,\n            linkType,\n            openInNewTab,\n            href,\n            path,\n            \"page\": page->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n            \"car\": car->{\n              _id,\n              title,\n              \"slug\": slug.current\n            },\n          }\n        }\n      },\n    }\n  }\n": SideQuickQueryResult;
     "\n*[_type == \"carList\"][0] {\n  ...,\n  \"cars\": cars[]{\n    ...,\n    \"carData\": @->{\n      name,\n      image,\n      \"slug\": slug.current\n    }\n  }\n}": GetCarListQueryResult;
+    "\n  *[_type == \"models\" && language == $locale] {\n    modelName\n  }\n": GetAllModelsQueryResult;
+    "\n  *[_type == \"serviceCost\" && language == $locale && modelName->modelName == $model][0] {\n    _type,\n    serviceCostTable{\n      rows[]{\n        _key,\n        cells\n      }\n    } \n  }\n": GetServiceTableQueryResult;
+    "\n  *[_type == \"sparePart\" && language == $locale && modelName->modelName == $model][0] {\n    _type,\n    sparePartTable{\n      rows[]{\n        _key,\n        cells\n      }\n    }\n  }\n": GetSparePartsTableQueryResult;
+    "\n  *[_type == \"sparePart\" && language == $locale && modelName->modelName == $model] {\n    _id,\n    hasTrim,\n    trimName\n  }\n": GetAllSparePartsForModelQueryResult;
   }
 }

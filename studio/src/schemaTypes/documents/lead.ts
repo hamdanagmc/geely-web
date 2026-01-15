@@ -90,5 +90,10 @@ export const lead = defineType({
             type: 'string',
             title: 'Page Url',
         }),
+        defineField({
+            name: 'referring_url',
+            type: 'string',
+            title: 'Referring URL',
+        }),
     ],
 });

@@ -17,6 +17,8 @@ import Cookie from "../components/websites/cookie";
 import Gtm from "../components/websites/Gtm";
 import { TestDriveProvider } from '../context/TestDriveContext';
 import StoreProvider from '../StoreProvider';
+import { useTrafficSource } from "../hooks/useTrafficSource";
+import TrafficTracker from "../components/TrafficTracker";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -91,6 +93,7 @@ export default async function RootLayout({
       </head>
       <body>
         <>
+        <TrafficTracker />
           {isDraftMode && (
             <>
               <DraftModeToast />

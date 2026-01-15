@@ -34,6 +34,7 @@ export type Lead = {
   type?: string;
   contactYou?: string;
   pageUrl?: string;
+  referring_url?: string;
 };
 
 const ALLOWED_USERS = "abdulrahman.zakout@agmc.ae"

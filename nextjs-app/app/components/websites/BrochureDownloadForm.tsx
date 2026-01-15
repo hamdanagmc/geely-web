@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import ImageComp from "../CustomImage";
 import { saveLeads } from "@/app/actions/sanity/leads";
+import { getCookie } from "cookies-next";
 
 type BrochureDownloadFormSectionProps = {
   block: BrochureDownloadFormSection;
@@ -39,6 +40,7 @@ interface FormValues {
   brochure_check: string[];
   countrymobileNoCode: string;
   contactYou: string;
+  referring_url?: string;
 }
 
 const validationSchema = Yup.object({
@@ -105,6 +107,13 @@ export default function BrochureDownloadForm({
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    const savedRef = getCookie('referring_url');
+    if (savedRef) {
+      formik.setFieldValue("referring_url", savedRef);
+    }
+  }, [isMounted]);
+
   const handleCheckboxChange = (title: string) => {
     const isSelected = selectedValues.includes(title);
     const newSelectedValues = isSelected ? [] : [title];
@@ -154,6 +163,7 @@ export default function BrochureDownloadForm({
       brochure_check: [],
       countrymobileNoCode: "",
       contactYou: "",
+      referring_url: "",
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
@@ -222,6 +232,7 @@ export default function BrochureDownloadForm({
           type: "",
           contactYou: values.contactYou || "",
           pageUrl,
+          referring_url: values.referring_url || "",
         };
         await saveLeads(leadData);
 
@@ -233,6 +244,7 @@ export default function BrochureDownloadForm({
             formName: "Brochure Download Form",
             vehicleModel: values.brochure_check.join(", ") || "",
             utmUrl: pageUrl,
+            referring_url: values.referring_url || "",
             ...values,
           }),
         });
@@ -342,6 +354,12 @@ export default function BrochureDownloadForm({
               onSubmit={formik.handleSubmit}
               className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-4 rounded-sm"
             >
+              {/* referring url hidden field */}
+              <input
+                type="hidden"
+                name="referring_url"
+                value={formik.values.referring_url}
+              />
               <div className="grid gap-6">
                 {/* Title */}
                 <div>

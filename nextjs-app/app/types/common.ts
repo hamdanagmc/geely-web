@@ -43,6 +43,7 @@ export type LeadProps = {
     type?: string;
     contactYou?: string;
     pageUrl? : string;
+    referring_url?: string;
   };
 
   export type OptOutLeadProps = {

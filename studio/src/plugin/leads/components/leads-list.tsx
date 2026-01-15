@@ -103,7 +103,7 @@ function LeadsTable({ leads }: LeadsListProps) {
                 <th>Service Center</th>
                 <th>Type</th>
                 <th>Do You want us to contact you</th>
-                <th>Page URL</th>
+                <th>Referring URL</th>
                 <th>Comments</th>
                 <th>UTM Source</th>
                 <th>UTM Medium</th>
@@ -130,11 +130,11 @@ function LeadsTable({ leads }: LeadsListProps) {
                   serviceCenter,
                   type,
                   contactYou,
-                  pageUrl,
+                  referring_url,
                   _createdAt,
                 } = lead;
 
-                const url = pageUrl ? new URL(pageUrl) : { hostname: "N/A", pathname: "", searchParams: new URLSearchParams() };
+                const url = referring_url ? new URL(referring_url) : { hostname: "N/A", pathname: "", searchParams: new URLSearchParams() };
                 const landingPage = url.hostname + url.pathname
                 const searchParams = url.searchParams;
                 const isEmpty = [...searchParams.entries()].length === 0;
@@ -171,7 +171,7 @@ function LeadsTable({ leads }: LeadsListProps) {
                     <td>{serviceCenter || "N/A"}</td>
                     <td>{type || "N/A"}</td>
                     <td>{contactYou || "N/A"}</td>
-                    <td>{pageUrl || "N/A"}</td>
+                    <td>{referring_url || "N/A"}</td>
                     <td>{comments || "N/A"}</td>
                     <td>{utmParameters.utm_source}</td>
                     <td>{utmParameters.utm_medium}</td>

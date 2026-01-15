@@ -21,6 +21,7 @@ import { Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import * as Yup from "yup"
 import { useTestDrive } from "../../context/TestDriveContext"
+import { getCookie } from "cookies-next"
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
@@ -110,6 +111,13 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
   }, [])
 
   useEffect(() => {
+    const savedRef = getCookie('referring_url');
+    if (savedRef) {
+      formik.setFieldValue("referring_url", savedRef);
+    }
+  }, [isMounted]);
+
+  useEffect(() => {
     const checkIsMobile = () => {
       setIsMobileDevice(window.innerWidth <= 768)
     }
@@ -160,6 +168,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
       agreed: false,
       location: "",
       countrymobileNoCode: "+971",
+      referring_url: "",
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
@@ -213,6 +222,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
           type: "",
           contactYou: "",
           pageUrl,
+          referring_url: values.referring_url || "",
         };
         await saveLeads(leadData);
 
@@ -222,7 +232,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             formName: formType.title,
-            utmUrl : pageUrl,
+            utmUrl: pageUrl,
             ...values,
           }),
         });
@@ -426,6 +436,12 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
           </div>
           <div className="flex-1">
             <form onSubmit={formik.handleSubmit} className="max-w-[600px] mx-auto space-y-6">
+              {/* referring url hidden field */}
+              <input
+                type="hidden"
+                name="referring_url"
+                value={formik.values.referring_url}
+              />
               {/* Title */}
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700">

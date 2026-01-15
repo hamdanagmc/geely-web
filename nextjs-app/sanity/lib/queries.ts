@@ -820,4 +820,43 @@ export const getGeelyNetworkQuery = (locale: string) => `
   }
 `;
 
+export const getAllModelsQuery = defineQuery(`
+  *[_type == "models" && language == $locale] {
+    modelName
+  }
+`);
 
+export const getServiceTableQuery = defineQuery(`
+  *[_type == "serviceCost" && language == $locale && modelName->modelName == $model][0] {
+    _type,
+    serviceCostTable{
+      rows[]{
+        _key,
+        cells
+      }
+    } 
+  }
+`);
+
+
+
+export const getSparePartsTableQuery = defineQuery(`
+  *[_type == "sparePart" && language == $locale && modelName->modelName == $model][0] {
+    _type,
+    sparePartTable{
+      rows[]{
+        _key,
+        cells
+      }
+    }
+  }
+`);
+
+
+export const getAllSparePartsForModelQuery = defineQuery(`
+  *[_type == "sparePart" && language == $locale && modelName->modelName == $model] {
+    _id,
+    hasTrim,
+    trimName
+  }
+`)

@@ -7,6 +7,7 @@ import { sendCRMFleetSalesEmail } from "@/app/services/email/crm";
 import { FleetSalesFormProps } from "@/app/types/email";
 import { FleetContactFormSection } from "@/sanity.types";
 import axios from "axios";
+import { getCookie } from "cookies-next";
 import { useFormik } from "formik";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -37,6 +38,7 @@ interface FormValues {
   comments: string;
   agreed: boolean;
   countrymobileNoCode: string;
+  referring_url: string;
 }
 
 const validationSchema = Yup.object({
@@ -95,6 +97,13 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+      const savedRef = getCookie('referring_url');
+      if (savedRef) {
+        formik.setFieldValue("referring_url", savedRef);
+      }
+    }, [isMounted]);
+
   const pathname = usePathname();
   const pathSegments = pathname.split("/");
   const currentLocale = pathSegments[1] || "en";
@@ -126,6 +135,7 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
       companyName: "",
       agreed: false,
       countrymobileNoCode: "",
+      referring_url: "",
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
@@ -176,6 +186,7 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
           type: "",
           contactYou: "",
           pageUrl,
+          referring_url: values.referring_url || "",
         };
         await saveLeads(leadData);
 
@@ -226,6 +237,12 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
             onSubmit={formik.handleSubmit}
             className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-4 px-4 rounded-sm"
           >
+            {/* referring url hidden field */}
+            <input
+              type="hidden"
+              name="referring_url"
+              value={formik.values.referring_url}
+            />
             <div className="grid gap-6">
               {/* Title */}
               <div>

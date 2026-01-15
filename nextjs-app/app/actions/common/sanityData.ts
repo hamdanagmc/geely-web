@@ -2,7 +2,7 @@
 
 import { sanityFetch } from "@/sanity/lib/live";
 import { sanityFetchCustom } from "@/sanity/lib/client";
-import { headerQuery, footerQuery, getGeelyNetworkQuery,sideQuickQuery,siteSettingQuery } from "@/sanity/lib/queries";
+import { headerQuery, footerQuery, getGeelyNetworkQuery,sideQuickQuery,siteSettingQuery,  getAllModelsQuery, getServiceTableQuery, getSparePartsTableQuery,getAllSparePartsForModelQuery } from "@/sanity/lib/queries";
 
 
 
@@ -54,4 +54,44 @@ export async function getGeelyNetwork(locale: string) {
     tags : ['geelyNetwork' ]
   });
   return data;
+}
+
+export async function getAllModels(locale: string) {
+  const data = await sanityFetchCustom({
+    query: getAllModelsQuery,
+    params: { locale },
+    tags: ['models']
+  });
+
+  return data;
+}
+
+export async function getServiceTable(locale: string, model: string) {
+  const data = await sanityFetchCustom({
+    query: getServiceTableQuery,
+    params: { locale, model },
+    tags: ['models']
+  });
+
+  return data;
+}
+
+
+export async function getSparePartsTable(locale: string, model: string) {
+  const data = await sanityFetchCustom({
+    query: getSparePartsTableQuery,
+    params: { locale, model },
+    tags: ['models']
+  });
+
+  return data;
+}
+export async function getAllSparePartsForModel(locale: string, model: string) {
+  const data = await sanityFetchCustom({
+    query: getAllSparePartsForModelQuery,
+    params: { locale, model },
+    tags: ["sparePart"],
+  })
+
+  return data
 }

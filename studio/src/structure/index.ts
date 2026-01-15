@@ -68,6 +68,195 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                 ),
             ])
         ),
+        S.listItem()
+          .title("Models")
+        .icon(FolderIcon)
+        .child(
+          S.list()
+            .title('Languages')
+            .items([
+              ...i18n.languages.map((language) =>
+                S.listItem()
+                  .title(`${language.id.toUpperCase()} Models`)
+                  .schemaType('models')
+                  .icon(FolderIcon)
+                  .child(
+                    S.documentList()
+                      .id(language.id)
+                      .title(`${language.title} Models`)
+                      .schemaType('models')
+                      .filter('_type == "models" && language == $language')
+                      .params({ language: language.id })
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem('models-language', {
+                          id: 'models-language',
+                          language: language.id,
+                        }),
+                      ])
+                      .canHandleIntent((intentName, params) => {
+                        // TODO: Handle **existing** documents (like search results when clicked)
+                        // to return `true` on the correct language list!
+                        if (intentName === 'edit') {
+                          // return params?.language === language.id
+                          return false
+                        }
+
+                        // Not an initial value template
+                        if (!params.template) {
+                          return true
+                        }
+
+                        // Template name structure example: "page-en"
+                        const languageValue = params?.template?.split(`-`).pop()
+
+                        return languageValue === language.id
+                      })
+                  )
+              ),
+              S.divider(),
+              S.listItem()
+                .title(`All Models`)
+                .schemaType('models')
+                .icon(FolderIcon)
+                .child(
+                  S.documentList()
+                    .id('all-models')
+                    .title('All Models')
+                    .schemaType('models')
+                    .filter('_type == "models"')
+                    .canHandleIntent(
+                      (intentName, params) => intentName === 'edit' || params.template === `models`
+                    )
+                ),
+            ])
+        ),
+
+        S.listItem()
+          .title("Spare Parts")
+        .icon(FolderIcon)
+        .child(
+          S.list()
+            .title('Languages')
+            .items([
+              ...i18n.languages.map((language) =>
+                S.listItem()
+                  .title(`${language.id.toUpperCase()} Spare Part`)
+                  .schemaType('sparePart')
+                  .icon(FolderIcon)
+                  .child(
+                    S.documentList()
+                      .id(language.id)
+                      .title(`${language.title} Spare Parts`)
+                      .schemaType('sparePart')
+                      .filter('_type == "sparePart" && language == $language')
+                      .params({ language: language.id })
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem('sparePart-language', {
+                          id: 'sparePart-language',
+                          language: language.id,
+                        }),
+                      ])
+                      .canHandleIntent((intentName, params) => {
+                        // TODO: Handle **existing** documents (like search results when clicked)
+                        // to return `true` on the correct language list!
+                        if (intentName === 'edit') {
+                          // return params?.language === language.id
+                          return false
+                        }
+
+                        // Not an initial value template
+                        if (!params.template) {
+                          return true
+                        }
+
+                        // Template name structure example: "page-en"
+                        const languageValue = params?.template?.split(`-`).pop()
+
+                        return languageValue === language.id
+                      })
+                  )
+              ),
+              S.divider(),
+              S.listItem()
+                .title(`All Spare Parts`)
+                .schemaType('sparePart')
+                .icon(FolderIcon)
+                .child(
+                  S.documentList()
+                    .id('all-spareParts')
+                    .title('All Spare Parts')
+                    .schemaType('sparePart')
+                    .filter('_type == "sparePart"')
+                    .canHandleIntent(
+                      (intentName, params) => intentName === 'edit' || params.template === `sparePart`
+                    )
+                ),
+            ])
+        ),
+
+        S.listItem()
+          .title("Service Cost")
+        .icon(FolderIcon)
+        .child(
+          S.list()
+            .title('Languages')
+            .items([
+              ...i18n.languages.map((language) =>
+                S.listItem()
+                  .title(`${language.id.toUpperCase()} Service Cost`)
+                  .schemaType('serviceCost')
+                  .icon(FolderIcon)
+                  .child(
+                    S.documentList()
+                      .id(language.id)
+                      .title(`${language.title} Service Cost`)
+                      .schemaType('serviceCost')
+                      .filter('_type == "serviceCost" && language == $language')
+                      .params({ language: language.id })
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem('serviceCost-language', {
+                          id: 'serviceCost-language',
+                          language: language.id,
+                        }),
+                      ])
+                      .canHandleIntent((intentName, params) => {
+                        // TODO: Handle **existing** documents (like search results when clicked)
+                        // to return `true` on the correct language list!
+                        if (intentName === 'edit') {
+                          // return params?.language === language.id
+                          return false
+                        }
+
+                        // Not an initial value template
+                        if (!params.template) {
+                          return true
+                        }
+
+                        // Template name structure example: "page-en"
+                        const languageValue = params?.template?.split(`-`).pop()
+
+                        return languageValue === language.id
+                      })
+                  )
+              ),
+              S.divider(),
+              S.listItem()
+                .title(`All Service Cost`)
+                .schemaType('serviceCost')
+                .icon(FolderIcon)
+                .child(
+                  S.documentList()
+                    .id('all-serviceCost')
+                    .title('All Service Cost')
+                    .schemaType('serviceCost')
+                    .filter('_type == "serviceCost"')
+                    .canHandleIntent(
+                      (intentName, params) => intentName === 'edit' || params.template === `serviceCost`
+                    )
+                ),
+            ])
+        ),
+
       S.listItem()
         .title("Car Pages")
         .icon(FolderIcon)

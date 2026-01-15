@@ -2,6 +2,7 @@
 import { client } from "@/sanity/lib/client";
 import { API_TOKEN } from "@/sanity/lib/token";
 import { CommonResponse, LeadProps } from "@/app/types/common";
+import { ref } from "yup";
 
 const sanityClient = client.withConfig({ token: API_TOKEN })
 
@@ -28,6 +29,7 @@ export async function saveLeads(props: LeadProps): Promise<CommonResponse> {
                 type: props.type,
                 contactYou: props.contactYou,
                 pageUrl: props.pageUrl,
+                referring_url: props.referring_url
             },
         },
     ];

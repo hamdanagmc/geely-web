@@ -92,6 +92,11 @@ import customerDetails from './objects/customerDetails'
 import appointmentBooked from './objects/appointmentBooked'
 import {appointmentError} from './objects/appointmentError'
 import { optOutLead } from './documents/optOutLead'
+import { models } from './documents/models'
+import { serviceCost } from './documents/serviceCost'
+import { sparePart } from './documents/sparePart'
+import { sparePartsModel } from './objects/sparePartsModel'
+import { serviceCostModel } from './objects/serviceCostModel'
 
 
 export const schemaTypes = [
@@ -112,6 +117,9 @@ export const schemaTypes = [
   offer,
   lead,
   optOutLead,
+  models,
+  serviceCost,
+  sparePart,
   
   // Objects
   blockContent,
@@ -193,5 +201,7 @@ export const schemaTypes = [
   customerLookup,
   customerDetails,
   appointmentBooked,
-  appointmentError
+  appointmentError,
+  sparePartsModel,
+  serviceCostModel,
 ]

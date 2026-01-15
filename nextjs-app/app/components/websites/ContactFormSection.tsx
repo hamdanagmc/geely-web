@@ -7,6 +7,7 @@ import { sendCRMContactEmail } from "@/app/services/email/crm";
 import { ContactEmailFields } from "@/app/types/email";
 import { ContactFormSection } from "@/sanity.types";
 import axios from "axios";
+import { getCookie } from "cookies-next";
 import { useFormik } from "formik";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -30,6 +31,7 @@ interface FormValues {
   location: string;
   comments: string;
   countrymobileNoCode: string;
+  referring_url?: string;
 }
 
 const validationSchema = Yup.object({
@@ -98,6 +100,13 @@ export default function ContactFormSectionComp({
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    const savedRef = getCookie('referring_url');
+    if (savedRef) {
+      formik.setFieldValue("referring_url", savedRef);
+    }
+  }, [isMounted]);
+
   //generate and set csrf token
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   useEffect(() => {
@@ -124,6 +133,7 @@ export default function ContactFormSectionComp({
       comments: "",
       location: "",
       countrymobileNoCode: "+971",
+      referring_url: "",
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
@@ -146,7 +156,7 @@ export default function ContactFormSectionComp({
         console.log("CSRF token not found");
         return;
       }
-      
+
       const response = await saveContactForm(values, csrfToken, token, currentLocale);
       console.log(response);
       const responseData = response.data as KeyloopResponse;
@@ -176,6 +186,7 @@ export default function ContactFormSectionComp({
           type: values.type,
           contactYou: "",
           pageUrl,
+          referring_url: values.referring_url || "",
         };
         await saveLeads(leadData);
 
@@ -185,7 +196,8 @@ export default function ContactFormSectionComp({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             formName: "Contact Form",
-            utmUrl : pageUrl,
+            utmUrl: pageUrl,
+            referring_url: values.referring_url || "",
             ...values,
           }),
         });
@@ -246,6 +258,13 @@ export default function ContactFormSectionComp({
             onSubmit={formik.handleSubmit}
             className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-4 px-4 rounded-sm"
           >
+            {/* referring url hidden field */}
+            <input
+              type="hidden"
+              name="referring_url"
+              value={formik.values.referring_url}
+            />
+
             <div className="grid gap-6">
               {/* Title */}
               <div>
