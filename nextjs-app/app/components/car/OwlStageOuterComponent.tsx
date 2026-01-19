@@ -63,11 +63,11 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
   return (
     <section
       id={`${block?.htmlId}`}
-      className={`${block?.title ? "sectTileAb" : "sectTile"} sectTileMain owlStageVideo relative bg-gradient-to-b from-neutral-800 to-neutral-900 text-white overflow-hidden`}
+      className={`${block?.title ? "sectTileAb" : "sectTile"} sectTileMain owlStageVideo relative bg-gradient-to-b from-neutral-800 to-neutral-900 text-white overflow-hidden owlStageComp`}
     >
       <div className="absolute secTileTop md:top-[60px] top-[25px] text-center z-10 left-1/2 -translate-x-1/2 mb-8 md:mb-12">
         {block?.title && (
-          <h2 className="text-[36px] custom-tracking leading-[44px] geelyBold uppercase font-bold mb-2">
+          <h2 className="text-[36px] custom-tracking leading-[44px] geelyBold  font-bold mb-2">
             {block?.title}
           </h2>
         )}
@@ -156,7 +156,7 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
             {/* Footer */}
             <div className="mt-8 md:mt-12 absolute footertxtBtm ltr:md:left-[60px] ltr:left-[10px] rtl:md:right-[60px] rtl:right-[10px] bottom-10">
               <div className="max-w-3xl">
-                <h3 className="text-[26px] leading-6 geelyBold uppercase font-bold mb-2">{slide?.title}</h3>
+                <h3 className="text-[26px] leading-6 geelyBold  font-bold mb-2">{slide?.title}</h3>
                 <p className="text-[18px] leading-[26px] text-white-300">{slide?.description}</p>
               </div>
             </div>
