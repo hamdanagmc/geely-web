@@ -12,6 +12,7 @@ import ImageComp from "../CustomImage";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
 import Vimeo from "@u-wave/react-vimeo"
 
+
 type ComfortSliderProps = {
   block: ComfortSlider;
   index: number;
@@ -28,7 +29,7 @@ export default function ComfortSliderComponent({ block }: ComfortSliderProps) {
       className="bg-black text-white py-12 md:py-16 overflow-hidden uniFeatureSlider"
     >
       <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-        <h2 className="text-center text-[28px] md:text-[36px] leading-[42px] font-medium mb-8 md:mb-[74px] custom-tracking">
+        <h2 className="text-center text-[28px] md:text-[36px] leading-[42px] font-medium mb-8 md:mb-[74px] custom-tracking text-black">
           {block.title}
         </h2>
 
@@ -104,7 +105,7 @@ export default function ComfortSliderComponent({ block }: ComfortSliderProps) {
                       }`}
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-                    <h3 className="text-xl geelyBold uppercase md:text-[26px] font-bold mb-2 md:mb-3 tracking-wider leading-8">
+                    <h3 className="text-xl geelyBold md:text-[26px] font-bold mb-2 md:mb-3 tracking-wider leading-8">
                       {slide?.title}
                     </h3>
                     <p className="text-sm md:text-base text-gray-200">
