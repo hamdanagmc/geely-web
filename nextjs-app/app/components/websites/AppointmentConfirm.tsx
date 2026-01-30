@@ -64,6 +64,11 @@ export default function AppointmentBookedComp({ block }: appointmentBookedProps)
     if (!isHydrated) {
         return <div></div>
     }
+
+    if(!appointmentDetails?.appointmentId){
+        return <div>Something went wrong, please try again later.</div>
+    }
+
     return (
         <div>
             <div className="max-w-[1200px] mx-auto px-4 md:py-16 py-8">

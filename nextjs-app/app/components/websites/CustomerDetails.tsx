@@ -389,7 +389,7 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
         // Handle the response as needed
         console.log("Create Appointment Response: ", response)
         const referenceNumber = response?.data?.result?.data?.appointmentId.split("-").pop();
-        if (response?.status) {
+        if (response?.status && referenceNumber) {
           dispatch(setAppointmentDetails({
             appointmentId: referenceNumber,
             serviceCenter: formServiceCenter,
