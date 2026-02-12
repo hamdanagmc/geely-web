@@ -16,6 +16,14 @@ export default defineType({
       title: 'ID Attribute',
       description: 'Unique identifier for the banner component',
     }),
+    defineField({
+      name: 'imageCenter',
+      type: 'boolean',
+      title: 'Center Image',
+      description: 'Enable to center align the image',
+      initialValue: false,
+    }),
+
   ],
   preview: {
     select: {
@@ -25,7 +33,6 @@ export default defineType({
       const { subtitle } = selection;
       return {
         title: `Rich Text`,
-        subtitle: subtitle ? `${subtitle[0].children[0].text}` : 'No content',
       };
     },
   }

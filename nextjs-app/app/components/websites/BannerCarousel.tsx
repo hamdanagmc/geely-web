@@ -91,12 +91,12 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
           ) : null}</div>
 
           {/* Content Overlay */}
-          <div className="absolute banner_Text_main inset-0 flex max-w-[1440px] m-auto flex-col">
+          <div className={`absolute ${block?.textAlign ? 'heroTopAlign' : 'items-center'} banner_Text_main inset-0 flex max-w-[1440px] m-auto flex-col`}>
             {/* Logo and Title */}
             <div
               key={activeIndex}
               data-aos={activeIndex === index ? "fade-right" : ""}
-              className="flex-1 banner_Text p-6 sm:p-8 md:p-12 flex items-center"
+              className={`flex-1 w-full banner_Text p-6 sm:p-8 md:p-12 flex ${block?.textAlign ? 'items-start' : 'items-center'} `}
             >
               <div className="space-y-4 bannerSlideLeft sm:space-y-6">
                 <div className="relative w-[200px] banner_logo h-[30px] sm:w-[300px] sm:h-[45px] md:w-[280px] md:h-[80px]">

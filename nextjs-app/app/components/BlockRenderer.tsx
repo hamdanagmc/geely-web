@@ -57,6 +57,9 @@ import AppointmentConfirm from "./websites/AppointmentConfirm";
 import AppointmentBookingError from "./websites/AppointmentBookingError";
 import SpareModel from "./websites/SpareModel";
 import ServiceModel from "./websites/ServiceModel";
+import GeelyCareForm from "./websites/GeelyCareForm";
+import ImageServiceDetail from "./websites/ImageServiceDetail";
+import ServiceHighlight from "./websites/ServiceHighlight";
 
 type BlocksType = {
   [key: string]: React.FC<any>;
@@ -130,6 +133,9 @@ const Blocks: BlocksType = {
   appointmentError : AppointmentBookingError,
   sparePartsModel : SpareModel,
   serviceCostModel : ServiceModel,
+  geelyCareForm:GeelyCareForm,
+  imageServiceDetail:ImageServiceDetail,
+  serviceHighlight:ServiceHighlight
 };
 
 /**

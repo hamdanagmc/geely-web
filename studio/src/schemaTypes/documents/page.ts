@@ -97,6 +97,9 @@ export const page = defineType({
         { type: 'historySection' },
         { type: 'orderServiceSection' },
         { type: 'heroVideoComponent' },
+        { type: 'geelyCareForm' },
+        { type: 'imageServiceDetail' },
+        { type: 'serviceHighlight' },
 
         { type: 'heroFleetSales' },
         { type: 'iconTextList' },

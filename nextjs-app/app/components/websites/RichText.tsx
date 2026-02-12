@@ -17,7 +17,7 @@ const components: PortableTextComponents = {
       const imageBuilder = urlForImage(value);
       const imageUrl = imageBuilder ? imageBuilder.width(800).url() : "";
       return (
-        <div className="relative w-full h-[400px] my-8">
+        <div className="relative richTextImage w-full h-[400px] my-8">
           <Image
             src={imageUrl}
             alt={value.alt || "Sanity Image"}
@@ -33,7 +33,7 @@ const components: PortableTextComponents = {
 
 export default function RichTexComponent({ block }: RichTextProps) {
   return (
-    <section className="py-[50px] mx-5 md:mx-[30px] lg:mx-10 richTextPara">
+    <section className={`${block?.imageCenter ? 'richTextImgCenter' : ''} py-[50px] mx-5 md:mx-[30px] lg:mx-10 richTextPara`}>
       <div>
         {block?.content?.length ? (
           <PortableText

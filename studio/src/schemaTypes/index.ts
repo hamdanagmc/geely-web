@@ -97,6 +97,9 @@ import { serviceCost } from './documents/serviceCost'
 import { sparePart } from './documents/sparePart'
 import { sparePartsModel } from './objects/sparePartsModel'
 import { serviceCostModel } from './objects/serviceCostModel'
+import { geelyCareForm } from './objects/geelyCareForm'
+import { imageServiceDetail } from './objects/imageServiceDetail'
+import { serviceHighlight } from './objects/serviceHighlight'
 
 
 export const schemaTypes = [
@@ -171,6 +174,9 @@ export const schemaTypes = [
   iconLinkList,
   referenceComponent,
   sideKickSection,
+  geelyCareForm,
+  imageServiceDetail,
+  serviceHighlight,
 
   vehicleListSection,
   networkListSection,

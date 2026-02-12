@@ -619,6 +619,62 @@ export type VehicleListSection = {
   limit?: number;
 };
 
+export type ServiceHighlight = {
+  _type: "serviceHighlight";
+  items?: Array<{
+    title?: string;
+    description?: string;
+    image?: CustomImage;
+    icon?: CustomImage;
+    _type: "serviceHighlightItem";
+    _key: string;
+  }>;
+};
+
+export type ImageServiceDetail = {
+  _type: "imageServiceDetail";
+  heading?: string;
+  listItem?: Array<{
+    image?: CustomImage;
+    title?: string;
+    _type: "serviceItem";
+    _key: string;
+  }>;
+};
+
+export type GeelyCareForm = {
+  _type: "geelyCareForm";
+  heading?: string;
+  form?: {
+    formTitle?: string;
+    formTitlePlaceholder?: string;
+    formTitleTypes?: Array<string>;
+    firstNameLabel?: string;
+    firstNamePlaceholder?: string;
+    lastNameLabel?: string;
+    lastNamePlaceholder?: string;
+    emailLabel?: string;
+    emailPlaceholder?: string;
+    phoneLabel?: string;
+    phonePlaceholder?: string;
+    typeLabel?: string;
+    typePlaceholder?: string;
+    typeOptions?: Array<string>;
+    locationLabel?: string;
+    locationPlaceholder?: string;
+    locationOption?: Array<string>;
+    commentsLabel?: string;
+    commentsPlaceholder?: string;
+    submitButtonLabel?: string;
+    link?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
+  };
+};
+
 export type SideKickSection = {
   _type: "sideKickSection";
   logo?: CustomImage;
@@ -1371,6 +1427,7 @@ export type RichText = {
   _type: "richText";
   content?: BlockContent;
   htmlId?: string;
+  imageCenter?: boolean;
 };
 
 export type ParallaxSection = {
@@ -1539,6 +1596,7 @@ export type RichTextheadingPara = {
 
 export type BannerCarousel = {
   _type: "bannerCarousel";
+  textAlign?: boolean;
   slides?: Array<{
     desktopImage?: CustomImage;
     mobileImage?: CustomImage;
@@ -1758,6 +1816,7 @@ export type Lead = {
   type?: string;
   contactYou?: string;
   pageUrl?: string;
+  referring_url?: string;
 };
 
 export type GeelyNetwork = {
@@ -2571,6 +2630,12 @@ export type Page = {
     _key: string;
   } & HeroVideoComponent | {
     _key: string;
+  } & GeelyCareForm | {
+    _key: string;
+  } & ImageServiceDetail | {
+    _key: string;
+  } & ServiceHighlight | {
+    _key: string;
   } & HeroFleetSales | {
     _key: string;
   } & IconTextList | {
@@ -2790,7 +2855,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = ServiceCostModel | SparePartsModel | AppointmentError | AppointmentBooked | CustomerDetails | CustomerLookup | OptOutForm | OfferDetailForm | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleBlockContent | LocaleText | LocaleString | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | SideKickSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | SanityImageCrop | SanityImageHotspot | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | RichText | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | Navigation | NavItem | Footer | Header | LinkList | LinkItem | CustomImage | Link | CallToAction | InfoSection | BlockContent | OptOutLead | Lead | GeelyNetwork | Vehicle | Color | Slug | Showrooms | Model | Settings | Table | TableRow | Twitter | OpenGraph | MetaTag | MetaAttribute | SeoMetaFields | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReference | InternationalizedArrayReferenceValue | SparePart | ServiceCost | Models | Offer | News | Fragment | Page | Car | Post | Person | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = ServiceCostModel | SparePartsModel | AppointmentError | AppointmentBooked | CustomerDetails | CustomerLookup | OptOutForm | OfferDetailForm | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleBlockContent | LocaleText | LocaleString | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ServiceHighlight | ImageServiceDetail | GeelyCareForm | SideKickSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | SanityImageCrop | SanityImageHotspot | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | RichText | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | Navigation | NavItem | Footer | Header | LinkList | LinkItem | CustomImage | Link | CallToAction | InfoSection | BlockContent | OptOutLead | Lead | GeelyNetwork | Vehicle | Color | Slug | Showrooms | Model | Settings | Table | TableRow | Twitter | OpenGraph | MetaTag | MetaAttribute | SeoMetaFields | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReference | InternationalizedArrayReferenceValue | SparePart | ServiceCost | Models | Offer | News | Fragment | Page | Car | Post | Person | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -2930,6 +2995,7 @@ export type GetPageQueryResult = {
   } | {
     _key: string;
     _type: "bannerCarousel";
+    textAlign?: boolean;
     slides?: Array<{
       desktopImage?: CustomImage;
       mobileImage?: CustomImage;
@@ -3396,6 +3462,38 @@ export type GetPageQueryResult = {
     }>;
   } | {
     _key: string;
+    _type: "geelyCareForm";
+    heading?: string;
+    form?: {
+      formTitle?: string;
+      formTitlePlaceholder?: string;
+      formTitleTypes?: Array<string>;
+      firstNameLabel?: string;
+      firstNamePlaceholder?: string;
+      lastNameLabel?: string;
+      lastNamePlaceholder?: string;
+      emailLabel?: string;
+      emailPlaceholder?: string;
+      phoneLabel?: string;
+      phonePlaceholder?: string;
+      typeLabel?: string;
+      typePlaceholder?: string;
+      typeOptions?: Array<string>;
+      locationLabel?: string;
+      locationPlaceholder?: string;
+      locationOption?: Array<string>;
+      commentsLabel?: string;
+      commentsPlaceholder?: string;
+      submitButtonLabel?: string;
+      link?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+    };
+  } | {
+    _key: string;
     _type: "heroBrochureDownload";
     backgroundImage?: CustomImage;
     mobileImage?: CustomImage;
@@ -3688,6 +3786,16 @@ export type GetPageQueryResult = {
       }>;
       videoList?: Array<string>;
     }> | null;
+  } | {
+    _key: string;
+    _type: "imageServiceDetail";
+    heading?: string;
+    listItem?: Array<{
+      image?: CustomImage;
+      title?: string;
+      _type: "serviceItem";
+      _key: string;
+    }>;
   } | {
     _key: string;
     _type: "imageTextRightLeft";
@@ -4050,6 +4158,7 @@ export type GetPageQueryResult = {
     _type: "richText";
     content?: BlockContent;
     htmlId?: string;
+    imageCenter?: boolean;
   } | {
     _key: string;
     _type: "richTextheadingPara";
@@ -4118,6 +4227,17 @@ export type GetPageQueryResult = {
     pdfLabel?: string;
     downloadButtonText?: string;
     buttonText?: string;
+  } | {
+    _key: string;
+    _type: "serviceHighlight";
+    items?: Array<{
+      title?: string;
+      description?: string;
+      image?: CustomImage;
+      icon?: CustomImage;
+      _type: "serviceHighlightItem";
+      _key: string;
+    }>;
   } | {
     _key: string;
     _type: "shoppingTools";
@@ -4270,6 +4390,7 @@ export type GetNewsDetailQueryResult = {
     _type: "richText";
     content?: BlockContent;
     htmlId?: string;
+    imageCenter?: boolean;
   }> | null;
 } | null;
 // Variable: getCarsQuery
@@ -4498,6 +4619,7 @@ export type GetCarsQueryResult = {
     _type: "richText";
     content?: BlockContent;
     htmlId?: string;
+    imageCenter?: boolean;
     link: null;
     brochurePageLink: null;
     linkOpenInNewTab: null;
