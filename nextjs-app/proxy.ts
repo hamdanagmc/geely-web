@@ -51,7 +51,8 @@ export default function middleware(request: NextRequest) {
       https://aax-eu.amazon-adsystem.com https://ad.doubleclick.net https://c.amazon-adsystem.com https://15181648.fls.doubleclick.net
       https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com
       https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io
-      https://www.googletagmanager.com https://server-side-tagging-prod-1057871630518.me-central1.run.app/ https://www.google.ae/;
+      https://www.googletagmanager.com https://server-side-tagging-prod-1057871630518.me-central1.run.app/ https://www.google.ae/
+      https://*.conversionsapigateway.com https://*.a.run.app ;
 
     img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
       https://www.googletagmanager.com https://px.ads.linkedin.com

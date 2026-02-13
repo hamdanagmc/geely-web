@@ -131,7 +131,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             ])
         ),
 
-        S.listItem()
+        /*S.listItem()
           .title("Spare Parts")
         .icon(FolderIcon)
         .child(
@@ -255,7 +255,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                     )
                 ),
             ])
-        ),
+        ),*/
 
       S.listItem()
         .title("Car Pages")
