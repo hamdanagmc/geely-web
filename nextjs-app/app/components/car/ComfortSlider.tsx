@@ -12,7 +12,6 @@ import ImageComp from "../CustomImage";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
 import Vimeo from "@u-wave/react-vimeo"
 
-
 type ComfortSliderProps = {
   block: ComfortSlider;
   index: number;

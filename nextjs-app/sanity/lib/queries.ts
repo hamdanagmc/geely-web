@@ -153,6 +153,14 @@ export const getPageQuery = defineQuery(`
               "slug": slug.current
             }
       },
+      _type == "promoCodeForm" => {
+          ...,
+          link -> {
+              _id,
+              title,
+              "slug": slug.current
+            }
+      },
       _type == "fleetContactFormSection" => {
           ...,
           form{
@@ -859,4 +867,11 @@ export const getAllSparePartsForModelQuery = defineQuery(`
     hasTrim,
     trimName
   }
-`)
+`);
+
+
+export const getPromoCodesQuery = defineQuery(`
+*[_type== 'promoCodes'][0]{
+  codes
+}
+`);

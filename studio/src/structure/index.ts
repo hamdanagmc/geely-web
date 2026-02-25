@@ -131,7 +131,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             ])
         ),
 
-        S.listItem()
+        /*S.listItem()
           .title("Spare Parts")
         .icon(FolderIcon)
         .child(
@@ -255,7 +255,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                     )
                 ),
             ])
-        ),
+        ),*/
 
       S.listItem()
         .title("Car Pages")
@@ -525,7 +525,10 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
          
         )
         .icon(ControlsIcon),*/
-
+      S.listItem()
+        .title('Promo Codes')
+        .child(S.document().schemaType('promoCodes').documentId('promoCodes'))
+        .icon(TiersIcon),
       S.listItem()
         .title('Site Settings')
         .child(S.document().schemaType('settings').documentId('siteSettings'))

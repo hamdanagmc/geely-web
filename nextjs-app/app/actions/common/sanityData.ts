@@ -2,7 +2,7 @@
 
 import { sanityFetch } from "@/sanity/lib/live";
 import { sanityFetchCustom } from "@/sanity/lib/client";
-import { headerQuery, footerQuery, getGeelyNetworkQuery,sideQuickQuery,siteSettingQuery,  getAllModelsQuery, getServiceTableQuery, getSparePartsTableQuery,getAllSparePartsForModelQuery } from "@/sanity/lib/queries";
+import { headerQuery, footerQuery, getGeelyNetworkQuery,sideQuickQuery,siteSettingQuery,  getAllModelsQuery, getServiceTableQuery, getSparePartsTableQuery,getAllSparePartsForModelQuery, getPromoCodesQuery } from "@/sanity/lib/queries";
 
 
 
@@ -94,4 +94,12 @@ export async function getAllSparePartsForModel(locale: string, model: string) {
   })
 
   return data
+}
+
+export async function getPromoCodes() {
+  const data = await sanityFetchCustom({
+    query: getPromoCodesQuery,
+    tags: ['promoCodes']
+  });
+  return data;
 }

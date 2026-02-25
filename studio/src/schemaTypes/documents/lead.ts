@@ -86,6 +86,11 @@ export const lead = defineType({
             title: 'Contact You',
         }),
         defineField({
+            name: 'promoCode',
+            type: 'string',
+            title: 'Promo Code',
+        }),
+        defineField({
             name: 'pageUrl',
             type: 'string',
             title: 'Page Url',

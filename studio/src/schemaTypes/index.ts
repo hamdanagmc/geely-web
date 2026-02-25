@@ -97,11 +97,18 @@ import { serviceCost } from './documents/serviceCost'
 import { sparePart } from './documents/sparePart'
 import { sparePartsModel } from './objects/sparePartsModel'
 import { serviceCostModel } from './objects/serviceCostModel'
+import { geelyCareForm } from './objects/geelyCareForm'
+import { imageServiceDetail } from './objects/imageServiceDetail'
+import { serviceHighlight } from './objects/serviceHighlight'
+import { promoCodeForm } from './objects/promoCodeForm'
+import { promoCodes } from './singletons/promoCodes'
 
 
 export const schemaTypes = [
   // Singletons
   settings,
+  promoCodes,
+  
   // Documents
   page,
   post,
@@ -171,6 +178,9 @@ export const schemaTypes = [
   iconLinkList,
   referenceComponent,
   sideKickSection,
+  geelyCareForm,
+  imageServiceDetail,
+  serviceHighlight,
 
   vehicleListSection,
   networkListSection,
@@ -204,4 +214,5 @@ export const schemaTypes = [
   appointmentError,
   sparePartsModel,
   serviceCostModel,
+  promoCodeForm,
 ]

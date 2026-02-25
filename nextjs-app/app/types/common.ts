@@ -42,6 +42,7 @@ export type LeadProps = {
     serviceCenter?: string;
     type?: string;
     contactYou?: string;
+    promoCode?: string;
     pageUrl? : string;
     referring_url?: string;
   };

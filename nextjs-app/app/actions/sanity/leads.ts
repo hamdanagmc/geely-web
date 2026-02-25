@@ -28,6 +28,7 @@ export async function saveLeads(props: LeadProps): Promise<CommonResponse> {
                 serviceCenter: props.serviceCenter,
                 type: props.type,
                 contactYou: props.contactYou,
+                promoCode: props.promoCode,
                 pageUrl: props.pageUrl,
                 referring_url: props.referring_url
             },

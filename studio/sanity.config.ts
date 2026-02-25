@@ -28,6 +28,7 @@ import { optOutLeadPlugin } from './src/plugin/optOutLeads/plugin'
 import { table } from '@sanity/table'
 import { DeleteByDateRangeTool } from './src/tools/DeleteByDateRange'
 import { TrashIcon } from '@sanity/icons'
+import { promoLeadPlugin } from './src/plugin/promoLeads/plugin'
 
 // Environment variables for project configuration
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-projectID'
@@ -178,6 +179,7 @@ export default defineConfig({
     seoMetaFields(),
     leadPlugin(),
     optOutLeadPlugin(),
+    promoLeadPlugin(),
     table(),
   ],
 
