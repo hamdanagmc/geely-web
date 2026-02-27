@@ -132,10 +132,12 @@ function LeadsTable({ leads }: LeadsListProps) {
                   contactYou,
                   referring_url,
                   _createdAt,
+                  pageUrl,
                 } = lead;
 
                 const url = referring_url ? new URL(referring_url) : { hostname: "N/A", pathname: "", searchParams: new URLSearchParams() };
-                const landingPage = url.hostname + url.pathname
+                const landinPageUrl = pageUrl ? new URL(pageUrl) : { hostname: "N/A", pathname: "", searchParams: new URLSearchParams() };
+                const landingPage = landinPageUrl.hostname + landinPageUrl.pathname
                 const searchParams = url.searchParams;
                 const isEmpty = [...searchParams.entries()].length === 0;
                 const utmParameters: UtmProps = {
