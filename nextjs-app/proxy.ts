@@ -82,7 +82,7 @@ export default function middleware(request: NextRequest) {
       https://www.googleadservices.com https://trackback.gotrackier.com https://trk.betrck.com https://bat.bing.com
       https://googleads.g.doubleclick.net https://thinkabout88.gotrackier.io/ https://track.valueleadme.com https://tracking.sksdigital.co https://gmt.gotrackier.com https://pixel.data.platformance.io
       https://*.fls.doubleclick.net https://adevolve.gotrackier.com https://server-side-tagging-prod-1057871630518.me-central1.run.app/
-      https://www.google.ae https://*.gotrackier.com https://*.gotrackier.io;
+      https://www.google.ae https://*.gotrackier.com https://*.gotrackier.io https://trk.cpttbm1.com;
   `
     .replace(/\s{2,}/g, " ")
     .trim()
