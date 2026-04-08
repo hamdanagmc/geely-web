@@ -57,7 +57,7 @@ export async function saveOfferDetailForm(data: OfferDetailFormPayload, csrfToke
             "seeks": {
                 "newused": "NEW",
                 "make": "",
-                "model": "",
+                "model": data.vehicle,
                 "stocknumber": "",
                 "regnumber": "",
                 "notes": `VehicleType : ${data.vehicle}, pageUrl : ${data.pageUrl}, Location : ${data.location}`

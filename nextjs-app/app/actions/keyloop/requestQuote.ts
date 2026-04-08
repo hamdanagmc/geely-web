@@ -56,7 +56,7 @@ export async function saveRequestQuoteForm(data: RequestQuoteForm, csrfToken: st
             "seeks": {
                 "newused": "NEW",
                 "make": "",
-                "model": "",
+                "model": data.selectedModelTitle,
                 "stocknumber": "",
                 "regnumber": "",
                 "notes": `Location : ${data.location}, Body Type : ${data.selectedFilter} , Model  : '${data.selectedModelTitle}'`
