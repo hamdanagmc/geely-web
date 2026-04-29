@@ -91,11 +91,11 @@ export default function CarModelsCarousel({ block }: CarModelsCarouselProps) {
                     .pop()}`}
                   className="w-full flex flex-col items-center"
                 >
-                  <div className="relative w-full flex items-center justify-center mb-2 overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105">
+                  <div className="relative w-full flex items-center justify-center mb-3 overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105">
                     {car?.carImage?.altText && (
                       <ImageComp
                         block={car?.carImage}
-                        imageClassName="object-cover"
+                        imageClassName="object-contain h-[105px] w-full"
                         width={215}
                         height={105}
                       />
