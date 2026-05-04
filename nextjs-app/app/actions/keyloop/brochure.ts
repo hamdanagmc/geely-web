@@ -57,7 +57,7 @@ export async function saveBrochureForm(data: BrochureFormProps, csrfToken: strin
             "seeks": {
                 "newused": "NEW",
                 "make": "",
-                "model": "",
+                "model": data?.brochure_check?.[0] || "",
                 "stocknumber": "",
                 "regnumber": "",
                 "notes": `Do you want us to contact you : ${data.contactYou}, Message  : ${data.comments}`,
