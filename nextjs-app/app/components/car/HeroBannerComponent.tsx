@@ -44,7 +44,7 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
   };
 
   return (
-    <section className={`${playbackId ? '' : 'heroImgCmp'} relative w-full heroBannerComp min-h-[928px] bg-[#BFBFCB] overflow-hidden`}>
+    <section className={`relative w-full heroBannerComp min-h-[928px] bg-[#BFBFCB] overflow-hidden`}>
       {/* Layer 1: Bottom Rectangle */}
       <div className="absolute heroImgCmpLayer inset-x-0 bottom-0 h-[40%] bg-[#BFBFCB] z-[11] opacity-99" />
 
