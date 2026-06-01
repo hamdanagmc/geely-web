@@ -6,13 +6,9 @@ import { ArrowRight, ArrowLeft } from "lucide-react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Controller, Autoplay, Pagination } from "swiper/modules"
 import type { Swiper as SwiperType } from "swiper"
-import "swiper/css"
-import "swiper/css/navigation"
-import "swiper/css/pagination"
-import "swiper/css/autoplay"
 import ImageComp from "../CustomImage"
 import useDeviceDetection from "../../hooks/useDeviceDetection"
-import Vimeo from "@u-wave/react-vimeo"
+import MuxVideo from "@mux/mux-video-react"
 
 type OwlStageOuterProps = {
   block: OwlStageOuter
@@ -119,36 +115,30 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
               />
             )}
 
-            {slide?.mediaType == 'video' && !isMobileDevice && slide?.videoId && (
-              <Vimeo
-                video={slide.videoId}
-                autoplay
+            {slide?.mediaType == 'video' && !isMobileDevice && (slide?.video?.asset as any)?.playbackId && (
+              <MuxVideo
+                playbackId={(slide?.video?.asset as any)?.playbackId}
+                autoPlay
                 loop
                 muted
                 controls={false}
-                responsive
-                background={true}
-                dnt={true}
                 className="w-full h-[83vh] static inset-0 object-cover"
                 onError={(error) => {
-                  console.error("Vimeo Player Error:", error)
+                  console.error("Mux Video Player Error:", error)
                 }}
               />
             )}
 
-            {slide?.mediaType == 'video' && isMobileDevice && slide?.mobileVideoId && (
-              <Vimeo
-                video={slide.mobileVideoId}
-                autoplay
+            {slide?.mediaType == 'video' && isMobileDevice && (slide?.mobileVideo?.asset as any)?.playbackId && (
+              <MuxVideo
+                playbackId={(slide?.mobileVideo?.asset as any)?.playbackId}
+                autoPlay
                 loop
                 muted
                 controls={false}
-                responsive
-                background={true}
-                dnt={true}
                 className="w-full h-[83vh] static inset-0 object-cover"
                 onError={(error) => {
-                  console.error("Vimeo Player Error:", error)
+                  console.error("Mux Video Player Error:", error)
                 }}
               />
             )}

@@ -4,7 +4,7 @@ import { urlForImage } from "@/sanity/lib/utils"
 import { urlForPDF } from "@/sanity/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
-import Vimeo from "@u-wave/react-vimeo"
+import MuxVideo from "@mux/mux-video-react"
 import useDeviceDetection from "../../hooks/useDeviceDetection"
 import { useState } from "react"
 import { useTestDrive } from "../../context/TestDriveContext";
@@ -13,6 +13,13 @@ import { useRouter } from "next/navigation"
 type HeroBannerComponentProps = {
   block: HeroBannerComponent & {
     videoId?: string
+    video?: {
+      asset?: {
+        playbackId?: string | null
+        assetId?: string | null
+        filename?: string | null
+      } | null
+    } | null
   }
   index: number
 }
@@ -23,9 +30,11 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
   const { setTestDrive } = useTestDrive();
   const router = useRouter();
   
-  // Check if videoId exists
-  if (!block?.videoId && !videoError) {
-    console.warn("No videoId found for video block:", block)
+  const playbackId = block?.video?.asset?.playbackId;
+
+  // Check if playbackId exists
+  if (!playbackId && !videoError) {
+    console.warn("No playbackId found for video block:", block)
     setVideoError(true)
   }
 
@@ -35,24 +44,22 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
   };
 
   return (
-    <section className={`${block?.videoId ? '' : 'heroImgCmp'} relative w-full heroBannerComp min-h-[928px] bg-[#BFBFCB] overflow-hidden`}>
+    <section className={`${playbackId ? '' : 'heroImgCmp'} relative w-full heroBannerComp min-h-[928px] bg-[#BFBFCB] overflow-hidden`}>
       {/* Layer 1: Bottom Rectangle */}
       <div className="absolute heroImgCmpLayer inset-x-0 bottom-0 h-[40%] bg-[#BFBFCB] z-[11] opacity-99" />
 
       {/* Video Layer */}
-      {block?.videoId && !videoError && (
-        <Vimeo
-          video={block.videoId}
-          autoplay
+      {playbackId && !videoError && (
+        <MuxVideo
+          playbackId={playbackId}
+          autoPlay
           loop
           muted
+          playsInline
           controls={false}
-          responsive
-          background={true}
-          dnt={true}
           className="w-full h-[75%] static inset-0 object-cover"
           onError={(error) => {
-            console.error("Vimeo Player Error:", error)
+            console.error("Mux Video Player Error:", error)
             setVideoError(true)
           }}
         />

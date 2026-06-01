@@ -257,6 +257,43 @@ export const getPageQuery = defineQuery(`
         ...,
         modelGalleryList[]{
           ...,
+          videoListMux[]{
+            ...,
+            asset->{
+              playbackId,
+              assetId,
+              filename
+            }
+          }
+        }
+      },
+      _type == "featureHighlightsComponent" => {
+        ...,
+        tabs[]{
+          ...,
+          highlights[]{
+            ...,
+            muxVideo {
+              asset-> {
+                playbackId,
+                assetId,
+                filename
+              }
+            }
+          }
+        }
+      },
+      _type == "comfortSlider" => {
+        ...,
+        slides[]{
+          ...,
+          video {
+            asset-> {
+              playbackId,
+              assetId,
+              filename
+            }
+          }
         }
       }
     }
@@ -504,7 +541,65 @@ export const getCarsQuery = defineQuery(`
               title,
               "slug": slug.current
             },
-            linkOpenInNewTab
+            linkOpenInNewTab,
+      _type == "featureHighlightsComponent" => {
+        ...,
+        tabs[]{
+          ...,
+          highlights[]{
+            ...,
+            muxVideo {
+              asset-> {
+                playbackId,
+                assetId,
+                filename
+              }
+            }
+          }
+        }
+      },
+      _type == "heroVideoComponent" => {
+        video {
+          asset-> {
+            playbackId,
+            assetId,
+            filename
+          }
+        }
+      },
+      _type == "comfortSlider" => {
+      ...,
+      slides[]{
+        ...,
+        video {
+          asset-> {
+            playbackId,
+            assetId,
+            filename
+          }
+        }
+        }
+      },
+      _type == "owlStageOuter" => {
+      ...,
+      slides[]{
+            ...,
+        video {
+          asset-> {
+            playbackId,
+            assetId,
+            filename
+          }
+        },
+        mobileVideo {
+          asset-> {
+            playbackId,
+            assetId,
+            filename
+          }
+        }
+}
+      },
     }
   }
 `);

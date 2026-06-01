@@ -83,8 +83,16 @@ export default defineType({
                       name: 'videoId',
                       title: 'Vimeo Video ID',
                       type: 'string',
+                      readOnly: true,
                       description: 'Provide the Vimeo video ID',
                       hidden: ({ parent }) => parent?.mediaType !== 'video',
+                    }),
+                    defineField({
+                      name: "muxVideo",
+                      title: "Mux Video",
+                      type: "mux.video",
+                      description: "Upload video using Mux",
+                      hidden: ({ parent }) => parent?.mediaType !== "video",
                     }),
                     defineField({
                       name: 'videoSize',

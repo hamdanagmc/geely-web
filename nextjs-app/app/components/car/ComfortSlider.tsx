@@ -3,14 +3,11 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useState } from "react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { ComfortSlider } from "@/sanity.types";
 import type { Swiper as SwiperType } from "swiper";
 import ImageComp from "../CustomImage";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
-import Vimeo from "@u-wave/react-vimeo"
+import MuxVideo from "@mux/mux-video-react"
 
 type ComfortSliderProps = {
   block: ComfortSlider;
@@ -28,7 +25,7 @@ export default function ComfortSliderComponent({ block }: ComfortSliderProps) {
       className="bg-black text-white py-12 md:py-16 overflow-hidden uniFeatureSlider"
     >
       <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-        <h2 className="text-center text-[28px] md:text-[36px] leading-[42px] font-medium mb-8 md:mb-[74px] custom-tracking text-black">
+        <h2 className="text-center text-[28px] md:text-[36px] leading-[42px] font-medium mb-8 md:mb-[74px] custom-tracking text-white">
           {block.title}
         </h2>
 
@@ -81,19 +78,16 @@ export default function ComfortSliderComponent({ block }: ComfortSliderProps) {
                     />
                   )}
 
-                  {slide?.mediaType == 'video' && slide?.videoId && (
-                    <Vimeo
-                      video={slide.videoId}
-                      autoplay
+                  {slide?.mediaType == 'video' && ((slide as any)?.video?.asset?.playbackId || slide?.videoId) && (
+                    <MuxVideo
+                      playbackId={((slide as any)?.video?.asset?.playbackId || slide?.videoId) as string}
+                      autoPlay
                       loop
                       muted
                       controls={false}
-                      responsive
-                      background={true}
-                      dnt={true}
                       className="w-[720px] h-[540px] static inset-0 object-cover"
                       onError={(error) => {
-                        console.error("Vimeo Player Error:", error)
+                        console.error("Mux Video Player Error:", error)
                       }}
                     />
                   )}

@@ -30,6 +30,8 @@ export default defineType({
       name: 'videoId',
       type: 'string',
       title: 'Vimeo Video ID',
+      readOnly: true,
+      deprecated: { reason: "Use the Vimeo Video ID field instead. This field will be removed in future versions!" },
       description: 'Please provide video id from vimeo'
     }),
     defineField({
@@ -37,8 +39,6 @@ export default defineType({
       type: 'mux.video',
       title: 'Video',
       description: 'Please upload video',
-      readOnly: true,
-      deprecated: { reason: "Use the Vimeo Video ID field instead. This field will be removed in future versions!" }
     }),
     defineField({
       name: 'titleLogo',

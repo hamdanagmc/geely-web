@@ -6,13 +6,13 @@ export const modelGallery = defineType({
     title: 'Model Gallery',
     fields: [
         defineField({ name: 'name', title: 'Model Name', type: 'string' }),
-        defineField({ name: 'image', title: 'Model Image', type: 'image', description:"image size should be 266x132 pixels" }),
+        defineField({ name: 'image', title: 'Model Image', type: 'image', description: "image size should be 266x132 pixels" }),
         defineField({ name: 'dataId', title: 'Data ID', type: 'string' }),
         defineField({
             name: 'imageList',
             type: 'array',
             title: 'Image List',
-            description:"image size should be 1024x548 pixels",
+            description: "image size should be 1024x548 pixels",
             of: [
                 defineField({
                     type: 'image',
@@ -35,13 +35,28 @@ export const modelGallery = defineType({
             name: 'videoList',
             type: 'array',
             title: 'Video List',
+            readOnly: true,
             of: [
                 defineField({
                     name: 'videoId',
                     title: 'Video Vimeo Id',
                     type: 'string',
-                    validation : rule => rule.required(),
-                    description : 'Please provide video id from vimeo'
+                    validation: rule => rule.required(),
+                    readOnly: true,
+                    description: 'Please provide video id from vimeo'
+                }),
+            ],
+        }),
+        defineField({
+            name: 'videoListMux',
+            type: 'array',
+            title: 'Video List',
+            of: [
+                defineField({
+                    name: "video",
+                    type: "mux.video",
+                    title: "Mux Video",
+                    description: "Please upload video from Mux",
                 }),
             ],
         }),

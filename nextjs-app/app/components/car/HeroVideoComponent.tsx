@@ -1,23 +1,31 @@
 "use client"
 import type { HeroVideoComponent } from "@/sanity.types"
 import { useRef, useState } from "react"
-import Vimeo from "@u-wave/react-vimeo"
+import MuxVideo from "@mux/mux-video-react"
 
 type HeroVideoComponentProps = {
-  block: HeroVideoComponent
+  block: HeroVideoComponent & {
+    video?: {
+      asset?: {
+        playbackId?: string | null
+        assetId?: string | null
+        filename?: string | null
+      } | null
+    } | null
+  }
   index: number
 }
 
-export default function HeroVideoVimeo({ block }: HeroVideoComponentProps) {
-  const videoId = block?.videoId
+export default function HeroVideoMux({ block }: HeroVideoComponentProps) {
+  const playbackId = block?.video?.asset?.playbackId
 
   const playerRef = useRef<any>(null)
   const [isMuted, setIsMuted] = useState(true) 
   const [isReady, setIsReady] = useState(false)
   const [hasError, setHasError] = useState(false)
 
-  if (!videoId) {
-    console.warn("No Vimeo ID found for video block:", block)
+  if (!playbackId) {
+    console.warn("No Mux playback ID found for video block:", block)
     return (
       <div className="w-full bg-gray-200 flex items-center justify-center p-10 rounded-lg">
         <p className="text-gray-600">Video not available</p>
@@ -35,21 +43,18 @@ export default function HeroVideoVimeo({ block }: HeroVideoComponentProps) {
 
   return (
     <div className="relative">
-      <Vimeo
-        video={videoId}
-        autoplay
+      <MuxVideo
+        playbackId={playbackId}
+        autoPlay
         loop={block?.loop ?? true}
         muted={isMuted}
         controls={false}
-        responsive
-        onReady={onReady}
+        onCanPlay={onReady}
         className="w-full mx-auto rounded-lg shadow-lg"
         onError={(error) => {
-          console.error("Vimeo Player Error:", error)
+          console.error("Mux Video Player Error:", error)
           setHasError(true)
         }}
-        background={true}
-        dnt={true}
       />
       {hasError && (
         <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">

@@ -3,14 +3,11 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useState } from "react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import type { FeatureHighlightsComponent } from "@/sanity.types";
 import type { Swiper as SwiperType } from "swiper";
 import ImageComp from "../CustomImage";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
-import Vimeo from "@u-wave/react-vimeo"
+import MuxVideo from "@mux/mux-video-react"
 
 type FeatureHighlightsComponentProps = {
   block: FeatureHighlightsComponent;
@@ -52,81 +49,81 @@ export default function FeatureHighlightsComp({
             onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
             className="!overflow-visible"
           >
-            {block?.tabs?.[0]?.highlights?.map((slide, index) => (
-              <SwiperSlide key={slide._key} className="!w-auto">
-                <div className="relative h-[540px] bg-gray-900 rounded-lg overflow-hidden">
+            {block?.tabs?.[0]?.highlights?.map((slide, index) => {
+              const playbackId = (slide as any)?.muxVideo?.asset?.playbackId;
 
-                  {!slide?.mediaType && slide?.image?.altText && !isMobileDevice && (
-                    <ImageComp
-                      block={slide?.image}
-                      imageClassName="object-cover w-full h-full"
-                      width={620}
-                      height={500}
+              return (
+                <SwiperSlide key={slide._key} className="!w-auto">
+                  <div className="relative h-[540px] bg-gray-900 rounded-lg overflow-hidden">
+
+                    {!slide?.mediaType && slide?.image?.altText && !isMobileDevice && (
+                      <ImageComp
+                        block={slide?.image}
+                        imageClassName="object-cover w-full h-full"
+                        width={620}
+                        height={500}
+                      />
+                    )}
+                    {!slide?.mediaType && slide?.mobileImage?.altText && isMobileDevice && (
+                      <ImageComp
+                        block={slide?.mobileImage}
+                        imageClassName="object-cover w-full h-full"
+                        width={620}
+                        height={624}
+                      />
+                    )}
+
+                    {slide?.mediaType == 'image' && slide?.optionImage?.altText && !isMobileDevice && (
+                      <ImageComp
+                        block={slide?.optionImage}
+                        imageClassName="object-cover w-full h-full"
+                        width={620}
+                        height={500}
+                      />
+                    )}
+                    {slide?.mediaType == 'image' && slide?.optionMobileImage?.altText && isMobileDevice && (
+                      <ImageComp
+                        block={slide?.optionMobileImage}
+                        imageClassName="object-cover w-full h-full"
+                        width={620}
+                        height={624}
+                      />
+                    )}
+
+                    {slide?.mediaType === 'video' && playbackId && (
+                      <MuxVideo
+                        playbackId={playbackId}
+                        streamType="on-demand"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        controls={false}
+                        className={`video-player ${slide.videoSize === '334x540' ? 'md:w-[334px] w-full h-[540px]' : 'w-[720px] h-[540px]'
+                          } static inset-0 object-cover`}
+                      />
+                    )}
+
+
+
+                    <div
+                      className={`absolute inset-0 ${activeIndex === index
+                        ? "bg-transparent"
+                        : "bg-gradient-to-t from-black/80 to-transparent"
+                        }`}
                     />
-                  )}
-                  {!slide?.mediaType && slide?.mobileImage?.altText && isMobileDevice && (
-                    <ImageComp
-                      block={slide?.mobileImage}
-                      imageClassName="object-cover w-full h-full"
-                      width={620}
-                      height={624}
-                    />
-                  )}
-
-                  {slide?.mediaType == 'image' && slide?.optionImage?.altText && !isMobileDevice && (
-                    <ImageComp
-                      block={slide?.optionImage}
-                      imageClassName="object-cover w-full h-full"
-                      width={620}
-                      height={500}
-                    />
-                  )}
-                  {slide?.mediaType == 'image' && slide?.optionMobileImage?.altText && isMobileDevice && (
-                    <ImageComp
-                      block={slide?.optionMobileImage}
-                      imageClassName="object-cover w-full h-full"
-                      width={620}
-                      height={624}
-                    />
-                  )}
-
-                  {slide?.mediaType === 'video' && slide?.videoId && (
-                    <Vimeo
-                      video={slide.videoId}
-                      autoplay
-                      loop
-                      muted
-                      controls={false}
-                      responsive
-                      background={true}
-                      dnt={true}
-                      className={`video-player ${slide.videoSize === '334x540' ? 'md:w-[334px] w-full h-[540px]' : 'w-[720px] h-[540px]'
-                        } static inset-0 object-cover`}
-                      onError={(error) => {
-                        console.error("Vimeo Player Error:", error);
-                      }}
-                    />
-                  )}
-
-
-
-                  <div
-                    className={`absolute inset-0 ${activeIndex === index
-                      ? "bg-transparent"
-                      : "bg-gradient-to-t from-black/80 to-transparent"
-                      }`}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-                    <h3 className="text-xl geelyBold  md:text-[26px] font-bold mb-2 md:mb-3 tracking-wider leading-8">
-                      {slide?.title}
-                    </h3>
-                    <p className="text-sm md:text-base text-gray-200">
-                      {slide?.description}
-                    </p>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                      <h3 className="text-xl geelyBold  md:text-[26px] font-bold mb-2 md:mb-3 tracking-wider leading-8">
+                        {slide?.title}
+                      </h3>
+                      <p className="text-sm md:text-base text-gray-200">
+                        {slide?.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
 
           {/* Custom Pagination */}

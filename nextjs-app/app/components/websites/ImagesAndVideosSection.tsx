@@ -6,17 +6,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectCoverflow } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { urlForImage } from "@/sanity/lib/utils";
-import MuxPlayer from "@mux/mux-video-react";
+import MuxVideo from "@mux/mux-video-react";
 import { ArrowLeft, ArrowRight, Share2 } from "lucide-react";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
-import Vimeo from "@u-wave/react-vimeo";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/thumbs";
-import "swiper/css/effect-coverflow";
 
 const activeSlideStyles = `
   .swiper-slide {
@@ -35,7 +27,17 @@ const activeSlideStyles = `
 `;
 
 type ImagesAndVideosSectionProps = {
-  block: ImagesAndVideosSection;
+  block: ImagesAndVideosSection & {
+    modelGalleryList?: Array<{
+      videoListMux?: Array<{
+        asset?: {
+          playbackId?: string | null;
+          assetId?: string | null;
+          filename?: string | null;
+        } | null;
+      }>;
+    }>;
+  };
   index: number;
 };
 
@@ -51,6 +53,7 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
   const [videoError, setVideoError] = useState(false);
   const playersRef = useRef<{ [key: number]: any }>({});
   const { isMobileDevice } = useDeviceDetection();
+  console.log("block",block)
 
   // Get the current model
   const currentModel = block?.modelGalleryList?.[activeModelIndex];
@@ -62,7 +65,7 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
   }, [activeModelIndex]);
 
   useEffect(() => {
-    if (activeTab === "video" && currentModel?.videoList) {
+    if (activeTab === "video" && currentModel?.videoListMux) {
       Object.entries(playersRef.current).forEach(([key, player]) => {
         const index = Number(key); // Cast the key to a number
         if (player && player.pause && player.play) {
@@ -74,7 +77,7 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
         }
       });
     }
-  }, [activeVideoIndex, activeTab, currentModel?.videoList]);
+  }, [activeVideoIndex, activeTab, currentModel?.videoListMux]);
 
   const handleThumbClick = (index: number) => {
     setActiveModelIndex(index);
@@ -256,7 +259,7 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
           <div className="relative overflow-hidden">
             {/* Main Video Swiper */}
             <div className="relative md:h-[600px] pb-14 max-w-[1300px] mx-auto z-10 overflow-visible">
-              {currentModel?.videoList && currentModel.videoList.length > 0 ? (
+              {currentModel?.videoListMux && currentModel.videoListMux.length > 0 ? (
                 <Swiper
                   onSwiper={setVideoSwiper}
                   spaceBetween={20}
@@ -274,7 +277,7 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
                     prevEl: ".main-prev-videos",
                   }}
                   onSlideChange={(swiper) => {
-                    setActiveVideoIndex(swiper.activeIndex); // Update the active video index
+                    setActiveVideoIndex(swiper.realIndex); // Update the active video index using realIndex
                     // Pause all videos except the active one
                     Object.entries(playersRef.current).forEach(([key, player]) => {
                       const index = Number(key); // Cast the key to a number
@@ -299,35 +302,41 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
                     slideShadows: false,
                   }}
                 >
-                  {currentModel.videoList.map((video, idx) => (
-                    <SwiperSlide key={`video-${idx}`}>
-                      <div className="relative md:h-[540px] aspect-[16/9] bg-black rounded-md overflow-hidden transform transition-all duration-300">
-                        <Vimeo
-                          video={video}
-                          autoplay={idx === activeVideoIndex}
-                          loop
-                          muted
-                          controls={false}
-                          responsive
-                          showTitle={false}
-                          background={false}
-                          dnt={true}
-                          className="w-full h-[75%] static inset-0 object-cover"
-                          onError={(error) => {
-                            console.error("Vimeo Player Error:", error);
-                            setVideoError(true);
-                          }}
-                          ref={(player) => {
-                            if (player) {
-                              playersRef.current[idx] = player;
-                            } else {
-                              delete playersRef.current[idx];
-                            }
-                          }}
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
+                  {currentModel.videoListMux.map((videoItem, idx) => {
+                    const playbackId = (videoItem as any)?.asset?.playbackId;
+
+                    return (
+                      <SwiperSlide key={`video-${idx}`}>
+                        <div className="relative md:h-[540px] aspect-[16/9] bg-black rounded-md overflow-hidden transform transition-all duration-300">
+                          {playbackId ? (
+                            <MuxVideo
+                              playbackId={playbackId}
+                              autoPlay={idx === activeVideoIndex}
+                              loop
+                              muted
+                              controls={false}
+                              className="w-full h-[100%] static inset-0 object-cover"
+                              onError={(error) => {
+                                console.error("Mux Video Player Error:", error);
+                                setVideoError(true);
+                              }}
+                              ref={(player) => {
+                                if (player) {
+                                  playersRef.current[idx] = player;
+                                } else {
+                                  delete playersRef.current[idx];
+                                }
+                              }}
+                            />
+                          ) : (
+                            <div className="w-full h-[75%] bg-gray-900 flex items-center justify-center">
+                              <p className="text-gray-500">Video not available</p>
+                            </div>
+                          )}
+                        </div>
+                      </SwiperSlide>
+                    );
+                  })}
                 </Swiper>
               ) : (
                 <div className="md:h-[540px] aspect-[16/9] bg-gray-100 flex items-center justify-center">

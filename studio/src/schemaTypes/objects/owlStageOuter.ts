@@ -81,13 +81,37 @@ export const owlStageOuter = defineType({
               title: 'Vimeo Video ID',
               type: 'string',
               description: "video size should be 1560x750 pixels",
+              readOnly: true,
+              deprecated: {
+                reason:
+                  "Use the Mux Video field instead. Vimeo Video ID field will be removed in future versions!",
+              },
               hidden: ({ parent }) => parent?.mediaType !== 'video',
             }),
             defineField({
               name: 'mobileVideoId',
               title: 'Vimeo Mobile Video ID',
               type: 'string',
+              readOnly: true,
+              deprecated: {
+                reason:
+                  "Use the Mux Video field instead. Vimeo Video ID field will be removed in future versions!",
+              },
               description: "video size should be 375x600 pixels",
+              hidden: ({ parent }) => parent?.mediaType !== 'video',
+            }),
+            defineField({
+              name: "video",
+              type: "mux.video",
+              title: "Mux Video",
+              description: "Please upload video and description video size should be 1560x750 pixels",
+              hidden: ({ parent }) => parent?.mediaType !== 'video',
+            }),
+            defineField({
+              name: "mobileVideo",
+              type: "mux.video",
+              title: "Mux Video",
+              description: "Please upload video and description video size should be 375x600 pixels",
               hidden: ({ parent }) => parent?.mediaType !== 'video',
             }),
           ],
