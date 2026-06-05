@@ -1,7 +1,7 @@
 "use server"
 
 import axios from 'axios';
-import { SERVICE_BOOKING_API_TOKEN, SERVICE_BOOKING_API_URL } from './api';
+import { getAuthToken, SERVICE_BOOKING_API_URL } from './api';
 import { CommonResponse } from '@/app/types/common';
 
 export async function findCustomerByName(name: string): Promise<CommonResponse> {
@@ -10,11 +10,12 @@ export async function findCustomerByName(name: string): Promise<CommonResponse> 
     }
 
     const url = `${SERVICE_BOOKING_API_URL}/api/service/find-customer`;
+    const apiToken = await getAuthToken();
     const config = {
         method: 'get',
         url,
         headers: {
-            'Authorization': SERVICE_BOOKING_API_TOKEN,
+            'Authorization': `Bearer ${apiToken}`,
         },
         params: { givenName: name },
     };
@@ -39,11 +40,12 @@ export async function findCustomerByPhone(phone: string): Promise<CommonResponse
     }
 
     const url = `${SERVICE_BOOKING_API_URL}/api/service/find-customer`;
+    const apiToken = await getAuthToken();
     const config = {
         method: 'get',
         url,
         headers: {
-            Authorization: SERVICE_BOOKING_API_TOKEN,
+            'Authorization': `Bearer ${apiToken}`,
         },
         params: { phone },
     };
@@ -68,11 +70,12 @@ export async function findCustomerByEmail(email: string): Promise<CommonResponse
     }
 
     const url = `${SERVICE_BOOKING_API_URL}/api/service/find-customer`;
+    const apiToken = await getAuthToken();
     const config = {
         method: 'get',
         url,
         headers: {
-            'Authorization': '43a33e25408884bc600652d8',
+            'Authorization': `Bearer ${apiToken}`,
         },
         params: { email },
     };

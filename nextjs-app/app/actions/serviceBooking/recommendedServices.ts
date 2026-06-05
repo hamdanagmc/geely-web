@@ -1,6 +1,6 @@
 "use server";
 import axios from 'axios';
-import { SERVICE_BOOKING_API_TOKEN, SERVICE_BOOKING_API_URL } from './api';
+import { getAuthToken, SERVICE_BOOKING_API_URL } from './api';
 import { CommonResponse } from '@/app/types/common';
 
 export async function getRecommendedServices(locale: string): Promise<CommonResponse> {
@@ -8,11 +8,12 @@ export async function getRecommendedServices(locale: string): Promise<CommonResp
         throw new Error("Invalid parameter: 'locale' is required.");
     }
     const url = `${SERVICE_BOOKING_API_URL}/api/service/recommended-services`;
+    const apiToken = await getAuthToken();
     const config = {
         method: 'get',
         url,
         headers: {
-            'Authorization': SERVICE_BOOKING_API_TOKEN,
+            'Authorization': `Bearer ${apiToken}`,
             'x-l10n-locale': locale,
         },
         params: { type: 'workshop' },

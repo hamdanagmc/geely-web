@@ -1,6 +1,6 @@
 "use server";
 import axios from 'axios';
-import { SERVICE_BOOKING_API_TOKEN, SERVICE_BOOKING_API_URL } from './api';
+import { getAuthToken, SERVICE_BOOKING_API_URL } from './api';
 import { CommonResponse } from '@/app/types/common';
 
 export async function deleteAppointment(appointmentId: string): Promise<CommonResponse> {
@@ -9,11 +9,12 @@ export async function deleteAppointment(appointmentId: string): Promise<CommonRe
     }
 
     const url = `${SERVICE_BOOKING_API_URL}/api/service/appointments`;
+    const apiToken = await getAuthToken();
     const config = {
         method: 'delete',
         url,
         headers: {
-            'Authorization': SERVICE_BOOKING_API_TOKEN,
+            'Authorization': `Bearer ${apiToken}`,
         },
         params: { appointmentId },
     };

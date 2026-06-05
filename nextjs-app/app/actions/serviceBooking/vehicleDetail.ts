@@ -1,7 +1,7 @@
 "use server";
 
 import axios, { AxiosError } from 'axios';
-import { SERVICE_BOOKING_API_TOKEN, SERVICE_BOOKING_API_URL } from './api';
+import { getAuthToken, SERVICE_BOOKING_API_URL } from './api';
 import { CommonResponse } from '@/app/types/common';
 
 /**
@@ -10,11 +10,12 @@ import { CommonResponse } from '@/app/types/common';
 const fetchVehicleDetails = async (params: Record<string, string>): Promise<CommonResponse> => {
   const url = `${SERVICE_BOOKING_API_URL}/api/service/vehicle-details`;
 
+  const apiToken = await getAuthToken();
   const config = {
     method: 'get',
     url,
     headers: {
-      Authorization: SERVICE_BOOKING_API_TOKEN,
+      'Authorization': `Bearer ${apiToken}`,
     },
     params,
   };

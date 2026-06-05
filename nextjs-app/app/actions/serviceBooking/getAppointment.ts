@@ -1,6 +1,6 @@
 "use server";
 import axios from 'axios';
-import { SERVICE_BOOKING_API_TOKEN, SERVICE_BOOKING_API_URL } from './api';
+import { getAuthToken, SERVICE_BOOKING_API_URL } from './api';
 import { CommonResponse } from '@/app/types/common';
 
 export async function getAppointment(regNumber: string, locale: string): Promise<CommonResponse> {
@@ -12,11 +12,12 @@ export async function getAppointment(regNumber: string, locale: string): Promise
     }
 
     const url = `${SERVICE_BOOKING_API_URL}/api/service/appointments`;
+    const apiToken = await getAuthToken();
     const config = {
         method: 'get',
         url,
         headers: {
-            'Authorization': SERVICE_BOOKING_API_TOKEN,
+            'Authorization': `Bearer ${apiToken}`,
             'x-l10n-locale': locale,
         },
         params: { regNumber },

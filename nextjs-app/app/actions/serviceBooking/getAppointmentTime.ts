@@ -1,6 +1,6 @@
 "use server";
 import axios from 'axios';
-import { SERVICE_BOOKING_API_TOKEN, SERVICE_BOOKING_API_URL } from './api';
+import { getAuthToken, SERVICE_BOOKING_API_URL } from './api';
 import { CommonResponse } from '@/app/types/common';
 import { AppointmentTimeSlotsPayload } from './types';
 
@@ -26,11 +26,12 @@ export async function getAppointmentTimeSlots(payload: AppointmentTimeSlotsPaylo
     validateAppointmentTimeSlotsPayload(payload);
 
     const url = `${SERVICE_BOOKING_API_URL}/api/service/appointment-time`;
+    const apiToken = await getAuthToken();
     const config = {
         method: 'post',
         url,
         headers: {
-            'Authorization': SERVICE_BOOKING_API_TOKEN,
+            'Authorization': `Bearer ${apiToken}`,
             'Content-Type': 'application/json',
         },
         data: payload,
