@@ -10,6 +10,7 @@ import PortableText from "@/app/components/PortableText"
 import Link from "next/link"
 import { Loader2 } from "lucide-react"
 import useDeviceDetection from "@/app/hooks/useDeviceDetection"
+import { urlForPDF } from "@/sanity/lib/utils"
 
 interface OptionType {
   value: string
@@ -177,13 +178,15 @@ export default function ServiceModel({ block }: ServiceModelProps) {
       <div className="flex flex-col gap-5 mt-5 lg:flex-row lg:flex-wrap lg:justify-between items-center">
         <p className="text-base text-center">{block?.pdfLabel}</p>
         <div className="w-max">
-          <Link
-            href="https://geelyksa.com/wp-content/uploads/2024/10/PMS-Old-Vehicles.pdf"
-            target="_blank"
-            className="md:text-[20px] text-base min-w-[8em] py-2 px-5 md:px-[20px] md:py-[10px] font-[500] rounded border w-max hover:bg-[#194BFF] hover:text-white transition ease-in-out duration-300"
-          >
-            {block?.downloadButtonText}
-          </Link>
+          {block.pdfFile && (
+            <Link
+              href={urlForPDF(block.pdfFile) || ""}
+              target="_blank"
+              className="md:text-[20px] text-base min-w-[8em] py-2 px-5 md:px-[20px] md:py-[10px] font-[500] rounded border w-max hover:bg-[#194BFF] hover:text-white transition ease-in-out duration-300"
+            >
+              {block?.downloadButtonText}
+            </Link>
+          )}
         </div>
       </div>
     </div>

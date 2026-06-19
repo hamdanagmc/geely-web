@@ -75,6 +75,16 @@ export type ServiceCostModel = {
   termAndConditionText?: BlockContent;
   pdfLabel?: string;
   downloadButtonText?: string;
+  pdfFile?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  };
   buttonText?: string;
 };
 
@@ -4334,6 +4344,16 @@ export type GetPageQueryResult = {
     termAndConditionText?: BlockContent;
     pdfLabel?: string;
     downloadButtonText?: string;
+    pdfFile?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      media?: unknown;
+      _type: "file";
+    };
     buttonText?: string;
   } | {
     _key: string;
