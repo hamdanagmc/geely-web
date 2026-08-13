@@ -41,7 +41,7 @@ export default function Footer({ locale, fragment, siteSettingData }: FooterProp
             {/* Logos Section */}
             <div className="space-y-8 md:w-[41%] w-full min-w-[41%]">
               <div className="flex items-center gap-4 md:mt-[-10px]">
-                <div className="relative w-[174px] h-[38px]">
+                <div className="relative w-[190px] h-[50px]">
                   {fragment?.footer?.footerLogo?.image?.asset && (
                     <Image
                       src={
@@ -49,22 +49,6 @@ export default function Footer({ locale, fragment, siteSettingData }: FooterProp
                         ""
                       }
                       alt={fragment?.footer?.footerLogo?.altText || ""}
-                      fill
-                      priority
-                      className="object-contain"
-                    />
-                  )}
-                </div>
-                <div className="w-px h-6 bg-white/80" />
-                <div className="relative w-[85px] h-[20px]">
-                  {fragment?.footer?.footerLogo2?.image?.asset?._ref && (
-                    <Image
-                      src={
-                        urlForImage(
-                          fragment?.footer?.footerLogo2?.image
-                        )?.url() || ""
-                      }
-                      alt={fragment?.footer?.footerLogo2?.altText || ""}
                       fill
                       priority
                       className="object-contain"
