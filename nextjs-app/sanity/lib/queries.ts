@@ -117,8 +117,15 @@ export const getPageQuery = defineQuery(`
        _type == "contactFormSection" => {
           ...,
           form{
-          ...,
-          link -> {
+            ...,
+            termsAndConditionsLabel[]{
+              ...,
+              markDefs[]{
+                ...,
+                ${linkReference}
+              }
+            },
+            link -> {
               _id,
               title,
               "slug": slug.current
@@ -147,6 +154,13 @@ export const getPageQuery = defineQuery(`
       },
       _type == "requestQuoteForm" => {
           ...,
+          termsAndConditionsLabel[]{
+            ...,
+            markDefs[]{
+              ...,
+              ${linkReference}
+            }
+          },
           link -> {
               _id,
               title,
@@ -164,8 +178,15 @@ export const getPageQuery = defineQuery(`
       _type == "fleetContactFormSection" => {
           ...,
           form{
-          ...,
-          link -> {
+            ...,
+            termsAndConditionsLabel[]{
+              ...,
+              markDefs[]{
+                ...,
+                ${linkReference}
+              }
+            },
+            link -> {
               _id,
               title,
               "slug": slug.current
@@ -183,13 +204,20 @@ export const getPageQuery = defineQuery(`
       _type == "customerLookup" => {
           ...,
           form{
-          ...,
-          termsAndConditionLink -> {
-              _id,
-              title,
-              "slug": slug.current
+            ...,
+            termsAndConditionsLabel[]{
+              ...,
+              markDefs[]{
+                ...,
+                ${linkReference}
+              }
+            },
+            termsAndConditionLink -> {
+                _id,
+                title,
+                "slug": slug.current
+            }
           }
-}
       },
       _type == "bannerCarousel" => {
         ...,
@@ -407,8 +435,15 @@ export const getFleetPageQuery = (locale: string) => {
         _type == "fleetContactFormSection" => {
           ...,
           form{
-          ...,
-          link -> {
+            ...,
+            termsAndConditionsLabel[]{
+              ...,
+              markDefs[]{
+                ...,
+                ${linkReference}
+              }
+            },
+            link -> {
               _id,
               title,
               "slug": slug.current
@@ -607,6 +642,23 @@ export const getCarsQuery = defineQuery(`
 export const getOfferDetailQuery = defineQuery(`
   *[_type == 'offer' && slug.current == $slug][0]{
      ...,
+     offerDetailForm {
+       ...,
+       privacyPolicyLabel[]{
+         ...,
+         markDefs[]{
+           ...,
+           ${linkReference}
+         }
+       },
+       termsAndConditionsLabel[]{
+         ...,
+         markDefs[]{
+           ...,
+           ${linkReference}
+         }
+       }
+     },
      link -> {
               "slug": slug.current
           }

@@ -6,69 +6,69 @@ export const requestQuoteForm = defineType({
     type: 'object',
     fields: [
         defineField({
-            name : 'stepOneLabel',
-            type : 'string',
+            name: 'stepOneLabel',
+            type: 'string',
         }),
         defineField({
-            name : 'chooseYourCarLabel',
-            type : 'string',
+            name: 'chooseYourCarLabel',
+            type: 'string',
         }),
         defineField({
-            name : 'sedanLabel',
-            type : 'string',
+            name: 'sedanLabel',
+            type: 'string',
         }),
         defineField({
-            name : 'suvLabel',
-            type : 'string',
+            name: 'suvLabel',
+            type: 'string',
         }),
         defineField({
-            name : 'stepTwoLabel',
-            type : 'string',
+            name: 'stepTwoLabel',
+            type: 'string',
         }),
         defineField({
-            name : 'selectModelLabel',
-            type : 'string',
+            name: 'selectModelLabel',
+            type: 'string',
         }),
         defineField({
-            name : 'models',
-            type : 'array',
-            of :[
+            name: 'models',
+            type: 'array',
+            of: [
                 defineField({
-                    name : 'model',
-                    type : 'object',
-                    fields :[
+                    name: 'model',
+                    type: 'object',
+                    fields: [
                         defineField({
-                            name : 'image',
-                            type : 'customImage',
+                            name: 'image',
+                            type: 'customImage',
                             description: " image size should be 266x132 pixles",
-                            title : 'Thumbnail Image'
+                            title: 'Thumbnail Image'
                         }),
                         defineField({
-                            name : 'title',
-                            type : 'string',
-                            title : 'Model Title'
+                            name: 'title',
+                            type: 'string',
+                            title: 'Model Title'
                         }),
                         defineField({
                             name: "category",
                             type: "string",
                             title: "Select Category",
                             options: {
-                              list: [
-                                { title: "SUV", value: "suv" },
-                                { title: "Sedan", value: "sedan" },
-                              ],
-                              layout: "radio",
+                                list: [
+                                    { title: "SUV", value: "suv" },
+                                    { title: "Sedan", value: "sedan" },
+                                ],
+                                layout: "radio",
                             },
-                          }),
+                        }),
                     ]
                 })
             ]
         }),
         defineField({
-            name : 'stepThreeLabel',
-            type : 'string',
+            name: 'stepThreeLabel',
+            type: 'string',
         }),
-        
+
         defineField({
             name: 'formTitle',
             type: 'string',
@@ -146,19 +146,26 @@ export const requestQuoteForm = defineType({
             of: [{ type: 'string' }]
         }),
         defineField({
-                  name: "commentsLabel",
-                  type: "string",
-                  title: "Comments Label",
-                }),
-                defineField({
-                  name: "commentsPlaceholder",
-                  type: "string",
-                  title: "Comments Placeholder",
-                }),
+            name: "commentsLabel",
+            type: "string",
+            title: "Comments Label",
+        }),
+        defineField({
+            name: "commentsPlaceholder",
+            type: "string",
+            title: "Comments Placeholder",
+        }),
+        defineField({
+            name: 'termsAndConditionsLabel',
+            type: 'blockContent',
+            title: 'Terms & Conditions Label',
+        }),
         defineField({
             name: 'termsAndConditions',
             title: 'Terms and Conditions',
             type: 'object',
+            readOnly: true,
+            deprecated: { reason: "This field is deprecated and will be removed in the future." },
             fields: [
                 defineField({ name: 'label', title: 'Terms and Conditions Text', type: 'string' }),
                 defineField({ name: 'termsAndConditionsTitle', title: 'Terms and Conditions Heading', type: 'string' }),
@@ -171,16 +178,16 @@ export const requestQuoteForm = defineType({
             type: 'string',
         }),
         defineField({
-            name : 'link',
-            type : 'reference',
-            title : 'Select thankyou Page',
-            to : [{type : 'page'}]
-          }),
+            name: 'link',
+            type: 'reference',
+            title: 'Select thankyou Page',
+            to: [{ type: 'page' }]
+        }),
     ],
-    preview : {
-        prepare () {
+    preview: {
+        prepare() {
             return {
-                title : 'Request A Quote Form'
+                title: 'Request A Quote Form'
             }
         }
     }

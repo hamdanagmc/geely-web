@@ -6,6 +6,9 @@ import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMFleetSalesEmail } from "@/app/services/email/crm";
 import { FleetSalesFormProps } from "@/app/types/email";
 import { FleetContactFormSection } from "@/sanity.types";
+import { PortableText as SanityPortableText } from "next-sanity";
+import ResolvedLink from "@/app/components/ResolvedLink";
+import DefaultTermsLabel from "./DefaultTermsLabel";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useFormik } from "formik";
@@ -107,6 +110,21 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
   const pathname = usePathname();
   const pathSegments = pathname.split("/");
   const currentLocale = pathSegments[1] || "en";
+
+  const inlineComponents: any = {
+    block: {
+      normal: ({ children }: any) => <span>{children}</span>,
+    },
+    marks: {
+      link: ({ children, value }: any) => {
+        return (
+          <ResolvedLink link={value} className="text-[#0070b7] hover:underline">
+            {children}
+          </ResolvedLink>
+        );
+      },
+    },
+  };
 
   //generate and set csrf token
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
@@ -561,8 +579,11 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
                     checked={formik.values.agreed}
                   />
                   <label htmlFor="agreed" className="text-sm font-medium text-gray-700">
-                    I have read the<a href={`/en/privacy-policy`} className="text-[#0070b7] mx-1 hover:underline">
-                      privacy policy</a>and agree.
+                    {block?.form?.termsAndConditionsLabel ? (
+                      <SanityPortableText value={block.form.termsAndConditionsLabel} components={inlineComponents} />
+                    ) : (
+                      <DefaultTermsLabel currentLocale={currentLocale} termsHref={(block?.form?.link as any)?.slug} />
+                    )}
                   </label>
                 </div>
                 {formik.touched.agreed && formik.errors.agreed ? (

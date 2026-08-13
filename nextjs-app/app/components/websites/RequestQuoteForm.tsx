@@ -6,6 +6,9 @@ import { sendContactCustomerEmail } from "@/app/services/email/contact"
 import { sendCRMRequestQuoteEmail } from "@/app/services/email/crm"
 import { RequestQuoteProps } from "@/app/types/email"
 import type { RequestQuoteForm } from "@/sanity.types"
+import { PortableText } from "next-sanity"
+import ResolvedLink from "@/app/components/ResolvedLink"
+import DefaultTermsLabel from "./DefaultTermsLabel"
 import { urlForImage } from "@/sanity/lib/utils"
 import axios from "axios"
 import { useFormik } from "formik"
@@ -89,6 +92,21 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split("/");
   const currentLocale = pathSegments[1] || "en";
+
+  const inlineComponents: any = {
+    block: {
+      normal: ({ children }: any) => <span>{children}</span>,
+    },
+    marks: {
+      link: ({ children, value }: any) => {
+        return (
+          <ResolvedLink link={value} className="text-[#0070b7] hover:underline">
+            {children}
+          </ResolvedLink>
+        );
+      },
+    },
+  };
 
   //generate and set csrf token
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
@@ -672,10 +690,11 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
                   checked={formik.values.agreed}
                 />
                 <label htmlFor="agreed" className="text-sm font-medium text-gray-700">
-                  {block?.termsAndConditions?.label || "I have read and accept"}{" "}
-                  <a href={block?.termsAndConditions?.link || "#"} className="text-[#0070b7] hover:underline">
-                    {block?.termsAndConditions?.termsAndConditionsTitle || "Terms & Conditions"}
-                  </a>
+                  {block?.termsAndConditionsLabel ? (
+                    <PortableText value={block.termsAndConditionsLabel} components={inlineComponents} />
+                  ) : (
+                    <DefaultTermsLabel currentLocale={currentLocale} termsHref={block?.termsAndConditions?.link} />
+                  )}
                 </label>
               </div>
               {formik.touched.agreed && formik.errors.agreed ? (

@@ -1359,7 +1359,7 @@ h2.react-datepicker__current-month {
     background: transparent;
     color: #194bff;
 }
-.input-style>div{width: 100%;}
+.input-style>div{width: 100%;padding:4px 0;}
 .errorMessge-layer {
     z-index: 1001;
     background: rgba(0, 0, 0, .79);

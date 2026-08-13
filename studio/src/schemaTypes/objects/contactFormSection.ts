@@ -125,6 +125,11 @@ export const contactFormSection = defineType({
           title: "Comments Placeholder",
         }),
         defineField({
+          name: 'termsAndConditionsLabel',
+          type: 'blockContent',
+          title: 'Terms & Conditions Label',
+        }),
+        defineField({
           name: "submitButtonLabel",
           type: "string",
           title: "Submit Button Label",

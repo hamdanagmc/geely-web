@@ -61,20 +61,31 @@ export default defineType({
                     type: 'string'
                 }),
                 defineField({
+                    name: 'termsAndConditionsLabel',
+                    type: 'blockContent',
+                    title: 'Terms & Conditions Label',
+                }),
+                defineField({
                     name: 'termsAndCondition',
                     title: 'Terms And Condition',
-                    type: 'string'
+                    type: 'string',
+                    readOnly: true,
+                    deprecated: { reason: "This field is deprecated and will be removed in the future." }
                 }),
                 defineField({
                     name: 'termsAndConditionColor',
                     title: 'Terms And Condition Label',
-                    type: 'string'
+                    type: 'string',
+                    readOnly: true,
+                    deprecated: { reason: "This field is deprecated and will be removed in the future." }
                 }),
                 defineField({
                     name: 'termsAndConditionLink',
                     title: 'Select Page Link',
                     type: 'reference', // Using the existing link schema
-                    to: [{ type: 'page' }]
+                    to: [{ type: 'page' }],
+                    readOnly: true,
+                    deprecated: { reason: "This field is deprecated and will be removed in the future." }
                 }),
                 defineField({
                     name: 'buttomText',

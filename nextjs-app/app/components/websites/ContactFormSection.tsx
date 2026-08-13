@@ -6,6 +6,9 @@ import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMContactEmail } from "@/app/services/email/crm";
 import { ContactEmailFields } from "@/app/types/email";
 import { ContactFormSection } from "@/sanity.types";
+import { PortableText as SanityPortableText } from "next-sanity";
+import ResolvedLink from "@/app/components/ResolvedLink";
+import DefaultTermsLabel from "./DefaultTermsLabel";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useFormik } from "formik";
@@ -32,6 +35,7 @@ interface FormValues {
   comments: string;
   countrymobileNoCode: string;
   referring_url?: string;
+  agreed: boolean;
 }
 
 const validationSchema = Yup.object({
@@ -49,6 +53,7 @@ const validationSchema = Yup.object({
   type: Yup.string().required("Please select type"),
   location: Yup.string().required("Location is required"),
   countrymobileNoCode: Yup.string().required("Country code is required"),
+  agreed: Yup.boolean().oneOf([true], "You must accept the terms and conditions"),
 });
 
 type ContactFormSectionProps = {
@@ -96,6 +101,21 @@ export default function ContactFormSectionComp({
   const currentLocale = pathSegments[1] || "en";
   const [isSubmitting, setSubmitting] = useState(false);
 
+  const inlineComponents: any = {
+    block: {
+      normal: ({ children }: any) => <span>{children}</span>,
+    },
+    marks: {
+      link: ({ children, value }: any) => {
+        return (
+          <ResolvedLink link={value} className="text-[#0070b7] hover:underline">
+            {children}
+          </ResolvedLink>
+        );
+      },
+    },
+  };
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -134,6 +154,7 @@ export default function ContactFormSectionComp({
       location: "",
       countrymobileNoCode: "+971",
       referring_url: "",
+      agreed: false,
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
@@ -591,6 +612,32 @@ export default function ContactFormSectionComp({
                 {formik.touched.comments && formik.errors.comments ? (
                   <div className="error-field" style={{ color: "red" }}>
                     {formik.errors.comments}
+                  </div>
+                ) : null}
+              </div>
+
+              {/* Terms and Conditions */}
+              <div className="py-2">
+                <div className="flex ltr:space-x-2 rtl:space-x-reverse">
+                  <input
+                    id="agreed"
+                    name="agreed"
+                    type="checkbox"
+                    className="h-4 w-4 rtl:ml-2"
+                    onChange={formik.handleChange}
+                    checked={formik.values.agreed}
+                  />
+                  <label htmlFor="agreed" className="text-sm font-medium text-gray-700">
+                    {block?.form?.termsAndConditionsLabel ? (
+                     <SanityPortableText value={block.form.termsAndConditionsLabel} components={inlineComponents} />
+                    ) : (
+                      <DefaultTermsLabel currentLocale={currentLocale} termsHref={(block?.form?.link as any)?.slug} />
+                    )}
+                  </label>
+                </div>
+                {formik.touched.agreed && formik.errors.agreed ? (
+                  <div className="error-field" style={{ color: "red" }}>
+                    {formik.errors.agreed}
                   </div>
                 ) : null}
               </div>

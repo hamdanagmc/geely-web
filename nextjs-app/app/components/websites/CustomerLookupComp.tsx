@@ -4,6 +4,9 @@ import * as Yup from "yup"
 import type { CustomerLookup } from "@/sanity.types"
 import PortableText from "../PortableText"
 import type { PortableTextBlock } from "next-sanity"
+import { PortableText as SanityPortableText } from "next-sanity"
+import ResolvedLink from "@/app/components/ResolvedLink"
+import DefaultTermsLabel from "./DefaultTermsLabel"
 import { getVehicleDetailByVin, getVehicleDetailByVehicleNumber } from "@/app/actions/serviceBooking/vehicleDetail"
 import { useEffect, useState } from "react"
 import Image from "next/image"
@@ -41,6 +44,22 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
   const dispatch = useDispatch()
   const { currentLocale } = useDeviceDetection()
   const [isMounted, setIsMounted] = useState(false)
+
+  const inlineComponents: any = {
+    block: {
+      normal: ({ children }: any) => <span>{children}</span>,
+    },
+    marks: {
+      link: ({ children, value }: any) => {
+        return (
+          <ResolvedLink link={value} className="text-[#0070B7] hover:underline">
+            {children}
+          </ResolvedLink>
+        );
+      },
+    },
+  };
+
   const [formErrorMessegeStatus, setFormErrorMessegeStatus] = useState(false)
   const [showVin, setShowVin] = useState(false);
   const [vinAlert, setVinAlert] = useState(false);
@@ -288,8 +307,11 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
 
                 {/* Terms and conditions */}
                 <p className="mx-1 text-sm font-medium text-gray-7 ">
-                  {block.form?.termsAndCondition}{" "}
-                  <Link href={`/${currentLocale}/${(block?.form?.termsAndConditionLink as any)?.slug?.replace(/^ar\//, "") || ""}`} className="text-[#0070B7]">{block.form?.termsAndConditionColor}</Link>
+                  {block?.form?.termsAndConditionsLabel ? (
+                   <SanityPortableText value={block.form.termsAndConditionsLabel} components={inlineComponents} />
+                  ) : (
+                    <DefaultTermsLabel currentLocale={currentLocale} />
+                  )}
                 </p>
               </div>
               {formik.touched.agreed && formik.errors.agreed ? (

@@ -77,6 +77,11 @@ export const offerDetailForm = defineType({
             title: "Privacy Policy Label",
         }),
         defineField({
+            name: 'termsAndConditionsLabel',
+            type: 'blockContent',
+            title: 'Terms & Conditions Label',
+        }),
+        defineField({
             name: "submitButtonLabel",
             type: "string",
             title: "Submit Button Label",

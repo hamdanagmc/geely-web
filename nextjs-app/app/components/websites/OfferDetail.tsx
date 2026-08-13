@@ -8,7 +8,8 @@ import { Offer } from "@/sanity.types";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useTranslations } from "next-intl";
-import { type PortableTextBlock } from "next-sanity";
+import { type PortableTextBlock, PortableText as SanityPortableText } from "next-sanity";
+import ResolvedLink from "@/app/components/ResolvedLink";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,6 +20,7 @@ import useDeviceDetection from "../../hooks/useDeviceDetection";
 import ImageComp from "../CustomImage";
 import { saveLeads } from "@/app/actions/sanity/leads";
 import { getCookie } from "cookies-next";
+import DefaultTermsLabel from "./DefaultTermsLabel";
 
 type OfferListProps = {
   offer: Offer;
@@ -65,6 +67,21 @@ export default function OfferDetail({ offer }: OfferListProps) {
   const [isSubmitting, setSubmitting] = useState(false);
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
+
+  const inlineComponents: any = {
+    block: {
+      normal: ({ children }: any) => <span>{children}</span>,
+    },
+    marks: {
+      link: ({ children, value }: any) => {
+        return (
+          <ResolvedLink link={value} className="text-[#06398F] hover:underline">
+            {children}
+          </ResolvedLink>
+        );
+      },
+    },
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -394,11 +411,11 @@ export default function OfferDetail({ offer }: OfferListProps) {
                     className="mt-1"
                   />
                   <label htmlFor="privacyPolicy" className="text-sm neoSansArabic">
-                    {t("readText")}{" "}
-                    <Link href={`/${currentLocale}/privacy-policy`} className="text-[#06398F]">
-                      {t("privacyPolicyText")}
-                    </Link>{" "}
-                    {t("readText2")} *
+                    {offer?.offerDetailForm?.privacyPolicyLabel ? (
+                      <SanityPortableText value={offer.offerDetailForm.privacyPolicyLabel} components={inlineComponents} />
+                    ) : (
+                     <DefaultTermsLabel currentLocale={currentLocale} />
+                    )}
                   </label>
 
                 </div>
