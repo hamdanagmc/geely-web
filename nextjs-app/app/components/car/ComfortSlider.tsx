@@ -81,10 +81,11 @@ export default function ComfortSliderComponent({ block }: ComfortSliderProps) {
                   {slide?.mediaType == 'video' && ((slide as any)?.video?.asset?.playbackId || slide?.videoId) && (
                     <MuxVideo
                       playbackId={((slide as any)?.video?.asset?.playbackId || slide?.videoId) as string}
-                      autoPlay
+                      autoPlay="muted"
                       loop
                       muted
                       controls={false}
+                      preferPlayback="mse"
                       className="w-[720px] h-[540px] static inset-0 object-cover"
                       onError={(error) => {
                         console.error("Mux Video Player Error:", error)

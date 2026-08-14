@@ -71,7 +71,7 @@ export default function middleware(request: NextRequest) {
 
     font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com data:;
 
-    media-src 'self' https://stream.mux.com https://*.mux.com;
+    media-src 'self' blob: https://stream.mux.com https://*.mux.com;
 
     frame-src 'self' https://*.vimeo.com/ https://vimeo.com/ https://vercel.live/
       https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com

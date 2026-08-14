@@ -118,9 +118,10 @@ export default function OwlStageOuterComp({ block, index }: OwlStageOuterProps) 
             {slide?.mediaType == 'video' && !isMobileDevice && (slide?.video?.asset as any)?.playbackId && (
               <MuxVideo
                 playbackId={(slide?.video?.asset as any)?.playbackId}
-                autoPlay
+                autoPlay="muted"
                 loop
                 muted
+                preferPlayback="mse"
                 controls={false}
                 className="w-full h-[83vh] static inset-0 object-cover"
                 onError={(error) => {

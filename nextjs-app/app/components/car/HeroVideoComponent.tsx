@@ -45,10 +45,11 @@ export default function HeroVideoMux({ block }: HeroVideoComponentProps) {
     <div className="relative">
       <MuxVideo
         playbackId={playbackId}
-        autoPlay
+        autoPlay="muted"
         loop={block?.loop ?? true}
         muted={isMuted}
         controls={false}
+        preferPlayback="mse"
         onCanPlay={onReady}
         className="w-full mx-auto rounded-lg shadow-lg"
         onError={(error) => {

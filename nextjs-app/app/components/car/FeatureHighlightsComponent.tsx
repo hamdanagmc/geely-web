@@ -94,9 +94,10 @@ export default function FeatureHighlightsComp({
                       <MuxVideo
                         playbackId={playbackId}
                         streamType="on-demand"
-                        autoPlay
+                        autoPlay="muted"
                         muted
                         loop
+                        preferPlayback="mse"
                         playsInline
                         controls={false}
                         className={`video-player ${slide.videoSize === '334x540' ? 'md:w-[334px] w-full h-[540px]' : 'w-[720px] h-[540px]'

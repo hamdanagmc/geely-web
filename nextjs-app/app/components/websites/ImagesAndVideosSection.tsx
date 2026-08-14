@@ -315,6 +315,7 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
                               loop
                               muted
                               controls={false}
+                              preferPlayback="mse"
                               className="w-full h-[100%] static inset-0 object-cover"
                               onError={(error) => {
                                 console.error("Mux Video Player Error:", error);

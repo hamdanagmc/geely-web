@@ -49,19 +49,16 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
       <div className="absolute heroImgCmpLayer inset-x-0 bottom-0 h-[40%] bg-[#BFBFCB] z-[11] opacity-99" />
 
       {/* Video Layer */}
-      {playbackId && !videoError && (
+      {playbackId && (
         <MuxVideo
           playbackId={playbackId}
-          autoPlay
+          autoPlay="muted"
           loop
           muted
+          preferPlayback="mse"
           playsInline
           controls={false}
           className="w-full h-[75%] static inset-0 object-cover"
-          onError={(error) => {
-            console.error("Mux Video Player Error:", error)
-            setVideoError(true)
-          }}
         />
       )}
 
