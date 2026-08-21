@@ -67,7 +67,7 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
           {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center"
-            
+
           >{isMobileDevice && slide?.mobileImage?.altText ? (
             <Image
               src={urlForImage(slide?.mobileImage?.image ?? "")?.url() ?? "/placeholder.svg"}
@@ -117,44 +117,43 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
 
             {/* Bottom Controls */}
             {isMobileDevice && (
-            <div className="p-6 sm:p-8 banner_Text_btm md:p-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-0">
-              {/* Custom Pagination Dots */}
-              <div className="flex md:mt-3 gap-3 order-2 sm:order-1">
-                {block?.slides?.map((_, dotIndex) => (
-                  <button
-                    key={dotIndex}
-                    onClick={() => handleDotClick(dotIndex)}
-                    className={`w-6 h-[3px] rounded-none transition-all duration-300 ${
-                      activeIndex === dotIndex ? "w-6 bg-white" : "bg-white/40"
-                    }`}
-                    aria-label={`Go to slide ${dotIndex + 1}`}
-                  />
-                ))}
-              </div>
+              <div className="p-6 sm:p-8 banner_Text_btm md:p-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-0">
+                {/* Custom Pagination Dots */}
+                <div className="flex md:mt-3 gap-3 order-2 sm:order-1">
+                  {block?.slides?.map((_, dotIndex) => (
+                    <button
+                      key={dotIndex}
+                      onClick={() => handleDotClick(dotIndex)}
+                      className={`w-6 h-[3px] rounded-none transition-all duration-300 ${activeIndex === dotIndex ? "w-6 bg-white" : "bg-white/40"
+                        }`}
+                      aria-label={`Go to slide ${dotIndex + 1}`}
+                    />
+                  ))}
+                </div>
 
-              {/* CTA Buttons */}
-              <div className="flex gap-4 banner_Text_btn order-1 sm:order-2">
-                {slide?.learnMoreTitle && (
-                  <Link
-                  href={`/${currentLocale}/car/${(slide?.link as any)?.slug
-                    ?.split('/')
-                    .filter((segment: string) => segment !== '')
-                    .pop()}`}
-                    className="px-4 linktype1 sm:px-6 font-medium md:px-8 py-2 sm:py-[13px] border border-white text-white text-sm sm:text-[15px] hover:bg-white/10 transition-colors rounded-[4px]"
-                  >
-                    {slide?.learnMoreTitle}
-                  </Link>
-                )}
-                {slide?.testDriveTitle && (
-                  <button
-                    onClick={() => handleTestDriveSelection((slide?.link as unknown as { title?: string })?.title || "")}
-                    className="px-4 linktype2 font-medium sm:px-6 md:px-8 py-2 sm:py-[13px] bg-white text-[#194BFF] text-sm sm:text-[15px] hover:bg-white/90 transition-colors rounded-[4px]"
-                  >
-                    {slide?.testDriveTitle}
-                  </button>
-                )}
+                {/* CTA Buttons */}
+                <div className="flex gap-4 banner_Text_btn order-1 sm:order-2">
+                  {slide?.learnMoreTitle && (
+                    <Link
+                      href={`/${currentLocale}/car/${(slide?.link as any)?.slug
+                        ?.split('/')
+                        .filter((segment: string) => segment !== '')
+                        .pop()}`}
+                      className="px-4 linktype1 sm:px-6 font-medium md:px-8 py-2 sm:py-[13px] border border-white text-white text-sm sm:text-[15px] hover:bg-white/10 transition-colors rounded-[4px]"
+                    >
+                      {slide?.learnMoreTitle}
+                    </Link>
+                  )}
+                  {slide?.testDriveTitle && (
+                    <button
+                      onClick={() => handleTestDriveSelection((slide?.link as unknown as { title?: string })?.title || "")}
+                      className="px-4 linktype2 font-medium sm:px-6 md:px-8 py-2 sm:py-[13px] bg-white text-[#194BFF] text-sm sm:text-[15px] hover:bg-white/90 transition-colors rounded-[4px]"
+                    >
+                      {slide?.testDriveTitle}
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
             )}
           </div>
           {/* Bottom Controls */}
@@ -166,9 +165,8 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
                   <button
                     key={dotIndex}
                     onClick={() => handleDotClick(dotIndex)}
-                    className={`w-6 h-[3px] rounded-none transition-all duration-300 ${
-                      activeIndex === dotIndex ? "w-6 bg-white" : "bg-white/40"
-                    }`}
+                    className={`w-6 h-[3px] rounded-none transition-all duration-300 ${activeIndex === dotIndex ? "w-6 bg-white" : "bg-white/40"
+                      }`}
                     aria-label={`Go to slide ${dotIndex + 1}`}
                   />
                 ))}
@@ -178,10 +176,10 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
               <div className="flex gap-4 banner_Text_btn order-1 sm:order-2">
                 {slide?.learnMoreTitle && (
                   <Link
-                  href={`/${currentLocale}/car/${(slide?.link as any)?.slug
-                    ?.split('/')
-                    .filter((segment: string) => segment !== '')
-                    .pop()}`}
+                    href={slide?.link ? `/${currentLocale}/car/${(slide?.link as any)?.slug
+                      ?.split('/')
+                      .filter((segment: string) => segment !== '')
+                      .pop()}` : slide.carDetailPath || ""}
                     className="px-4 linktype1 sm:px-6 font-medium md:px-8 py-2 sm:py-[13px] border border-white text-white text-sm sm:text-[15px] hover:bg-white/10 transition-colors rounded-[4px]"
                   >
                     {slide?.learnMoreTitle}
@@ -197,7 +195,7 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
                 )}
               </div>
             </div>
-            )}
+          )}
         </SwiperSlide>
       ))}
     </Swiper>
