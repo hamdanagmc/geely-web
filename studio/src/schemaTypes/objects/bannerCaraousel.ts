@@ -62,12 +62,7 @@ export default defineType({
               title: 'Select Car Detail Page',
               to: [{ type: 'car' }],
             },
-            {
-              name: 'carDetailPath',
-              type: 'string',
-              title: 'Car Detail Path',
-              description: 'Enter path like /en/geelym9'
-            }
+
           ],
         },
       ],

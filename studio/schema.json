@@ -11371,13 +11371,6 @@
                   },
                   "optional": true
                 },
-                "carDetailPath": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string"
-                  },
-                  "optional": true
-                },
                 "_type": {
                   "type": "objectAttribute",
                   "value": {
@@ -12577,20 +12570,6 @@
         "optional": true
       },
       "pageUrl": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "lastReconciledAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "reconciliationNote": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
