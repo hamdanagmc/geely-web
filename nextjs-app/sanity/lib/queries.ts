@@ -167,6 +167,23 @@ export const getPageQuery = defineQuery(`
               "slug": slug.current
             }
       },
+      _type == "preBookHeroBannerComponent" => {
+          ...,
+          link -> {
+              _type,
+              _id,
+              title,
+              "slug": slug.current
+          }
+      },
+      _type == "vehiclePromoBanner" => {
+          ...,
+          link -> {
+              _id,
+              title,
+              "slug": slug.current
+          }
+      },
       _type == "promoCodeForm" => {
           ...,
           link -> {
@@ -577,6 +594,16 @@ export const getCarsQuery = defineQuery(`
               "slug": slug.current
             },
             linkOpenInNewTab,
+            preBook {
+    enable,
+    preBookButton,
+    price,
+    preBookButtonLink->{
+      _id,
+      title,
+      "slug": slug.current
+    }
+  },
       _type == "featureHighlightsComponent" => {
         ...,
         tabs[]{
@@ -658,6 +685,12 @@ export const getOfferDetailQuery = defineQuery(`
            ${linkReference}
          }
        }
+     },
+     preBookLink -> {
+        _type,
+        _id,
+        title,
+        "slug": slug.current
      },
      link -> {
               "slug": slug.current

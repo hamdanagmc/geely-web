@@ -22,6 +22,10 @@ export const settings = defineType({
       name: 'social',
       title: 'Social',
     },
+    {
+      name: 'prebooking',
+      title: 'Pre-Booking',
+    }
   ],
 
   fields: [
@@ -45,6 +49,14 @@ export const settings = defineType({
       initialValue: demo.title,
       validation: (rule) => rule.required(),
       group: 'basic',
+    }),
+    defineField({
+      name: 'preBookingAmountGeelyM9',
+      title: 'Pre booking amount for geely m9',
+      type: 'number',
+      description: 'Amount (in AED) used for the Geely M9 pre-booking flow',
+      group: 'prebooking',
+      validation: (rule) => rule.min(0),
     }),
     defineField({
       name: 'description',

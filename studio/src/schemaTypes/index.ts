@@ -12,6 +12,7 @@ import { offer } from './documents/offer'
 import { person } from './documents/person'
 import { post } from './documents/post'
 import showrooms from './documents/showrooms'
+import { vehiclePreBooking } from './documents/vehiclePreBooking'
 import { vehicle } from './documents/vehicle'
 import backgroundWithCaption from './objects/backgroundWithCaption'
 import bannerCaraousel from './objects/bannerCaraousel'
@@ -102,6 +103,11 @@ import { imageServiceDetail } from './objects/imageServiceDetail'
 import { serviceHighlight } from './objects/serviceHighlight'
 import { promoCodeForm } from './objects/promoCodeForm'
 import { promoCodes } from './singletons/promoCodes'
+import { preBookHeroBannerComponent } from './objects/preBookHeroBannerComponent'
+import { preBookForm } from './objects/preBookForm'
+import { vehiclePromoBanner } from './objects/vehiclePromoBanner'
+import { vehicleFeatureGrid } from './objects/vehicleFeatureGrid'
+import preBookThankyouComponent from './objects/preBookThankyouComponent'
 
 
 export const schemaTypes = [
@@ -127,6 +133,7 @@ export const schemaTypes = [
   models,
   serviceCost,
   sparePart,
+  vehiclePreBooking,
   
   // Objects
   blockContent,
@@ -215,4 +222,9 @@ export const schemaTypes = [
   sparePartsModel,
   serviceCostModel,
   promoCodeForm,
+  preBookHeroBannerComponent,
+  preBookForm,
+  vehiclePromoBanner,
+  vehicleFeatureGrid,
+  preBookThankyouComponent
 ]

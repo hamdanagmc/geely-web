@@ -29,7 +29,6 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
   const [videoError, setVideoError] = useState(false)
   const { setTestDrive } = useTestDrive();
   const router = useRouter();
-  
   const playbackId = block?.video?.asset?.playbackId;
 
   // Check if playbackId exists
@@ -81,6 +80,7 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
       </div>
 
       {/* Layer 3: Content */}
+      
       <div className="absolute heroBannerCnt inset-x-0 bottom-0 h-[30%] flex z-[12] items-end pb-[50px]">
         <div className="w-full pl-[60px] pr-[60px] mx-auto flex items-end justify-between">
           {/* Left side content */}
@@ -96,7 +96,7 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
                 />
               )}
             </div>
-            <p className="text-[26px] leading-[34px] text-black">{block.subtitle || "Perfected Presence"}</p>
+            {block?.subtitle && <p className="text-[26px] leading-[34px] text-black">{block.subtitle}</p> }
           </div>
 
           {/* Right side buttons */}
@@ -117,9 +117,21 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
                 {block?.brochureTitle}
                 </Link>
             )}
+
+             {block?.preBook && block?.preBook?.preBookButtonLink && (
+                <Link
+                onClick={() => setTestDrive(block?.brandTitle || "")}
+                href={`/${currentLocale}/${(block?.preBook?.preBookButtonLink as any)?.slug?.replace(/^ar\//, "") || ""}`}
+                className="px-6 py-3 text-[17px] font-medium leading-5 bg-transparent hover:bg-[#194bff] hover:text-[#fff] hover:border-[#194bff] text-black border border-black rounded-[3px]"
+                >
+                {block?.preBook?.preBookButton}
+                </Link>
+            )}
+
           </div>
         </div>
       </div>
+
     </section>
   )
 }

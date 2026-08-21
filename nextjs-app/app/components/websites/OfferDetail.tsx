@@ -113,7 +113,6 @@ export default function OfferDetail({ offer }: OfferListProps) {
     fetchCsrfToken();
   }, []);
 
-
   const formik = useFormik<FormValues>({
     initialValues: {
       title: "",
@@ -207,15 +206,31 @@ export default function OfferDetail({ offer }: OfferListProps) {
         src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
         strategy="lazyOnload"
       />
-      <div className="offer-details__hero pt-[6rem]">
-        {offer?.mainImage?.altText && (
-          <ImageComp
-            block={offer.mainImage}
-            imageClassName="object-cover w-full"
-            width={1600}
-            height={700}
-          />
-        )}
+      <div className="offer-details__hero pt-[6rem] relative">
+        
+        <div className="relative">
+          {offer?.mainImage?.altText && (
+            <ImageComp
+              block={offer.mainImage}
+              imageClassName="object-cover w-full"
+              width={1600}
+              height={700}
+            />
+          )}
+          {(offer as any)?.enablePreBookCta && (offer as any)?.preBookLink?.slug && (
+            <div className="md:absolute md:mt-0 mt-8 z-50 inset-0 flex flex-col md:flex-row gap-4 items-center justify-center pointer-events-none w-full md:px-6 px-4">
+               <div className="pointer-events-auto w-full md:w-auto flex justify-center">
+                 <Link 
+                   href={`/${currentLocale}${(offer as any).preBookLink._type === 'car' ? '/car' : ''}/${(offer as any).preBookLink.slug.replace(/^ar\//, "")}`} 
+                   className="w-full md:w-auto px-6 md:px-[55px] py-[13px] text-[17px] font-medium leading-[1] md:bg-white md:text-black border md:border-white md:hover:border-[#194bff] md:hover:bg-[#194bff] md:hover:text-white transition-colors duration-300 rounded-[3px] bg-[#194bff] border-[#194bff] text-white hover:bg-transparent hover:border-black hover:text-black text-center"
+                 >
+                   {(offer as any).preBookButtonTitle || 'Pre Book'}
+                 </Link>
+               </div>
+            </div>
+          )}
+          <div className="md:absolute inset-x-0 bottom-0 h-[100%] bg-[#000]/20" />
+        </div>
       </div>
       <div className={`offer-details`}>
         <div className="offer-details__grid">

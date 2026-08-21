@@ -23,6 +23,13 @@ export default defineType({
       description: 'Enable to center align the image',
       initialValue: false,
     }),
+    defineField({
+      name: 'containerWidth',
+      type: 'boolean',
+      title: 'Container Width',
+      description: 'Enable to use container width',
+      initialValue: false,
+    }),
 
   ],
   preview: {

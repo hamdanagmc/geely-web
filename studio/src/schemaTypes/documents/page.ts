@@ -119,6 +119,11 @@ export const page = defineType({
         { type: 'sparePartsModel' },
         { type: 'serviceCostModel' },
         { type: 'promoCodeForm' },
+        { type: 'preBookHeroBannerComponent' },
+        { type: 'preBookForm' },
+        {type: 'vehiclePromoBanner' },
+        {type: 'vehicleFeatureGrid' },
+        { type: 'preBookThankyouComponent' },
       ],
 
       options: {

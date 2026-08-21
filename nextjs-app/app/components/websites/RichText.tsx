@@ -33,7 +33,7 @@ const components: PortableTextComponents = {
 
 export default function RichTexComponent({ block }: RichTextProps) {
   return (
-    <section className={`${block?.imageCenter ? 'richTextImgCenter' : ''} py-[50px] mx-5 md:mx-[30px] lg:mx-10 richTextPara`}>
+    <section className={`${block?.containerWidth ? 'max-w-[1140px] m-auto contRichtext' : 'mx-5 md:mx-[30px] lg:mx-10'} ${block?.imageCenter ? 'richTextImgCenter' : ''} py-[50px] richTextPara`}>
       <div>
         {block?.content?.length ? (
           <PortableText

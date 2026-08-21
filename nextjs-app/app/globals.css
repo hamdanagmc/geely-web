@@ -632,7 +632,7 @@ a.opacity-0 {
 }
 
 .innerPage .richTextPara p {
-    @apply text-[18px] leading-relaxed
+    @apply text-[18px] leading-relaxed mb-5
 }
 .innerPage .thankyouRichText h2{
 margin-top: 20px;
@@ -1440,6 +1440,29 @@ h2.react-datepicker__current-month {
     max-width: 100%;
     padding-top: 30px;
 }
+.preBookHeroBanner::before{
+    background: linear-gradient(180deg, #000000 0%, rgba(242, 41, 91, 0) 30%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 30%;
+    z-index: 9;
+}
+.contRichtext h2{
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 20px;
+}
+.contRichtext{
+background: #FAFAFA;
+padding: 40px;
+margin-bottom: 60px;
+}
+.errorMTop{
+    margin-top: 4px!important;
+}
 @media (min-width: 768px) and (max-height: 700px) {
     .consentPopup {
         min-height: 600px;
@@ -1590,6 +1613,19 @@ background: #bfbfcb;
     .heroBannerImgCntr {
         margin-top: -21%;
     }
+    .contRichtext{
+        padding: 0 20px;
+    }
+    .preBookHeroBanner.heroBannerImgCntr{
+        margin-top: 0;
+        height: 100vh;
+    }
+    .preBookHeroBannerMain .heroBannerCnt{
+        position: absolute!important;
+    }
+    .preBookHeroBanner:before {
+    background: linear-gradient(#000 0%, #f2295b00 70%);
+    }
     .heroBannerCnt{
         position: relative;
     }
@@ -1614,6 +1650,7 @@ background: #bfbfcb;
         gap: 10px;
     justify-content: center;
     margin-top: 10px;
+    flex-wrap: balance;
     }
     .uniFeatureSlider h2{
         font-size: 23px;

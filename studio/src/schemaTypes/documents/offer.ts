@@ -71,6 +71,28 @@ export const offer = defineType({
       group : 'basic',
     }),
     defineField({
+      name: 'enablePreBookCta',
+      title: 'Enable Pre Book CTA',
+      type: 'boolean',
+      initialValue: false,
+      group: 'basic',
+    }),
+    defineField({
+      name: 'preBookButtonTitle',
+      title: 'Button Title',
+      type: 'string',
+      hidden: ({ document }) => !document?.enablePreBookCta,
+      group: 'basic',
+    }),
+    defineField({
+      name: 'preBookLink',
+      type: 'reference',
+      title: 'Select Page or Car',
+      to: [{ type: 'page' }, { type: 'car' }],
+      hidden: ({ document }) => !document?.enablePreBookCta,
+      group: 'basic',
+    }),
+    defineField({
       name: 'content',
       title: 'Content',
       type: 'blockContent',

@@ -1,5 +1,5 @@
-import {defineField, defineType} from 'sanity'
-import {DocumentIcon} from '@sanity/icons'
+import { defineField, defineType } from 'sanity'
+import { DocumentIcon } from '@sanity/icons'
 import { i18n } from '../../../language'
 
 /**
@@ -36,13 +36,13 @@ export const car = defineType({
       },
       group: 'basic',
     }),
-    
+
     defineField({
       name: 'pageBuilder',
       title: 'Page builder',
       type: 'array',
-      of: [{type: 'heroVideoComponent'}, {type: 'heroBannerComponent'}, {type: 'stickyTabsComponent'}, {type: 'featureHighlightsComponent'}, {type:'car360'}, {type:'richText'}, {type: 'richTextheadingPara'}, 
-        {type:"owlStageOuter"}, {type:'comfortSlider'}], 
+      of: [{ type: 'heroVideoComponent' }, { type: 'heroBannerComponent' }, { type: 'stickyTabsComponent' }, { type: 'featureHighlightsComponent' }, { type: 'car360' }, { type: 'richText' }, { type: 'richTextheadingPara' },
+      { type: "owlStageOuter" }, { type: 'comfortSlider' }],
       options: {
         insertMenu: {
           // Configure the "Add Item" menu to display a thumbnail preview of the content type. https://www.sanity.io/docs/array-type#efb1fe03459d
@@ -78,12 +78,12 @@ export const car = defineType({
     select: {
       title: 'title',
       subtitle: 'slug.current',
-      locale : 'language',
+      locale: 'language',
     },
     prepare({ title, subtitle, locale }) {
       return {
         title,
-        subtitle : `locale : ${locale}, slug : ${subtitle}`,
+        subtitle: `locale : ${locale}, slug : ${subtitle}`,
       }
     }
   }

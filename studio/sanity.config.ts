@@ -29,6 +29,7 @@ import { table } from '@sanity/table'
 import { DeleteByDateRangeTool } from './src/tools/DeleteByDateRange'
 import { TrashIcon } from '@sanity/icons'
 import { promoLeadPlugin } from './src/plugin/promoLeads/plugin'
+import { preBookingsPlugin } from './src/plugin/preBookings/plugin'
 
 // Environment variables for project configuration
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-projectID'
@@ -180,6 +181,7 @@ export default defineConfig({
     leadPlugin(),
     optOutLeadPlugin(),
     promoLeadPlugin(),
+    preBookingsPlugin(),
     table(),
   ],
 

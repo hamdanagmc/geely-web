@@ -61,6 +61,11 @@ import GeelyCareForm from "./websites/GeelyCareForm";
 import ImageServiceDetail from "./websites/ImageServiceDetail";
 import ServiceHighlight from "./websites/ServiceHighlight";
 import PromoCodeFormCmp from "./websites/PromoCodeForm";
+import PreBookHeroBannerComponent from "./websites/PreBookHeroBannerComponent";
+import PreBookForm from "./websites/PreBookForm";
+import VehiclePromoBanner from "./websites/VehiclePromoBanner";
+import VehicleFeatureGrid from "./websites/VehicleFeatureGrid";
+import PreBookThankyou from "./PreBookThankyou";
 
 type BlocksType = {
   [key: string]: React.FC<any>;
@@ -138,6 +143,11 @@ const Blocks: BlocksType = {
   imageServiceDetail:ImageServiceDetail,
   serviceHighlight:ServiceHighlight,
   promoCodeForm: PromoCodeFormCmp,
+  preBookHeroBannerComponent: PreBookHeroBannerComponent,
+  preBookForm : PreBookForm,
+  vehiclePromoBanner : VehiclePromoBanner,
+  vehicleFeatureGrid : VehicleFeatureGrid,
+  preBookThankyouComponent: PreBookThankyou
 };
 
 /**

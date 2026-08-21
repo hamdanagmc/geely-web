@@ -47,14 +47,19 @@ export default defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'brandTitle',
+      type: 'string',
+      title: 'Brand Title',
+    }),
+    defineField({
       name: 'title',
       type: 'string',
-      title: 'Title Text',
+      title: 'Heading Text',
     }),
     defineField({
       name: 'subtitle',
       type: 'string',
-      title: 'Subtitle Text',
+      title: 'Sub Heading Text',
     }),
     defineField({
       name: 'testDriveTitle',
@@ -67,10 +72,10 @@ export default defineType({
       title: 'Test Drive Button Link',
     }),
     defineField({
-      name : 'link',
-      type : 'reference',
-      title : 'Select Car Detail Page',
-      to : [{type : 'car'}]
+      name: 'link',
+      type: 'reference',
+      title: 'Select Car Detail Page',
+      to: [{ type: 'car' }]
     }),
     defineField({
       name: 'brochureTitle',
@@ -81,18 +86,46 @@ export default defineType({
       name: 'brochurePageLink',
       title: 'Select Page Link',
       type: 'reference', // Using the existing link schema
-      to : [{type : 'page'}]
-       }),
+      to: [{ type: 'page' }]
+    }),
     defineField({
-      name: 'brochureFile',
-      type: 'file',
-      title: 'Brochure File',
-      readOnly: true,
-      deprecated: { reason: "Use the Vimeo Video ID field instead. This field will be removed in future versions!" },
-      options: {
-        accept: 'application/pdf',
-      },
-      
+      name: 'preBook',
+      title: 'Pre-book Button Display Settings',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'enable',
+          title: 'Enable Pre-book Button',
+          type: 'boolean',
+          initialValue: false,
+        }),
+        defineField({
+          name: 'preBookButton',
+          title: 'Pre-book Button Title',
+          type: 'string',
+          hidden: ({ parent }) => !parent?.enable,
+        }),
+        defineField({
+          name: 'preBookButtonLink',
+          title: 'Select Page Link',
+          type: 'reference',
+          to: [{ type: 'page' }],
+          hidden: ({ parent }) => !parent?.enable,
+        }),
+        defineField({
+          name: 'price',
+          title: 'Price',
+          type: 'number',
+          hidden: ({ parent }) => !parent?.enable,
+          validation: (Rule) =>
+            Rule.custom((value, context) => {
+              if ((context.parent as any)?.enable && (value === undefined || value === null)) {
+                return 'Price is required when Pre-book is enabled';
+              }
+              return true;
+            }),
+        }),
+      ],
     }),
   ],
 });

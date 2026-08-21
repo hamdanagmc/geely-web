@@ -2,7 +2,7 @@
 import sgMail, { MailDataRequired } from "@sendgrid/mail";
 
 type Props = {
-  to: string;
+  to: Array<{ email: string }> | string;
   templateId: string;
   dynamicTemplateData?: Record<string, string>;
 };
@@ -16,11 +16,11 @@ export const sendEmail = async ({
 
   const fromEmail = process.env.SENDGRID_FROM_EMAIL;
   const fromName = process.env.SENDGRID_FROM_NAME;
-  if(!fromEmail){
+  if (!fromEmail) {
     console.log("Sendgrid Sender email not found! Kindly check environment variables")
     throw new Error("Sendgrid sender email not found!");
   }
-  const msg : MailDataRequired = {
+  const msg: MailDataRequired = {
     to,
     from: {
       email: fromEmail,
@@ -32,7 +32,7 @@ export const sendEmail = async ({
 
   try {
     await sgMail.send(msg);
-  } catch (error : any) {
+  } catch (error: any) {
     console.error("Server error :- " + error.message);
     throw new Error("Failed to send email");
   }

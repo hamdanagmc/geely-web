@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     }
 
     body.tags.forEach((tag) => {
-      revalidateTag(tag)
+      revalidateTag(tag, { expire: 0 })
     })
     console.log("Tags Revalidated : ", body.tags);
     return NextResponse.json({ body })
