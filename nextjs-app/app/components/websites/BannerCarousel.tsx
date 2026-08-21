@@ -135,10 +135,10 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
                 <div className="flex gap-4 banner_Text_btn order-1 sm:order-2">
                   {slide?.learnMoreTitle && (
                     <Link
-                      href={`/${currentLocale}/car/${(slide?.link as any)?.slug
+                      href={slide?.link ? `/${currentLocale}/car/${(slide?.link as any)?.slug
                         ?.split('/')
                         .filter((segment: string) => segment !== '')
-                        .pop()}`}
+                        .pop()}` : slide.learnMoreLink || ""}
                       className="px-4 linktype1 sm:px-6 font-medium md:px-8 py-2 sm:py-[13px] border border-white text-white text-sm sm:text-[15px] hover:bg-white/10 transition-colors rounded-[4px]"
                     >
                       {slide?.learnMoreTitle}
