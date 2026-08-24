@@ -32,7 +32,7 @@ const fetchVehicleDetails = async (params: Record<string, string>): Promise<Comm
     };
   } catch (error) {
     const axiosError = error as AxiosError;
-    console.error('Axios Error:', {
+    console.log('Axios Error:', {
       message: axiosError.message,
       code: axiosError.code,
       status: axiosError.response?.status,
