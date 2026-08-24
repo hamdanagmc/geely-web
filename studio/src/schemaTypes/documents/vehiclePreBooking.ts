@@ -86,6 +86,20 @@ export const vehiclePreBooking = defineType({
       type: 'string',
       readOnly: true,
     }),
+    defineField({
+      name: 'lastReconciledAt',
+      title: 'Last Reconciled At',
+      type: 'datetime',
+      readOnly: true,
+      description: 'Timestamp of the last reconciliation cron check for this booking.',
+    }),
+    defineField({
+      name: 'reconciliationNote',
+      title: 'Reconciliation Note',
+      type: 'string',
+      readOnly: true,
+      description: 'Set by the reconciliation cron (e.g. "reconciliation_timeout") for audit purposes.',
+    }),
   ],
   preview: {
     select: {

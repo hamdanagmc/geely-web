@@ -56,16 +56,22 @@ export const vehiclePromoBanner = defineType({
         }),
 
         defineField({
-            name: "buttonText",
-            type: "string",
-            title: "Button Text",
-        }),
-
-        defineField({
-            name: 'link',
-            type: 'reference',
-            title: 'Select Page',
-            to: [{ type: 'page' }]
+            name: 'cta',
+            type: 'object',
+            title: 'Call to Action',
+            fields: [
+                defineField({
+                    name: "buttonText",
+                    type: "string",
+                    title: "Button Text",
+                }),
+                defineField({
+                    name: 'link',
+                    type: 'reference',
+                    title: 'Select Product or Offer or Page link',
+                    to: [{ type: 'page' }, { type: 'car' },  { type: 'offer' }],
+                }),
+            ]
         }),
         defineField({
             name: 'buttonAlignment',

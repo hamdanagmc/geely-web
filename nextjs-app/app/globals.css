@@ -1463,6 +1463,9 @@ margin-bottom: 60px;
 .errorMTop{
     margin-top: 4px!important;
 }
+.paragraphBlocks .prose{
+    max-width: 100%!important;
+}
 @media (min-width: 768px) and (max-height: 700px) {
     .consentPopup {
         min-height: 600px;

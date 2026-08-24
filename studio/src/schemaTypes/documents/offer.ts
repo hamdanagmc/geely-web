@@ -93,6 +93,24 @@ export const offer = defineType({
       group: 'basic',
     }),
     defineField({
+      name: 'preBookButtonAlignment',
+      title: 'Button Alignment',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Top Left', value: 'top-left' },
+          { title: 'Top Right', value: 'top-right' },
+          { title: 'Bottom Left', value: 'bottom-left' },
+          { title: 'Bottom Right', value: 'bottom-right' },
+          { title: 'Center', value: 'center' },
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'center',
+      hidden: ({ document }) => !document?.enablePreBookCta,
+      group: 'basic',
+    }),
+    defineField({
       name: 'content',
       title: 'Content',
       type: 'blockContent',

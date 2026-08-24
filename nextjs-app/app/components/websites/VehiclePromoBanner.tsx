@@ -17,8 +17,10 @@ type VehiclePromoBannerProps = {
         vehicleName?: string | null;
         description?: string | null;
         features?: VehicleFeature[] | null;
-        buttonText?: string | null;
-        link?: { slug?: string } | null;
+        cta?: {
+            buttonText?: string | null;
+            link?: { slug?: string; _type?: string } | null;
+        } | null;
         showDarkOverlay?: boolean;
         buttonAlignment?: string | null;
         paddingTop?: boolean;
@@ -41,13 +43,17 @@ export default function VehiclePromoBanner({
     const buttonAlignment = block?.buttonAlignment || 'bottom';
 
     const renderCTA = () => {
-        if (!block?.buttonText || !block?.link?.slug) return null;
+        if (!block?.cta?.buttonText || !block?.cta?.link?.slug) return null;
+
+        const slug = block.cta.link.slug.replace(/^ar\//, "");
+        const prefix = block.cta.link._type === 'car' ? '/car' : block.cta.link._type === 'offer' ? '/offers' : '';
+
         return (
             <Link
-                href={`/${currentLocale}/${block.link.slug.replace(/^ar\//, "")}`}
+                href={`/${currentLocale}${prefix}/${slug}`}
                 className="bg-white rounded-[3px] px-6 md:px-[55px] py-[13px] text-[17px] leading-[1] font-medium text-black transition hover:bg-black hover:text-white"
             >
-                {block.buttonText}
+                {block.cta.buttonText}
             </Link>
         );
     };
