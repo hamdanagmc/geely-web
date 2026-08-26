@@ -21,9 +21,11 @@ import ImageComp from "../CustomImage";
 import { saveLeads } from "@/app/actions/sanity/leads";
 import { getCookie } from "cookies-next";
 import DefaultTermsLabel from "./DefaultTermsLabel";
+import type {SettingsQueryResult } from "@/sanity.types"
 
 type OfferListProps = {
   offer: Offer;
+  siteSettingData : SettingsQueryResult;
 };
 
 interface FormValues {
@@ -58,7 +60,7 @@ const validationSchema = Yup.object().shape({
   ),
 });
 
-export default function OfferDetail({ offer }: OfferListProps) {
+export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
   const t = useTranslations("offerForm");
   const carModels = t("carModels").split(",") || [];
   const title = t("titleOptions").split(",") || [];
@@ -218,13 +220,19 @@ export default function OfferDetail({ offer }: OfferListProps) {
             />
           )}
           {(offer as any)?.enablePreBookCta && (offer as any)?.preBookLink?.slug && (
-            <div className="md:absolute md:mt-0 mt-8 z-50 inset-0 flex flex-col md:flex-row gap-4 items-center justify-center pointer-events-none w-full md:px-6 px-4">
+            <div className={`md:absolute md:mt-0 mt-8 z-50 inset-0 flex flex-col md:flex-row gap-4 items-center justify-center pointer-events-none w-full md:px-6 px-4 ${
+              (offer as any)?.preBookButtonAlignment === 'top-left' ? 'md:justify-start md:items-start md:pt-10' :
+              (offer as any)?.preBookButtonAlignment === 'top-right' ? 'md:justify-end md:items-start md:pt-10' :
+              (offer as any)?.preBookButtonAlignment === 'bottom-left' ? 'md:justify-start md:items-end md:pb-10' :
+              (offer as any)?.preBookButtonAlignment === 'bottom-right' ? 'md:justify-end md:items-end md:pb-10' :
+              'md:justify-center md:items-center'
+            }`}>
                <div className="pointer-events-auto w-full md:w-auto flex justify-center">
                  <Link 
                    href={`/${currentLocale}${(offer as any).preBookLink._type === 'car' ? '/car' : ''}/${(offer as any).preBookLink.slug.replace(/^ar\//, "")}`} 
                    className="w-full md:w-auto px-6 md:px-[55px] py-[13px] text-[17px] font-medium leading-[1] md:bg-white md:text-black border md:border-white md:hover:border-[#194bff] md:hover:bg-[#194bff] md:hover:text-white transition-colors duration-300 rounded-[3px] bg-[#194bff] border-[#194bff] text-white hover:bg-transparent hover:border-black hover:text-black text-center"
                  >
-                   {(offer as any).preBookButtonTitle || 'Pre Book'}
+                   {(offer as any).preBookButtonTitle?.replace('{prebookAmount}', siteSettingData?.preBookingAmountGeelyM9?.toString() || '')}
                  </Link>
                </div>
             </div>

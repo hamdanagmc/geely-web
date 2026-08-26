@@ -12,6 +12,7 @@ import Script from "next/script"
 import { useEffect, useRef, useState } from "react"
 import * as Yup from "yup"
 import { useTestDrive } from "../../context/TestDriveContext"
+import { getSiteSettingData } from "@/app/actions/common/sanityData"
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
@@ -39,14 +40,15 @@ const validationSchema = Yup.object({
 const customStyles = {
   control: (provided: any, state: any) => ({
     ...provided,
-    borderColor: "transparent",
+    borderColor: state.isFocused ? "black" : "#e5e7eb",
     boxShadow: "none",
     fontSize: "14px",
     borderRadius: "0",
-    border: 0,
-    padding: "4px 15px",
+    borderWidth: "1px",
+    minHeight: "50px",
+    padding: "0 15px",
     "&:hover": {
-      borderColor: "transparent",
+      borderColor: state.isFocused ? "black" : "#e5e7eb",
     },
   }),
   placeholder: (provided: any) => ({
@@ -72,6 +74,7 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
   const swiperRef = useRef<any>(null)
   const { selectedTestDrive } = useTestDrive()
   const [isSubmitting, setSubmitting] = useState(false);
+  const [siteSettingData, setSiteSettingData] = useState<any>(null);
 
   const pathname = usePathname();
   const pathSegments = pathname.split("/");
@@ -95,7 +98,17 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
   useEffect(() => {
     setIsClient(true)
     setIsMounted(true)
-  }, [])
+
+    const fetchSiteSettings = async () => {
+      try {
+        const data = await getSiteSettingData(currentLocale);
+        setSiteSettingData(data);
+      } catch (error) {
+        console.error("Failed to fetch site settings:", error);
+      }
+    };
+    fetchSiteSettings();
+  }, [currentLocale])
 
   useEffect(() => {
     const savedRef = getCookie('referring_url');
@@ -233,7 +246,7 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
 
       <div id="preBookNow" className={`w-full max-w-[1180px] mx-auto px-4 py-16`}>
         <div className="text-center mb-10">
-          <h2 className="text-[32px] md:text-[35px] font-black uppercase mb-2">{block?.formTitle}</h2>
+          <h2 className="text-[32px] md:text-[35px] font-black uppercase mb-2">{block?.formTitle?.replace('{prebookAmount}', siteSettingData?.preBookingAmountGeelyM9?.toString() || '')}</h2>
           <p className="text-[#000000] text-base md:text-lg">{block?.formSubTitle}</p>
         </div>
 
@@ -244,7 +257,7 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
             {/* Full Name */}
             <div>
               <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name <span className="text-red-500">*</span>
+                {block?.fullNameLabel} <span className="text-red-500">*</span>
               </label>
               <input
                 id="fullName"
@@ -264,7 +277,7 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email Address <span className="text-red-500">*</span>
+                  {block?.emailPlaceholder?.label} <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="email"
@@ -322,13 +335,13 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone Number <span className="text-red-500">*</span>
+                   {block?.phone?.label} <span className="text-red-500">*</span>
                 </label>
                 <div className="flex gap-2">
                   <div className="w-[140px] shrink-0 bg-white">
                     {isMounted ? (
                       <Select
-                        className="w-full h-full border border-gray-200"
+                        className="w-full h-full"
                         options={countryCodeOptions}
                         name="countrymobileNoCode"
                         styles={customStyles}
@@ -378,9 +391,9 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
                 checked={formik.values.agreed}
               />
               <label htmlFor="agreed" className="ml-2 text-sm text-gray-700">
-                I have read and accept (
+                {block?.termsAndConditions?.label} (
                 <a href={block?.termsAndConditions?.link || "#"} className="text-[#0070b7] hover:underline">
-                  Terms & Conditions
+                  {block?.termsAndConditions?.termsAndConditionsTitle}
                 </a>
                 )
               </label>
@@ -394,13 +407,13 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
               <button
                 type="submit"
                 className={`${isSubmitting ? "opacity-75 cursor-not-allowed" : "hover:bg-black/90"
-                  } bg-black text-white px-10 py-3 rounded-sm font-medium transition-colors flex items-center justify-center min-w-[140px]`}
+                  } bg-black text-white md:px-10 px-4 py-3 rounded-sm font-medium transition-colors flex items-center justify-center md:w-auto w-full min-w-[140px]`}
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
                   <Image src="/images/infinite-spinner.svg" alt="loading" width={24} height={24} className="animate-spin" />
                 ) : (
-                  block?.submitLabel
+                  block?.submitLabel?.replace('{prebookAmount}', siteSettingData?.preBookingAmountGeelyM9?.toString() || '')
                 )}
               </button>
             </div>

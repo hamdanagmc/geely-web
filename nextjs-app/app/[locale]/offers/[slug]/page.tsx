@@ -59,7 +59,7 @@ export default async function Page(props: Props) {
   return (
     <div className={`main_page innerPage textBlack`}>
      <Header siteSettingData={siteSettingData} sideQuickData={sideQuickData} pageBg={true} locale={locale} fragment={headerData} />
-      <OfferDetail offer={{ ...page, link: page.link && page.link.slug ? { _ref: page.link.slug, _type: "reference" } : undefined }} />
+      <OfferDetail siteSettingData={siteSettingData} offer={{ ...page, link: page.link && page.link.slug ? { _ref: page.link.slug, _type: "reference" } : undefined }} />
      <Footer siteSettingData={siteSettingData} locale={locale} fragment={footerData} />
     </div>
   );

@@ -178,10 +178,14 @@ export const getPageQuery = defineQuery(`
       },
       _type == "vehiclePromoBanner" => {
           ...,
-          link -> {
-              _id,
-              title,
-              "slug": slug.current
+          cta {
+              ...,
+              link -> {
+                  _type,
+                  _id,
+                  title,
+                  "slug": slug.current
+              }
           }
       },
       _type == "promoCodeForm" => {
@@ -338,6 +342,51 @@ export const getPageQuery = defineQuery(`
               assetId,
               filename
             }
+          }
+        }
+      },
+      _type == "preBookThankyouComponent" => {
+        ...,
+        successObject {
+          ...,
+          paragraph[]{
+            ...,
+            markDefs[]{
+              ...,
+              ${linkReference}
+            }
+          },
+          cta {
+            ...,
+            ${linkReference}
+          }
+        },
+        pendingObject {
+          ...,
+          paragraph[]{
+            ...,
+            markDefs[]{
+              ...,
+              ${linkReference}
+            }
+          },
+          cta {
+            ...,
+            ${linkReference}
+          }
+        },
+        failedObject {
+          ...,
+          paragraph[]{
+            ...,
+            markDefs[]{
+              ...,
+              ${linkReference}
+            }
+          },
+          cta {
+            ...,
+            ${linkReference}
           }
         }
       }

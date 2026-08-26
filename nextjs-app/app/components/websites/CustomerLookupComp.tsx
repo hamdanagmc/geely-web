@@ -161,7 +161,7 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
           }
         }
       } catch (error) {
-        console.error("Error fetching vehicle details:", error)
+        console.log("Error fetching vehicle details:", error)
       } finally {
         setSubmitting(false)
       }
