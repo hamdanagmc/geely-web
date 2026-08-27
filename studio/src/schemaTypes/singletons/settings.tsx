@@ -157,6 +157,13 @@ export const settings = defineType({
           type: 'url',
           group: 'social',
         }),
+        defineField({
+          name: 'whatsappLink',
+          title: 'WhatsApp Link',
+          type: 'url',
+          description: 'Full WhatsApp link (e.g. https://wa.me/97146058666)',
+          group: 'social',
+        }),
         ],
         preview: {
     prepare() {
