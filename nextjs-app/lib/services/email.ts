@@ -77,6 +77,8 @@ export const emailService = {
       phone: details.mobile,
       vehicleType: details.location,
       pageUrl: details.pageUrl || '',
+      paidAmount: `${details.amount} ${details.currency}`,
+      orderReference: details.orderReference,
     }
 
     if (!CRM_TEMPLATE_ID) {
