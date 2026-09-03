@@ -151,7 +151,7 @@ export default function Footer({ locale, fragment, siteSettingData }: FooterProp
           </div>
         </div>
       </footer>
-      <div className="whatsApp fixed z-[10000] md:bottom-[14px] bottom-1 md:ltr:right-2 ltr:right-1 md:rtl:left-2 rtl:left-1">
+      <div className="whatsApp fixed z-[10000] md:bottom-[14px] bottom-1 md:left-2 left-1">
         <Link className="m-[7px] block flex-shrink-0 opacity-100 w-[50px] h-[50px] rounded-full order-2 p-[5px] box-border cursor-pointer overflow-hidden shadow-[0_1px_7px_rgba(136,136,136,0.4)] transition-all duration-500 relative z-[200] bg-[#4dc247] no-underline" href={siteSettingData?.whatsappLink || "https://wa.me/97146058666"} target="_blank" aria-label="Go to whatsapp">
           <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{
             width: "100%",
