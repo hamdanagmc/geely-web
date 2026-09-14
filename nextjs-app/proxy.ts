@@ -39,7 +39,7 @@ export default function middleware(request: NextRequest) {
       https://www.googleadservices.com https://bat.bing.com https://trackback.gotrackier.com https://trk.betrck.com
       https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com https://d1v2u6by4izioz.cloudfront.net
       https://cdn.pixel.platformance.io https://us-assets.i.posthog.com/ https://us.i.posthog.com/ https://pixel.data.platformrce.io https://gmt.gotrackier.com https://pixel.data.platformance.io https://events.data.platformance.io
-      https://server-side-tagging-prod-1057871630518.me-central1.run.app/ https://www.google.ae https://*.posthog.com/;
+      https://server-side-tagging-prod-1057871630518.me-central1.run.app/ https://www.google.ae https://*.posthog.com/ https://*.mypurecloud.de;
     
     connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
       https://app-uae.freshmarketer.com https://www.google-analytics.com
@@ -52,7 +52,7 @@ export default function middleware(request: NextRequest) {
       https://www.googleadservices.com https://www.google.co.in https://google.com https://bat.bing.com https://adservice.google.com https://www.facebook.com
       https://cdn.pixel.platformance.io https://us.i.posthog.com/ https://d34iy6sn17nn1e.cloudfront.net https://us-assets.i.posthog.com https://pixel.data.platformance.io
       https://www.googletagmanager.com https://server-side-tagging-prod-1057871630518.me-central1.run.app/ https://www.google.ae/
-      https://*.conversionsapigateway.com https://*.a.run.app https://googleads.g.doubleclick.net https://*.posthog.com https://stream.mux.com https://*.mux.com https://inferred.litix.io;
+      https://*.conversionsapigateway.com https://*.a.run.app https://googleads.g.doubleclick.net https://*.posthog.com https://stream.mux.com https://*.mux.com https://inferred.litix.io https://*.mypurecloud.de wss://*.mypurecloud.de;
 
     img-src 'self' data: https://*.sanity.io https://*.vercel.app blob:
       https://www.googletagmanager.com https://px.ads.linkedin.com
@@ -84,7 +84,7 @@ export default function middleware(request: NextRequest) {
       https://www.googleadservices.com https://trackback.gotrackier.com https://trk.betrck.com https://bat.bing.com
       https://googleads.g.doubleclick.net https://thinkabout88.gotrackier.io/ https://track.valueleadme.com https://tracking.sksdigital.co https://gmt.gotrackier.com https://pixel.data.platformance.io
       https://*.fls.doubleclick.net https://adevolve.gotrackier.com https://server-side-tagging-prod-1057871630518.me-central1.run.app/
-      https://www.google.ae https://*.gotrackier.com https://*.gotrackier.io https://trk.cpttbm1.com;
+      https://www.google.ae https://*.gotrackier.com https://*.gotrackier.io https://trk.cpttbm1.com https://*.mypurecloud.de;
   `
     .replace(/\s{2,}/g, " ")
     .trim()

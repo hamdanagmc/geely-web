@@ -65,7 +65,6 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
   const [vinAlert, setVinAlert] = useState(false);
   const t = useTranslations("customerLookup");
 
-
   const validationSchema = (showVin: boolean) =>
     Yup.object().shape({
       plateNumber: showVin

@@ -19,6 +19,7 @@ import { TestDriveProvider } from '../context/TestDriveContext';
 import StoreProvider from '../StoreProvider';
 import { useTrafficSource } from "../hooks/useTrafficSource";
 import TrafficTracker from "../components/TrafficTracker";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -101,6 +102,27 @@ export default async function RootLayout({
             </>
           )}
           {/* <SanityLive onError={handleError} /> */}
+
+          <Script
+          id="genesys-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function (g, e, n, es, ys) {
+                g['_genesysJs'] = e;
+                g[e] = g[e] || function () {
+                  (g[e].q = g[e].q || []).push(arguments)
+                };
+                g[e].t = 1 * new Date();
+                g[e].c = es;
+                ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+              })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
+                environment: 'prod-euc1',
+                deploymentId: '4a6081fc-450e-411e-bc72-eca590395b4d'
+              });
+            `,
+          }}
+        />
           <main className="">
           <StoreProvider>
             <TestDriveProvider>
