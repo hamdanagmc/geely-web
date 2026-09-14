@@ -84,7 +84,7 @@ export async function GET(req: Request) {
     const createdAt = new Date(booking._createdAt);
     const ageHours = (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60);
 
-    const ngeniusRef = booking.ngeniusOrderReference || booking.orderReference;
+    const ngeniusRef = booking.orderReference || "";
 
     if (!ngeniusRef) {
       console.warn(`[reconcile] Booking ${booking._id} has no order reference — skipping`);
