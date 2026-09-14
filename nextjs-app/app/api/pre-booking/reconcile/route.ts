@@ -50,8 +50,10 @@ export async function GET(req: Request) {
   console.log(`[reconcile] Cron run started at ${cronRunAt}`);
 
   // Fetch all pending pre-bookings (writeClient = no CDN cache, always fresh)
+  // Only consider bookings that have been pending for at least 15 minutes
+  const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString();
   const pendingBookings = await writeClient.fetch<PendingBooking[]>(
-    `*[_type == "vehiclePreBooking" && paymentStatus == "pending"] | order(_createdAt asc) {
+    `*[_type == "vehiclePreBooking" && paymentStatus == "pending" && _createdAt <= $cutoff] | order(_createdAt asc) {
       _id,
       _rev,
       _createdAt,
@@ -65,7 +67,8 @@ export async function GET(req: Request) {
       amount,
       currency,
       lastReconciledAt
-    }`
+    }`,
+    { cutoff: fifteenMinutesAgo }
   );
 
   console.log(`[reconcile] Found ${pendingBookings.length} pending booking(s)`);

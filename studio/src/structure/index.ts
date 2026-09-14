@@ -503,6 +503,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       S.documentTypeListItem('color').title('Colors').icon(ColorWheelIcon),
       //S.documentTypeListItem('lead').title('Leads').icon(ColorWheelIcon),
       //S.documentTypeListItem('optOutLead').title('Opt Out Leads').icon(DocumentIcon),
+      //S.documentTypeListItem('vehiclePreBooking').title('Vehicle Pre-Bookings').icon(DocumentIcon),
       
       /*S.listItem()
         .title('Site Utils')
