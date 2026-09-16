@@ -17,6 +17,7 @@ import {
 
 interface PreBooking {
   _id: string;
+  _createdAt: string;
   fullName: string;
   email: string;
   mobile: string;
@@ -65,7 +66,7 @@ const PreBookingsTool = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [locationFilter, setLocationFilter] = useState('');
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
-  const [sortField, setSortField] = useState<'transactionDate' | 'fullName' | 'paymentStatus'>('transactionDate');
+  const [sortField, setSortField] = useState<'_createdAt' | 'transactionDate' | 'fullName' | 'paymentStatus'>('_createdAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   
   // Pagination state
@@ -189,7 +190,7 @@ const PreBookingsTool = () => {
                 <Box flex={1}>
                   <Text size={1} weight="semibold" style={{marginBottom: '8px'}}>Sort By</Text>
                   <Select onChange={(e) => setSortField(e.currentTarget.value as any)} value={sortField}>
-                    <option value="transactionDate">Date</option>
+                    <option value="_createdAt">Date</option>
                     <option value="fullName">Customer Name</option>
                     <option value="paymentStatus">Status</option>
                   </Select>
@@ -225,7 +226,7 @@ const PreBookingsTool = () => {
                     ) : (
                       paginatedData.map((item) => (
                         <tr key={item._id} style={{ borderBottom: '1px solid #eaeaea' }}>
-                          <td style={{ padding: '12px 8px' }}><Text size={1}>{formatTransactionDate(item.transactionDate) || 'N/A'}</Text></td>
+                          <td style={{ padding: '12px 8px' }}><Text size={1}>{formatTransactionDate(item._createdAt) || 'N/A'}</Text></td>
                           <td style={{ padding: '12px 8px' }}><Text size={1}>{item.fullName}<br/><span style={{fontSize: '0.85em', color: '#666'}}>{item.email}</span></Text></td>
                           <td style={{ padding: '12px 8px' }}><Text size={1}>{item.mobile}</Text></td>
                           <td style={{ padding: '12px 8px' }}><Text size={1}>{item.location}</Text></td>

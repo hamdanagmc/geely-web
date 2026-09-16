@@ -60,12 +60,24 @@ export type VehiclePromoBanner = {
     label?: string;
     _key: string;
   }>;
-  buttonText?: string;
-  link?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
+  cta?: {
+    buttonText?: string;
+    link?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    } | {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "car";
+    } | {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "offer";
+    };
   };
   buttonAlignment?: "bottom" | "center";
   showDarkOverlay?: boolean;
@@ -2262,6 +2274,7 @@ export type Settings = {
   instagramLink?: string;
   twitterLink?: string;
   youtubeLink?: string;
+  whatsappLink?: string;
 };
 
 export type Table = {
@@ -2699,43 +2712,6 @@ export type Models = {
   language?: "en" | "ar";
 };
 
-export type Offer = {
-  _id: string;
-  _type: "offer";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  subTitle?: string;
-  offerDetailLabel?: string;
-  thumbnail?: CustomImage;
-  mainImage?: CustomImage;
-  enablePreBookCta?: boolean;
-  preBookButtonTitle?: string;
-  preBookLink?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  } | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "car";
-  };
-  content?: BlockContent;
-  link?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  };
-  offerDetailForm?: OfferDetailForm;
-  isHidden?: boolean;
-  language?: "en" | "ar";
-};
-
 export type News = {
   _id: string;
   _type: "news";
@@ -2940,6 +2916,44 @@ export type Page = {
   language?: "en" | "ar";
 };
 
+export type Offer = {
+  _id: string;
+  _type: "offer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  subTitle?: string;
+  offerDetailLabel?: string;
+  thumbnail?: CustomImage;
+  mainImage?: CustomImage;
+  enablePreBookCta?: boolean;
+  preBookButtonTitle?: string;
+  preBookLink?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "car";
+  };
+  preBookButtonAlignment?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center";
+  content?: BlockContent;
+  link?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+  offerDetailForm?: OfferDetailForm;
+  isHidden?: boolean;
+  language?: "en" | "ar";
+};
+
 export type Car = {
   _id: string;
   _type: "car";
@@ -3122,7 +3136,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = PreBookThankyouComponent | VehicleFeatureGrid | VehiclePromoBanner | PreBookForm | PreBookHeroBannerComponent | PromoCodeForm | ServiceCostModel | SparePartsModel | AppointmentError | AppointmentBooked | CustomerDetails | CustomerLookup | OptOutForm | OfferDetailForm | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleBlockContent | LocaleText | LocaleString | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ServiceHighlight | ImageServiceDetail | GeelyCareForm | SideKickSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | SanityImageCrop | SanityImageHotspot | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | RichText | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | Navigation | NavItem | Footer | Header | LinkList | LinkItem | CustomImage | Link | CallToAction | InfoSection | BlockContent | VehiclePreBooking | OptOutLead | Lead | GeelyNetwork | Vehicle | Color | Slug | Showrooms | Model | PromoCodes | Settings | Table | TableRow | Twitter | OpenGraph | MetaTag | MetaAttribute | SeoMetaFields | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReference | InternationalizedArrayReferenceValue | SparePart | ServiceCost | Models | Offer | News | Fragment | Page | Car | Post | Person | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = PreBookThankyouComponent | VehicleFeatureGrid | VehiclePromoBanner | PreBookForm | PreBookHeroBannerComponent | PromoCodeForm | ServiceCostModel | SparePartsModel | AppointmentError | AppointmentBooked | CustomerDetails | CustomerLookup | OptOutForm | OfferDetailForm | ThankyouBanner | ThankyouRichText | BrochureDownloadFormSection | HeroBrochureDownload | FleetContactFormSection | LocaleBlockContent | LocaleText | LocaleString | FleetVehicleList | ContactInfo | FleetTextImage | IconTextList | IconTextItem | HeroFleetSales | OrderServiceSection | HistorySection | HistoryItem | TermsAndConditionSection | ImagesAndVideosSection | ModelGallery | ServiceBookingForm | RequestQuoteForm | NetworkListSection | VehicleListSection | ServiceHighlight | ImageServiceDetail | GeelyCareForm | SideKickSection | ReferenceComponent | IconLinkList | IconLinkItem | CustomerCareFormSection | ContactFormSection | Iframe | HeroCenteredHeading | CardsCollectionWithIcons | LogoContainer | IconsWithBackground | ImageTextRightLeft | TabbedAnchors | NewsList | ImageComponent | SanityImageCrop | SanityImageHotspot | ComfortSlider | OwlStageOuter | Car360 | FeatureHighlightsComponent | StickyTabsComponent | HeroBannerComponent | HeroVideoComponent | CarModelComponent | CardHoverComponent | HeroImageSlider | ParallaxWithRichText | ImageTextSlider | BackgroundWithCaption | RichText | ParallaxSection | SpotlightSection | PageBackground | ImageGallery | ListCars | ShoppingTools | HistoryVision | RichTextheadingPara | BannerCarousel | Navigation | NavItem | Footer | Header | LinkList | LinkItem | CustomImage | Link | CallToAction | InfoSection | BlockContent | VehiclePreBooking | OptOutLead | Lead | GeelyNetwork | Vehicle | Color | Slug | Showrooms | Model | PromoCodes | Settings | Table | TableRow | Twitter | OpenGraph | MetaTag | MetaAttribute | SeoMetaFields | MuxVideo | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | InternationalizedArrayTextValue | InternationalizedArrayStringValue | InternationalizedArrayText | InternationalizedArrayString | TranslationMetadata | InternationalizedArrayReference | InternationalizedArrayReferenceValue | SparePart | ServiceCost | Models | News | Fragment | Page | Offer | Car | Post | Person | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -3173,6 +3187,7 @@ export type SettingsQueryResult = {
   instagramLink?: string;
   twitterLink?: string;
   youtubeLink?: string;
+  whatsappLink?: string;
 } | null;
 // Variable: getPageQuery
 // Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    blackBackground,    heading,    subheading,    seo,    redirect,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }      },      },      _type == "carModelComponent" => {        carModels[]{          ...,          exploreLink {            text,            link -> {              _id,              title,              "slug": slug.current            },            externalLink{              type,              linkType,              openInNewTab,              href,              path,              "car": car->{                _id,                title,                "slug": slug.current              },              "page": page->{                _id,                title,                "slug": slug.current              }            }          },            getQuoteLink{              text,              quoteLink{                type,                linkType,                openInNewTab,                href,                path,                "car": car->{                  _id,                  title,                  "slug": slug.current                },                "page": page->{                  _id,                  title,                  "slug": slug.current                }              }             },            testDriveLink{              text,              drivelink{                type,                linkType,                openInNewTab,                href,                path,                "car": car->{                  _id,                  title,                  "slug": slug.current                },                "page": page->{                  _id,                  title,                  "slug": slug.current                }              }             }        }      },       _type == "contactFormSection" => {          ...,          form{            ...,            termsAndConditionsLabel[]{              ...,              markDefs[]{                ...,                  _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }              }            },            link -> {              _id,              title,              "slug": slug.current            }          }      },      _type == "optOutForm" => {                    ...,          link -> {              _id,              title,              "slug": slug.current            }      },      _type == "brochureDownloadFormSection" => {          ...,          form{          ...,          link -> {              _id,              title,              "slug": slug.current            }          }      },      _type == "requestQuoteForm" => {          ...,          termsAndConditionsLabel[]{            ...,            markDefs[]{              ...,                _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }            }          },          link -> {              _id,              title,              "slug": slug.current            }      },      _type == "preBookHeroBannerComponent" => {          ...,          link -> {              _type,              _id,              title,              "slug": slug.current          }      },      _type == "vehiclePromoBanner" => {          ...,          cta {              ...,              link -> {                  _type,                  _id,                  title,                  "slug": slug.current              }          }      },      _type == "promoCodeForm" => {          ...,          link -> {              _id,              title,              "slug": slug.current            }      },      _type == "fleetContactFormSection" => {          ...,          form{            ...,            termsAndConditionsLabel[]{              ...,              markDefs[]{                ...,                  _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }              }            },            link -> {              _id,              title,              "slug": slug.current            }          }      },      _type == "serviceBookingForm" => {          ...,          link -> {              _id,              title,              "slug": slug.current          }      },      _type == "customerLookup" => {          ...,          form{            ...,            termsAndConditionsLabel[]{              ...,              markDefs[]{                ...,                  _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }              }            },            termsAndConditionLink -> {                _id,                title,                "slug": slug.current            }          }      },      _type == "bannerCarousel" => {        ...,        link -> {              _id,              title,              "slug": slug.current            }      },      _type == "thankyouRichText" => {        ...,        callToActionButton{        ...,        link { _type, linkType, openInNewTab, href, path, "page": page->{ _id, title, "slug": slug.current } },         }      },            _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }          }        }      },      _type == "heroVideoComponent" => {        video {          asset-> {            playbackId,            assetId,            filename          }        }      },      _type == "appointmentBooked" => {          ...,          exploreButton {            ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }      },        },        bookButton {            ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }      },        }      },      _type == "appointmentError" => {          ...,          tryAgainLink -> {              _id,              title,              "slug": slug.current            }      },      _type == "customerDetails" => {          ...,          restartButtonLink -> {              _id,              title,              "slug": slug.current            }      },      _type == "imagesAndVideosSection" => {        ...,        modelGalleryList[]{          ...,          videoListMux[]{            ...,            asset->{              playbackId,              assetId,              filename            }          }        }      },      _type == "featureHighlightsComponent" => {        ...,        tabs[]{          ...,          highlights[]{            ...,            muxVideo {              asset-> {                playbackId,                assetId,                filename              }            }          }        }      },      _type == "comfortSlider" => {        ...,        slides[]{          ...,          video {            asset-> {              playbackId,              assetId,              filename            }          }        }      },      _type == "preBookThankyouComponent" => {        ...,        successObject {          ...,          paragraph[]{            ...,            markDefs[]{              ...,                _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }            }          },          cta {            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }          }        },        pendingObject {          ...,          paragraph[]{            ...,            markDefs[]{              ...,                _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }            }          },          cta {            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }          }        },        failedObject {          ...,          paragraph[]{            ...,            markDefs[]{              ...,                _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }            }          },          cta {            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "car": car->slug.current,  }          }        }      }    }  }
@@ -5105,18 +5120,29 @@ export type GetPageQueryResult = {
       label?: string;
       _key: string;
     }>;
-    buttonText?: string;
-    link?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "page";
-    };
+    cta: {
+      buttonText?: string;
+      link: {
+        _type: "car";
+        _id: string;
+        title: string | null;
+        slug: string | null;
+      } | {
+        _type: "offer";
+        _id: string;
+        title: string | null;
+        slug: string | null;
+      } | {
+        _type: "page";
+        _id: string;
+        title: string | null;
+        slug: string | null;
+      } | null;
+    } | null;
     buttonAlignment?: "bottom" | "center";
     showDarkOverlay?: boolean;
     paddingBottom?: boolean;
     paddingTop?: boolean;
-    cta: null;
   }> | null;
 } | null;
 // Variable: getNewsDetailQuery
@@ -5492,6 +5518,7 @@ export type GetOfferDetailQueryResult = {
     title: string | null;
     slug: string | null;
   } | null;
+  preBookButtonAlignment?: "bottom-left" | "bottom-right" | "center" | "top-left" | "top-right";
   content?: BlockContent;
   link: {
     slug: string | null;

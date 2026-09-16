@@ -94,6 +94,13 @@ export const vehiclePreBooking = defineType({
       description: 'Timestamp of the last reconciliation cron check for this booking.',
     }),
     defineField({
+      name: 'reconciliationRunId',
+      title: 'Reconciliation Run ID',
+      type: 'string',
+      readOnly: true,
+      description: 'Workflow run id that processed this booking (for idempotency/audit).',
+    }),
+    defineField({
       name: 'reconciliationNote',
       title: 'Reconciliation Note',
       type: 'string',
