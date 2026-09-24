@@ -1309,6 +1309,7 @@ export type StickyTabsComponent = {
 export type HeroBannerComponent = {
   _type: "heroBannerComponent";
   htmlId?: string;
+  fullWidth?: boolean;
   desktopImage?: {
     asset?: {
       _ref: string;
@@ -2021,6 +2022,7 @@ export type VehiclePreBooking = {
   transactionDate?: string;
   pageUrl?: string;
   lastReconciledAt?: string;
+  reconciliationRunId?: string;
   reconciliationNote?: string;
 };
 
@@ -5294,6 +5296,7 @@ export type GetCarsQueryResult = {
     _key: string;
     _type: "heroBannerComponent";
     htmlId?: string;
+    fullWidth?: boolean;
     desktopImage?: {
       asset?: {
         _ref: string;
