@@ -13,6 +13,14 @@ export default defineType({
       description: 'Unique identifier for the banner component'
     }),
     defineField({
+      name: 'fullWidth',
+      type: 'boolean',
+      title: 'Display Full Width Image',
+      description:
+        'Enable to display the image at full viewport width and video will not be displayed and desktop image size will be 1920 * 745px.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'desktopImage',
       type: 'image',
       title: 'Desktop Image',

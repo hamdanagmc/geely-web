@@ -43,12 +43,12 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
   };
 
   return (
-    <section className={`relative w-full heroBannerComp min-h-[928px] bg-[#BFBFCB] overflow-hidden`}>
+    <section className={`relative w-full heroBannerComp md:min-h-[840px] md:h-[100vh] bg-[#BFBFCB] overflow-hidden`}>
       {/* Layer 1: Bottom Rectangle */}
       <div className="absolute heroImgCmpLayer inset-x-0 bottom-0 h-[40%] bg-[#BFBFCB] z-[11] opacity-99" />
-
+     
       {/* Video Layer */}
-      {playbackId && (
+      {playbackId && !block?.fullWidth && (
         <MuxVideo
           playbackId={playbackId}
           autoPlay="muted"
@@ -63,10 +63,9 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
 
       {/* Layer 2: Car Image */}
       <div
-        className="absolute heroBannerImg inset-0 z-[12] flex items-center justify-center"
-        style={{ transform: "translateY(8.5%)" }}
+        className={`${block?.fullWidth ? 'items-start' : 'items-center'} absolute heroBannerImg inset-0 z-[12] flex justify-center`}
       >
-        <div className="relative heroBannerImgCntr w-full max-w-[1220px] h-[430px]">
+        <div className={`${block?.fullWidth ? 'md:min-h-[75vh] min-h-[55vw] fullWidthImage md:mb-0 mb-10' : 'max-w-[1220px] heroBannerImgCntr h-[430px]'} relative w-full`}>
           {block.desktopImage?.asset && (
             <Image
               src={urlForImage(block.desktopImage)?.url() || ""}
