@@ -1,5 +1,6 @@
 import { timingSafeEqual, randomUUID } from "node:crypto";
 import { sendHealthReportEmail } from "@/app/services/email/health-report";
+import { NextResponse } from 'next/server';
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -11,7 +12,8 @@ type Config = {
 type Check = { ok: boolean; detail: string };
 
 function reply(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), {
+  console.log("[apisix-monitor] Replying with", status, JSON.stringify(body));
+  return new NextResponse(JSON.stringify(body), {
     status,
     headers: {
       "Content-Type": "application/json",
@@ -115,6 +117,7 @@ export async function GET(request: Request): Promise<Response> {
         ? { ok: false, detail: "SIMULATED outage; the real server was not stopped or checked." }
         : await checkOnce(c.healthUrl);
       results.push(result);
+      console.log(`[apisix-monitor] Attempt ${attempt + 1}: ${result.ok ? "healthy" : "unhealthy"} - ${result.detail}`);
       if (result.ok) return reply({ status: "healthy", attempts: results.length, emailAccepted: false });
     }
   }
