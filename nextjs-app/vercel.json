@@ -4,6 +4,10 @@
     {
       "path": "/api/pre-booking/reconcile",
       "schedule": "0 * * * *"
+    },
+    { 
+      "path": "/api/cron/apisix-health",
+      "schedule": "0 */6 * * *"
     }
   ]
 }
