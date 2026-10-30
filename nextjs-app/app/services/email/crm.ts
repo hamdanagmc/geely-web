@@ -48,12 +48,11 @@ export async function sendCRMRequestQuoteEmail(props: RequestQuoteProps, current
             console.log("Server Side Error (CRM Email sending ) : ", "Invalid locale");
             return { status: false, msg: 'Invalid Locale' };
         }
-        const toEmail = process.env.SENDGRID_CRM_TO_EMAIL;
+        const toEmail = formType == "Test Drive" ? process.env.SENDGRID_TEST_DRIVE_CRM_TO_EMAIL : process.env.SENDGRID_CRM_TO_EMAIL;
         if (!toEmail) {
             console.log("Server Side Error (CRM Email sending ) : ", "Invalid To Email");
             return { status: false, msg: 'Invalid To Email' };
         }
-
 
         await sendEmail({
             to: toEmail || "",
