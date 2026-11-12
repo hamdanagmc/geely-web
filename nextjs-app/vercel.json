@@ -1,13 +1,15 @@
 {
   "framework": "nextjs",
-  "crons": [
-    {
+  "schedules": {
+    "reconcile-pre-booking": {
       "path": "/api/pre-booking/reconcile",
-      "schedule": "0 * * * *"
+      "schedule": "0 * * * *",
+      "requestMethod": "GET"
     },
-    { 
+    "apisix-health": {
       "path": "/api/cron/apisix-health",
-      "schedule": "0 */6 * * *"
+      "schedule": "0 */6 * * *",
+      "requestMethod": "GET"
     }
-  ]
+  }
 }
