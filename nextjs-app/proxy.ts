@@ -39,7 +39,7 @@ export default function middleware(request: NextRequest) {
       https://www.googleadservices.com https://bat.bing.com https://trackback.gotrackier.com https://trk.betrck.com
       https://googleads.g.doubleclick.net https://www.google.com https://www.google-analytics.com https://d1v2u6by4izioz.cloudfront.net
       https://cdn.pixel.platformance.io https://us-assets.i.posthog.com/ https://us.i.posthog.com/ https://pixel.data.platformrce.io https://gmt.gotrackier.com https://pixel.data.platformance.io https://events.data.platformance.io
-      https://server-side-tagging-prod-1057871630518.me-central1.run.app/ https://www.google.ae https://*.posthog.com/ https://*.mypurecloud.de;
+      https://server-side-tagging-prod-1057871630518.me-central1.run.app/ https://www.google.ae https://*.posthog.com/ https://*.mypurecloud.de https://widgets.in.webengage.com;
     
     connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
       https://app-uae.freshmarketer.com https://www.google-analytics.com
