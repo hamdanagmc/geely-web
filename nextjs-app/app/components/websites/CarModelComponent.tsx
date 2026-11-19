@@ -11,6 +11,7 @@ import type { PortableTextBlock } from "next-sanity"
 import PortableText from "@/app/components/PortableText"
 import { useTestDrive } from "../../context/TestDriveContext"
 import { useRouter } from "next/navigation"
+import { slugify } from "@/app/lib/webengage"
 
 
 type CarModelComponentProps = {
@@ -80,13 +81,14 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
 };
 
   return (
-    <div className="w-full overflow-x-hidden pt-24 carItemlist">
+    <div className="w-full overflow-x-hidden pt-24 carItemlist" data-we-section="listing_card">
       <h1 className="text-center text-[36px] pb-10 pt-6 leading-tight font-bold">{block?.mainTitle}</h1>
       {block?.carModels?.map((vehicle, index) => {
         const isEven = index % 2 === 0
         return (
           <div
             key={vehicle?._key}
+            data-we-model={(vehicle.exploreLink?.externalLink as any)?.car?.slug?.split("/").pop() || slugify(vehicle.title)}
             className={`md:flex w-full carItem h-auto lg:h-[680px] ${isEven ? "" : "md:flex-row-reverse flex-col-reverse"}`}
           >
             {/* Hero Image Section */}
@@ -212,6 +214,7 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-[21px]">
                   {(vehicle.exploreLink?.externalLink?.href || vehicle.exploreLink?.externalLink?.car || vehicle.exploreLink?.externalLink?.page) && (
                     <Link
+                      data-we-cta
                       href={getLinkHref(vehicle.exploreLink?.externalLink)}
                       target={vehicle.exploreLink.externalLink?.openInNewTab ? "_blank" : undefined}
                       className="w-full h-12 border border-black bg-transparent hover:bg-[#194BFF] hover:text-white hover:border-[#194BFF] rounded-[3px] font-medium transition-colors flex items-center justify-center"
@@ -221,6 +224,7 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
                   )}
                   {vehicle.getQuoteLink && (
                     <button
+                      data-we-cta="quote"
                       onClick={() =>
                         handleTestDriveSelection(vehicle?.title || "" ,vehicle.getQuoteLink)
                       }
@@ -231,6 +235,7 @@ const handleTestDriveSelection = (testDriveIdOrName: string ,myUrl: any) => {
                   )}
                   {vehicle.testDriveLink && (
                     <button
+                      data-we-cta="test_drive"
                       onClick={() =>
                         handleTestDriveSelection(vehicle?.title || "", vehicle.testDriveLink)
                       }

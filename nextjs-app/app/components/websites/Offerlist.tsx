@@ -16,12 +16,13 @@ export default function Offerlist({ offers }: OfferListProps) {
 
   return (
     <>
-      <section className={`py-16 px-4 md:px-6 lg:px-8`}>
+      <section className={`py-16 px-4 md:px-6 lg:px-8`} data-we-section="offer_card">
         <div className="max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {offers?.map((offer) => (
               <div
                 key={offer?._id}
+                data-we-offer={offer?.slug?.current?.split("/").filter(Boolean).pop()}
                 className="group bg-white rounded-lg overflow-hidden"
               >
                 {/* Image Container */}
@@ -43,6 +44,7 @@ export default function Offerlist({ offers }: OfferListProps) {
                     {offer?.subTitle}
                   </p>
                   <Link
+                    data-we-cta
                     href={`/${currentLocale}/offers/${offer?.slug?.current?.split('/').filter(segment => segment !== '').pop() ?? ''}`}
                     className="w-full bg-black text-white hover:bg-blue-600 transition-colors rounded-[3px] py-2 px-4 flex items-center justify-center"
                   >

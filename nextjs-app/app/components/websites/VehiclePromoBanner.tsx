@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { slugify } from "@/app/lib/webengage";
 import { urlForImage } from "@/sanity/lib/utils";
 import useDeviceDetection from "@/app/hooks/useDeviceDetection";
 
@@ -59,7 +60,13 @@ export default function VehiclePromoBanner({
     };
 
     return (
-        <section className={`${(block as any)?.paddingBottom ? 'mb-12' : 'mb-0'} relative w-full min-h-[650px] h-[100vh] overflow-hidden bg-[#e6e7eb]`}>
+        <section
+            className={`${(block as any)?.paddingBottom ? 'mb-12' : 'mb-0'} relative w-full min-h-[650px] h-[100vh] overflow-hidden bg-[#e6e7eb]`}
+            data-we-banner={`promo_${slugify(block?.vehicleName)}`}
+            data-we-banner-name={block?.vehicleName ?? ""}
+            data-we-model={block?.cta?.link?._type === 'car' ? block.cta.link.slug?.replace(/^ar\//, "") : undefined}
+            data-we-offer={block?.cta?.link?._type === 'offer' ? block.cta.link.slug?.replace(/^ar\//, "") : undefined}
+        >
             {/* Background Image */}
             {activeImage?.asset && (
                 <Image

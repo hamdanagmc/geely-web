@@ -63,7 +63,14 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
       }}
     >
       {block?.slides?.map((slide, index) => (
-        <SwiperSlide key={index} className="relative w-full h-full">
+        <SwiperSlide
+          key={index}
+          className="relative w-full h-full"
+          data-we-banner={`home_hero_${(slide?.link as any)?.slug?.split("/").filter(Boolean).pop() ?? index + 1}`}
+          data-we-banner-name={slide?.headingText ?? ""}
+          data-we-banner-pos={index + 1}
+          data-we-model={(slide?.link as any)?.slug?.split("/").filter(Boolean).pop()}
+        >
           {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center"
@@ -147,6 +154,7 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
                   {slide?.testDriveTitle && (
                     <button
                       onClick={() => handleTestDriveSelection((slide?.link as unknown as { title?: string })?.title || "")}
+                    data-we-dest={`/${currentLocale}/request-test-drive`}
                       className="px-4 linktype2 font-medium sm:px-6 md:px-8 py-2 sm:py-[13px] bg-white text-[#194BFF] text-sm sm:text-[15px] hover:bg-white/90 transition-colors rounded-[4px]"
                     >
                       {slide?.testDriveTitle}
@@ -188,6 +196,7 @@ export default function BannerCarouselComp({ block }: BannerCarouselProps) {
                 {slide?.testDriveTitle && (
                   <button
                     onClick={() => handleTestDriveSelection((slide?.link as unknown as { title?: string })?.title || "")}
+                    data-we-dest={`/${currentLocale}/request-test-drive`}
                     className="px-4 linktype2 font-medium sm:px-6 md:px-8 py-2 sm:py-[13px] bg-white text-[#194BFF] text-sm sm:text-[15px] hover:bg-white/90 transition-colors rounded-[4px]"
                   >
                     {slide?.testDriveTitle}

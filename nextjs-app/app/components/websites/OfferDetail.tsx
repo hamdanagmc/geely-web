@@ -231,6 +231,7 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
             }`}>
                <div className="pointer-events-auto w-full md:w-auto flex justify-center">
                  <Link 
+                   data-we-cta="pre_book"
                    href={`/${currentLocale}${(offer as any).preBookLink._type === 'car' ? '/car' : ''}/${(offer as any).preBookLink.slug.replace(/^ar\//, "")}`} 
                    className="w-full md:w-auto px-6 md:px-[55px] py-[13px] text-[17px] font-medium leading-[1] md:bg-white md:text-black border md:border-white md:hover:border-[#194bff] md:hover:bg-[#194bff] md:hover:text-white transition-colors duration-300 rounded-[3px] bg-[#194bff] border-[#194bff] text-white hover:bg-transparent hover:border-black hover:text-black text-center"
                  >

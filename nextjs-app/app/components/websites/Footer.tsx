@@ -35,7 +35,7 @@ export default function Footer({ locale, fragment, siteSettingData }: FooterProp
     <>
       <StickyLinks fragment = {fragment} />
 
-      <footer className={`bg-[#21262A] text-white`}>
+      <footer className={`bg-[#21262A] text-white`} data-we-nav="footer">
         <div className="max-w-[1440px] mx-auto px-5 md:px-8 py-[50px] md:pt-[130px] md:pb-[100px]">
           <div className="md:flex block">
             {/* Logos Section */}
@@ -93,7 +93,7 @@ export default function Footer({ locale, fragment, siteSettingData }: FooterProp
             </div>
 
             {/* Models Column */}
-            <div className="md:w-[17%] min-w-[17%] w-full md:mt-0 mt-8">
+            <div className="md:w-[17%] min-w-[17%] w-full md:mt-0 mt-8" data-we-nav-cat={fragment?.footer?.linkList1?.title || "Models"}>
               <h3 className="text-[20px] leading-7 font-medium mb-6">
                 {fragment?.footer?.linkList1?.title || "Models"}
               </h3>
@@ -112,7 +112,7 @@ export default function Footer({ locale, fragment, siteSettingData }: FooterProp
             </div>
 
             {/* Useful Links Column */}
-            <div className="[28%] min-w-[28%] w-full md:mt-0 mt-8">
+            <div className="[28%] min-w-[28%] w-full md:mt-0 mt-8" data-we-nav-cat={fragment?.footer?.linkList2?.title || "Useful Links"}>
               <h3 className="text-[20px] leading-7 font-medium mb-6">
                 {fragment?.footer?.linkList2?.title || "Useful Links"}
               </h3>
@@ -131,7 +131,7 @@ export default function Footer({ locale, fragment, siteSettingData }: FooterProp
             </div>
 
             {/* About Geely Column */}
-            <div className="[14%] min-w-[14%] w-full md:mt-0 mt-8">
+            <div className="[14%] min-w-[14%] w-full md:mt-0 mt-8" data-we-nav-cat={fragment?.footer?.linkList3?.title || "About Geely"}>
               <h3 className="text-[20px] leading-7 font-medium mb-6">
                 {fragment?.footer?.linkList3?.title || "About Geely"}
               </h3>

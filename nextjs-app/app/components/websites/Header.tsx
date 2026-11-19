@@ -7,6 +7,7 @@ import type { HeaderQueryResult, SideQuickQueryResult, SettingsQueryResult } fro
 import SidePanel from "./SidePanel"
 import ImageComp from "../CustomImage"
 import { usePathname, useRouter } from "next/navigation"
+import { trackWebEngage } from "@/app/lib/webengage"
 
 type FooterProps = {
   locale: string
@@ -30,6 +31,9 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
   const isRTL = currentLocale === "ar"
   const switchLanguage = (lang: string) => {
     if (lang != currentLocale) {
+      trackWebEngage("Language Switched", { from_language: currentLocale, to_language: lang })
+      const we = (window as any).webengage
+      we?.user.setAttribute("preferred_language", lang)
       const newPath = `/${lang}${pathname.replace(`/${currentLocale}`, "")}`
       router.push(newPath)
     }
@@ -57,7 +61,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
 
   return (
     <>
-      <header className={`w-full absolute z-50 pt-[26px]`}>
+      <header className={`w-full absolute z-50 pt-[26px]`} data-we-nav="header">
         <div className="max-w-[1440px] mx-auto px-4 md:px-8">
           <nav className="flex relative items-end justify-between">
             {/* Logo */}
@@ -89,6 +93,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
                 <li
                   key={item._key}
                   className="relative"
+                  data-we-nav-cat={item.title}
                   onMouseEnter={() => item.hasSubPages && setActiveSubMenu(item._key)}
                   onMouseLeave={() => setActiveSubMenu(null)}
                 >
@@ -102,7 +107,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
 
                   {/* Sub Menu */}
                   {item.hasSubPages && (
-                    <ul className="absolute top-full ltr:left-[-20px] rtl:right-[-20px] mt-0 w-72 bg-white">
+                    <ul data-we-nav="mega_menu" className="absolute top-full ltr:left-[-20px] rtl:right-[-20px] mt-0 w-72 bg-white">
                       {item.navigation?.navItems?.map((subItem) => (
                         <li
                           key={subItem._key}
@@ -235,6 +240,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
 
       {/* Mobile Menu */}
       <div
+        data-we-nav="header"
         className={`fixed inset-0 bg-black bg-opacity-95 z-[100] transition-all duration-300 ease-in-out ${
           isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
@@ -255,7 +261,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
           </div>
           <ul className="flex flex-col items-center space-y-4 mt-8">
             {fragment?.header?.navigation?.navItems?.map((item) => (
-              <li key={item._key} className="relative w-full">
+              <li key={item._key} className="relative w-full" data-we-nav-cat={item.title}>
                 <div className="flex justify-between items-center w-full px-4">
                   <Link
                     href={getLinkHref(item.link)}
@@ -278,6 +284,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
                 </div>
                 {item.hasSubPages && (
                   <ul
+                    data-we-nav="mega_menu"
                     className={`mt-2 space-y-2 px-6 overflow-hidden transition-all duration-300 ease-in-out ${
                       activeMobileSubMenu === item._key ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                     }`}
@@ -302,7 +309,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
           {/* Content */}
           <div className="flex-1 mt-8 px-4">
             {/* Shopping Tools Section */}
-            <div className="mb-12">
+            <div className="mb-12" data-we-nav="shopping_tools" data-we-nav-cat={sideQuickData?.sideKickSection?.iconLinkList1?.title}>
               <h2 className="text-[20px] text-white font-semibold mb-5">
                 {sideQuickData?.sideKickSection?.iconLinkList1?.title}
               </h2>

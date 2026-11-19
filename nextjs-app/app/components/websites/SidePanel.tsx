@@ -59,7 +59,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50">
+    <div className="fixed inset-0 z-50 bg-black/50" data-we-nav="header">
       <div
   className={`fixed inset-y-0 ltr:right-0 rtl:left-0 w-full max-w-[400px] bg-[#21262A] text-white transform transition-transform duration-300 ease-in-out ${
     isVisible
@@ -92,7 +92,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
           {/* Content */}
           <div className="flex-1 overflow-y-auto px-6">
             {/* Shopping Tools Section */}
-            <div className="mb-12">
+            <div className="mb-12" data-we-nav="shopping_tools" data-we-nav-cat={sideQuickData?.sideKickSection?.iconLinkList1?.title}>
               <h2 className="text-[20px] font-semibold mb-5">
                 {sideQuickData?.sideKickSection?.iconLinkList1?.title}
               </h2>
@@ -121,7 +121,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
             </div>
 
             {/* Customer Care Section */}
-            <div className="mb-12">
+            <div className="mb-12" data-we-nav-cat={sideQuickData?.sideKickSection?.iconLinkList2?.title}>
               <h2 className="text-[20px] font-semibold mb-5">
                 {sideQuickData?.sideKickSection?.iconLinkList2?.title}
               </h2>

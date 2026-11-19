@@ -33,7 +33,7 @@ export default function PreBookHeroBannerComponent({ block }: PreBookHeroBannerC
   }
 
   return (
-    <section className={`relative w-full heroBannerComp preBookHeroBannerMain min-h-[760px] h-[100vh] bg-[#BFBFCB] overflow-hidden`}>
+    <section data-we-section="model_hero" className={`relative w-full heroBannerComp preBookHeroBannerMain min-h-[760px] h-[100vh] bg-[#BFBFCB] overflow-hidden`}>
       {/* Layer 1: Bottom Rectangle */}
       <div className="absolute heroImgCmpLayer inset-x-0 bottom-0 h-[40%] bg-[#BFBFCB] z-[11] opacity-99" />
 
@@ -74,6 +74,7 @@ export default function PreBookHeroBannerComponent({ block }: PreBookHeroBannerC
         <div className="absolute bottom-[60px] flex flex-col md:flex-row gap-4 justify-center items-center pointer-events-auto w-full px-6">
           {block.ButtonText && (
             <button
+              data-we-cta="pre_book"
               onClick={handleScrollToPreBook}
               className="w-full md:w-auto px-6 md:px-[55px] py-[13px] text-[17px] font-medium leading-[1] bg-white text-black border border-white hover:bg-transparent hover:text-white transition-colors duration-300 rounded-[2px]"
             >
@@ -83,6 +84,7 @@ export default function PreBookHeroBannerComponent({ block }: PreBookHeroBannerC
 
           {block.ButtonText2 && block.link?.slug && (
             <Link
+              data-we-cta
               href={getLinkHref()}
               className="w-full md:w-auto px-6 md:px-[55px] py-[13px] text-[17px] font-medium leading-[1] bg-transparent text-white border border-white hover:bg-white hover:text-black transition-colors duration-300 rounded-[2px] text-center"
             >

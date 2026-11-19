@@ -43,7 +43,7 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
   };
 
   return (
-    <section className={`relative w-full heroBannerComp md:min-h-[840px] md:h-[100vh] bg-[#BFBFCB] overflow-hidden`}>
+    <section data-we-section="model_hero" className={`relative w-full heroBannerComp md:min-h-[840px] md:h-[100vh] bg-[#BFBFCB] overflow-hidden`}>
       {/* Layer 1: Bottom Rectangle */}
       <div className="absolute heroImgCmpLayer inset-x-0 bottom-0 h-[40%] bg-[#BFBFCB] z-[11] opacity-99" />
      
@@ -102,6 +102,7 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
           <div className="flex heroBannerBtn gap-5 flex-row">
             {block.testDriveLink && (
               <button
+              data-we-cta="test_drive"
               onClick={() => handleTestDriveSelection((block?.link as unknown as { title?: string })?.title || "")}
                 className="px-6 py-3 text-[17px] font-medium leading-5 bg-transparent hover:bg-[#194bff] hover:text-[#fff] hover:border-[#194bff] text-black border border-black rounded-[3px]"
               >
@@ -110,6 +111,7 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
             )}
             {block.brochurePageLink && (
                 <Link
+                data-we-cta="brochure"
                 href={`/${currentLocale}/${(block?.brochurePageLink as any)?.slug?.replace(/^ar\//, "") || ""}`}
                 className="px-[18px] py-3 text-[17px] font-medium leading-5 bg-black hover:bg-[#194bff] text-white rounded-[3px]"
                 >
@@ -119,6 +121,7 @@ export default function HeroBannerComp({ block }: HeroBannerComponentProps) {
 
              {block?.preBook && block?.preBook?.preBookButtonLink && (
                 <Link
+                data-we-cta="pre_book"
                 onClick={() => setTestDrive(block?.brandTitle || "")}
                 href={`/${currentLocale}/${(block?.preBook?.preBookButtonLink as any)?.slug?.replace(/^ar\//, "") || ""}`}
                 className="px-6 py-3 text-[17px] font-medium leading-5 bg-transparent hover:bg-[#194bff] hover:text-[#fff] hover:border-[#194bff] text-black border border-black rounded-[3px]"

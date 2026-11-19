@@ -10,11 +10,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Swiper as SwiperType } from "swiper";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
+import { trackWebEngage } from "@/app/lib/webengage";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
+const carSlug = (car: any): string =>
+  car?.exploreLink?.link?.slug?.split("/").filter(Boolean).pop() ?? "";
 
 type CarModelsCarouselProps = {
   block: ListCars;
@@ -24,6 +28,20 @@ export default function CarModelsCarousel({ block }: CarModelsCarouselProps) {
   const [mounted, setMounted] = useState(false);
   const swiperRef = useRef<SwiperType | null>(null);
   const { currentLocale } = useDeviceDetection();
+  const trackedSlides = useRef(new Set<number>());
+  const touchStartIndex = useRef(0);
+
+  // Carousel Interacted: user actions only (never autoplay), once per slide per page view.
+  const trackSlide = (action: "tab_click" | "swipe" | "arrow", index: number) => {
+    if (trackedSlides.current.has(index)) return;
+    trackedSlides.current.add(index);
+    trackWebEngage("Carousel Interacted", {
+      carousel_id: "home_model_tabs",
+      action,
+      slide_position: index + 1,
+      model_id: carSlug(block.cars?.[index]),
+    });
+  };
 
   // Handle client-side rendering for Swiper
   useEffect(() => {
@@ -48,6 +66,15 @@ export default function CarModelsCarousel({ block }: CarModelsCarouselProps) {
             slidesPerView={2}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
+            }}
+            onTouchStart={(swiper) => {
+              touchStartIndex.current = swiper.realIndex;
+            }}
+            onTouchEnd={(swiper) => {
+              // Swiper picks the new slide right after touchEnd fires.
+              setTimeout(() => {
+                if (swiper.realIndex !== touchStartIndex.current) trackSlide("swipe", swiper.realIndex);
+              });
             }}
             navigation={{
               nextEl: ".swiper-button-next",
@@ -80,15 +107,11 @@ export default function CarModelsCarousel({ block }: CarModelsCarouselProps) {
             }}
             className="!pb-12"
           >
-            {block.cars?.map((car) => (
+            {block.cars?.map((car, index) => (
               <SwiperSlide key={car._key}>
                 <Link
-                  href={`/${currentLocale}/car/${(
-                    car?.exploreLink?.link as any
-                  )?.slug
-                    ?.split("/")
-                    .filter((segment: string) => segment !== "")
-                    .pop()}`}
+                  href={`/${currentLocale}/car/${carSlug(car)}`}
+                  onClick={() => trackSlide("tab_click", index)}
                   className="w-full flex flex-col items-center"
                 >
                   <div className="relative w-full flex items-center justify-center mb-3 overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105">
@@ -111,7 +134,10 @@ export default function CarModelsCarousel({ block }: CarModelsCarouselProps) {
 
           {/* Custom navigation buttons */}
           <button
-            onClick={() => swiperRef.current?.slidePrev()}
+            onClick={() => {
+              swiperRef.current?.slidePrev();
+              trackSlide("arrow", swiperRef.current?.realIndex ?? 0);
+            }}
             className="absolute -left-12 top-1/2 -translate-y-1/2 hidden lg:block"
             aria-label="Previous models"
           >
@@ -132,7 +158,10 @@ export default function CarModelsCarousel({ block }: CarModelsCarouselProps) {
           </button>
 
           <button
-            onClick={() => swiperRef.current?.slideNext()}
+            onClick={() => {
+              swiperRef.current?.slideNext();
+              trackSlide("arrow", swiperRef.current?.realIndex ?? 0);
+            }}
             className="absolute -right-12 top-1/2 -translate-y-1/2 hidden lg:block"
             aria-label="Next models"
           >

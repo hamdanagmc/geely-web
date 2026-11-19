@@ -19,6 +19,7 @@ import { TestDriveProvider } from '../context/TestDriveContext';
 import StoreProvider from '../StoreProvider';
 import { useTrafficSource } from "../hooks/useTrafficSource";
 import TrafficTracker from "../components/TrafficTracker";
+import WebEngageTracker from "../components/WebEngageTracker";
 import Script from "next/script";
 
 const inter = Inter({
@@ -103,6 +104,7 @@ arguments])}}var i,s,r=w[b],z=" ",l="init options track screen onReady".split(z)
       <body>
         <>
         <TrafficTracker />
+        <WebEngageTracker />
           {isDraftMode && (
             <>
               <DraftModeToast />
