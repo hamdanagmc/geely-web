@@ -9,6 +9,15 @@ export type CommonValidationResponse = {
     message : string;
 }
 
+export interface CaptchaVerificationResponse {
+    success: boolean;
+    score: number;
+    action: string;
+    challenge_ts: string;
+    hostname: string;
+    [key: string]: any;
+  }
+
  export type CRMEmailProps = {
     fname: string;
     lname : string;

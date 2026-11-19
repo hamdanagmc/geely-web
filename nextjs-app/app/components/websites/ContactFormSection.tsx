@@ -16,6 +16,7 @@ import { useFormik } from "formik";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import Script from "next/script";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 
@@ -161,12 +162,24 @@ export default function ContactFormSectionComp({
       // Handle form submission
       setSubmitting(true);
       console.log(values);
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+      if (!siteKey) {
+        console.log("Recpatcha site key not found!");
+        return;
+      }
+      const token = await grecaptcha.execute(siteKey, {
+        action: "geelyContactForm",
+      });
+      if (!token) {
+        console.log("Recpatch failed");
+        return;
+      }
       if (!csrfToken) {
         console.log("CSRF token not found");
         return;
       }
 
-      const response = await saveContactForm(values, csrfToken, currentLocale);
+      const response = await saveContactForm(values, csrfToken, token, currentLocale);
       console.log(response);
       const responseData = response.data as KeyloopResponse;
       if (responseData.InboundEnquiryResponse.status === "1") {
@@ -236,6 +249,10 @@ export default function ContactFormSectionComp({
 
   return (
     <>
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+        strategy="lazyOnload"
+      />
       <div className={`w-full max-w-[1200px] mx-auto px-4 md:py-16 py-10`}>
         <div className="bg-[#f5f2f0] md:p-8 pt-8 rounded-sm">
           {/* Google Maps Embed */}

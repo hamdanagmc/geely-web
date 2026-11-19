@@ -17,3 +17,12 @@ export type storyListParams = {
   toBeSharedInLease : boolean;
   toBeSharedInRent : boolean;
 }
+
+export interface CaptchaVerificationResponse {
+  success: boolean;
+  score: number;
+  action: string;
+  challenge_ts: string;
+  hostname: string;
+  [key: string]: any;
+}

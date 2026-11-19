@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import Script from "next/script";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 
@@ -113,6 +114,18 @@ export default function OptOutFormComp({ block }: OptOutFormProps) {
     onSubmit: async (values, { resetForm }) => {
       // Handle form submission
       setSubmitting(true);
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+      if (!siteKey) {
+        console.log("Recpatcha site key not found!");
+        return;
+      }
+      const token = await grecaptcha.execute(siteKey, {
+        action: "geelyOptOutForm",
+      });
+      if (!token) {
+        console.log("Recpatch failed");
+        return;
+      }
       if (!csrfToken) {
         console.log("CSRF token not found");
         return;
@@ -121,7 +134,7 @@ export default function OptOutFormComp({ block }: OptOutFormProps) {
       //email logic
       const crmEmailProps = values as OptOutFormFields;
       const pageUrl = window.location.href;
-      const response = await sendCRMOptOutEmail(crmEmailProps, currentLocale, "Opt-Out Form", pageUrl, csrfToken);
+      const response = await sendCRMOptOutEmail(crmEmailProps, currentLocale, "Opt-Out Form", pageUrl, token, csrfToken);
       if (response.status) {
         setSubmitting(false);
         await saveOptOutLeads({
@@ -143,6 +156,10 @@ export default function OptOutFormComp({ block }: OptOutFormProps) {
 
   return (
     <>
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+        strategy="lazyOnload"
+      />
       <div id="registerForm" className={`w-full max-w-7xl mx-auto px-4 md:py-16 py-10`}>
         <div className="bg-[#f5f2f0] md:p-8 pt-8 rounded-sm">
           <h2 className="text-2xl md:text-3xl pt-5 font-semibold text-center">
