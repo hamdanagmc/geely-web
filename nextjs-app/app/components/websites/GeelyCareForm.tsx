@@ -1,6 +1,7 @@
 "use client";
 import { saveContactForm } from "@/app/actions/keyloop/contact";
 import { saveLeads } from "@/app/actions/sanity/leads";
+import { identifyWebEngageUser } from "@/app/lib/webengage";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMContactEmail } from "@/app/services/email/crm";
@@ -189,6 +190,7 @@ export default function GeelyCareFormComp({
           referring_url: values.referring_url || "",
         };
         await saveLeads(leadData);
+        identifyWebEngageUser(leadData);
 
         //zapier logic
         await fetch("/api/zap/send", {

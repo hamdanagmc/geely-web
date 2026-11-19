@@ -1,6 +1,7 @@
 "use client";
 import { saveServiceBookingForm } from "@/app/actions/keyloop/serviceBooking";
 import { saveLeads } from "@/app/actions/sanity/leads";
+import { identifyWebEngageUser } from "@/app/lib/webengage";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMServideBookingEmail } from "@/app/services/email/crm";
@@ -175,6 +176,7 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
           pageUrl,
         };
         await saveLeads(leadData);
+        identifyWebEngageUser(leadData);
 
         setSubmitting(false);
         const slug = (block?.link as any)?.slug || "";

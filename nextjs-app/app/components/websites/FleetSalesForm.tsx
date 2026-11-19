@@ -1,6 +1,7 @@
 "use client";
 import { saveFleetSalesForm } from "@/app/actions/keyloop/fleetSales";
 import { saveLeads } from "@/app/actions/sanity/leads";
+import { identifyWebEngageUser } from "@/app/lib/webengage";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { sendContactCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMFleetSalesEmail } from "@/app/services/email/crm";
@@ -207,6 +208,7 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
           referring_url: values.referring_url || "",
         };
         await saveLeads(leadData);
+        identifyWebEngageUser(leadData);
 
         //zapier logic
         await fetch("/api/zap/send", {

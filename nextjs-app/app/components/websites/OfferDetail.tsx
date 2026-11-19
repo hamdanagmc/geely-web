@@ -19,6 +19,7 @@ import * as Yup from "yup";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
 import ImageComp from "../CustomImage";
 import { saveLeads } from "@/app/actions/sanity/leads";
+import { identifyWebEngageUser } from "@/app/lib/webengage";
 import { getCookie } from "cookies-next";
 import DefaultTermsLabel from "./DefaultTermsLabel";
 import type {SettingsQueryResult } from "@/sanity.types"
@@ -182,6 +183,7 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
           referring_url: values.referring_url || "",
         };
         await saveLeads(leadData);
+        identifyWebEngageUser(leadData);
 
         //zapier logic
         await fetch("/api/zap/send", {

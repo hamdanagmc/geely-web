@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react"
 import * as Yup from "yup"
 import { useTestDrive } from "../../context/TestDriveContext"
 import { getSiteSettingData } from "@/app/actions/common/sanityData"
+import { identifyWebEngageUser } from "@/app/lib/webengage"
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
@@ -201,6 +202,10 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
         currency: 'AED',
         currentLocale: currentLocale
       }
+
+      // Identify before the request: on success the page redirects straight to the payment gateway
+      const [firstName, ...lastName] = (values.fullName || "").trim().split(/\s+/)
+      identifyWebEngageUser({ firstName, lastName: lastName.join(" "), email: values.email, phone: body.mobile })
 
       try {
         const createPaymentResponse = await fetch("/api/pre-booking/create", {

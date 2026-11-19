@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import ImageComp from "../CustomImage";
 import { saveLeads } from "@/app/actions/sanity/leads";
+import { identifyWebEngageUser } from "@/app/lib/webengage";
 import { getCookie } from "cookies-next";
 
 type BrochureDownloadFormSectionProps = {
@@ -235,6 +236,7 @@ export default function BrochureDownloadForm({
           referring_url: values.referring_url || "",
         };
         await saveLeads(leadData);
+        identifyWebEngageUser(leadData);
 
         //zapier logic
         await fetch("/api/zap/send", {
