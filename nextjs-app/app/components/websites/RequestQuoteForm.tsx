@@ -17,7 +17,6 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import Script from "next/script"
 import { useEffect, useRef, useState } from "react"
 import "swiper/css"
 import "swiper/css/navigation"
@@ -195,24 +194,12 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
       console.log(values)
       setSubmitting(true);
 
-      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-      if (!siteKey) {
-        console.log("Recpatcha site key not found!");
-        return;
-      }
-      const token = await grecaptcha.execute(siteKey, {
-        action: "geelyTestDriveForm",
-      });
-      if (!token) {
-        console.log("Recpatch failed");
-        return;
-      }
       if (!csrfToken) {
         console.log("CSRF token not found");
         return;
       }
       const formType = pathname.includes("request-test-drive") ? { name: 'testDrive', title: "Test Drive" } : { name: 'requestQuote', title: "Request A Quote" };
-      const response = await saveRequestQuoteForm(values, csrfToken, token, currentLocale, formType.title);
+      const response = await saveRequestQuoteForm(values, csrfToken, currentLocale, formType.title);
       console.log(response);
       const responseData = response.data as KeyloopResponse;
       if (responseData.InboundEnquiryResponse.status === "1") {
@@ -292,10 +279,6 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
 
   return (
     <>
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-        strategy="lazyOnload"
-      />
       <div className={`w-full max-w-[1180px] reqTestForm mx-auto px-4 py-16`}>
         {/* selectedTestDrive: {selectedTestDrive} */}
         {/* Step 1 */}

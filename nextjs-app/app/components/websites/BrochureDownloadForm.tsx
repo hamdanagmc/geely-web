@@ -11,7 +11,6 @@ import { useFormik } from "formik";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import ImageComp from "../CustomImage";
@@ -169,23 +168,11 @@ export default function BrochureDownloadForm({
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       setSubmitting(true);
-      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-      if (!siteKey) {
-        console.log("Recpatcha site key not found!");
-        return;
-      }
-      const token = await grecaptcha.execute(siteKey, {
-        action: "geelyContactForm",
-      });
-      if (!token) {
-        console.log("Recpatch failed");
-        return;
-      }
       if (!csrfToken) {
         console.log("CSRF token not found");
         return;
       }
-      const response = await saveBrochureForm(values, csrfToken, token, currentLocale);
+      const response = await saveBrochureForm(values, csrfToken, currentLocale);
       console.log(response);
       const responseData = response.data as KeyloopResponse;
       if (responseData.InboundEnquiryResponse.status === "1") {
@@ -273,10 +260,6 @@ export default function BrochureDownloadForm({
 
   return (
     <>
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-        strategy="lazyOnload"
-      />
       <div className="broucherList pt-12 md:pb-0 pb-10">
         <h2 className="text-center md:text-[30px] text-[24px] geelybold">
           {block?.heading}

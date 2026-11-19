@@ -31,7 +31,6 @@ export default function middleware(request: NextRequest) {
       https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com
       https://www.google.com/ https://www.gstatic.com/
       https://www.googletagmanager.com https://*.cookiebot.com/
-      https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
       https://connect.facebook.net https://snap.licdn.com
       https://sc-static.net https://analytics.tiktok.com
       https://tr.snapchat.com https://static.ads-twitter.com https://analytics.google.com https://googleads.g.doubleclick.net
@@ -44,7 +43,7 @@ export default function middleware(request: NextRequest) {
     connect-src 'self' https://vimeo.com/ https://*.sanity.io https://*.vercel.app
       https://app-uae.freshmarketer.com https://www.google-analytics.com
       https://*.cookiebot.com https://cdn.cookielaw.org https://*.freshmarketer.ae
-      https://www.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
+      https://www.google.com
       https://px.ads.linkedin.com https://tr.snapchat.com
       https://analytics.tiktok.com https://analytics.google.com  https://stats.g.doubleclick.net 
       https://*.ads.linkedin.com https://*.snapchat.com https://ara.paa-reporting-advertising.amazon
@@ -76,7 +75,6 @@ export default function middleware(request: NextRequest) {
     frame-src 'self' https://*.vimeo.com/ https://vimeo.com/ https://vercel.live/ https://*.webengage.com
       https://agmc-768475558000719353-aaa2c72fa980a2717295684.freshchat.com
       https://www.google.com/ https://*.cookiebot.com/
-      https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/
       https://www.youtube.com https://www.youtube-nocookie.com https://tr.snapchat.com
       https://geely-ae.vercel.app/ https://td.doubleclick.net
       https://13442784.fls.doubleclick.net https://www.googletagmanager.com https://www.facebook.com

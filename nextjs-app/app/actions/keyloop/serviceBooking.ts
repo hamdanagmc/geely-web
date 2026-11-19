@@ -2,7 +2,6 @@
 
 import { CommonResponse } from "@/app/types/common";
 import { validateCsrfToken } from "@/app/utils/csrf";
-import verifyRecaptcha from "@/app/utils/recaptcha";
 import axios from 'axios';
 
 const API_KEY = process.env.KEYLOOP_API_KEY;
@@ -10,19 +9,7 @@ const BRANCH_ID = process.env.KEYLOOP_BRANCH_ID;
 const ENDPOINT_URL = process.env.KEYLOOP_ENDPOINT_URL;
 
 
-export async function saveServiceBookingForm(data: ServiceBookingFormPayload, csrfToken: string, recaptchaToken: string, currentLocale : string): Promise<CommonResponse> {
-
-    const recaptchaResponse = await verifyRecaptcha(recaptchaToken);
-    console.log(recaptchaResponse)
-    if (!recaptchaResponse.status) {
-        console.log("Recaptcha verification failed");
-        return {
-            status: false,
-            message: "Recaptcha verification failed",
-            data: null,
-        };
-    }
-    console.log("Recaptcha verified successfully");
+export async function saveServiceBookingForm(data: ServiceBookingFormPayload, csrfToken: string, currentLocale : string): Promise<CommonResponse> {
 
     // Validate CSRF token
     if (!(await validateCsrfToken(csrfToken))) {

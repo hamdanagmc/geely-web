@@ -13,7 +13,6 @@ import ResolvedLink from "@/app/components/ResolvedLink";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Script from "next/script";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
@@ -134,24 +133,12 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
     onSubmit: async (values, { resetForm }) => {
       setSubmitting(true);
 
-      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-      if (!siteKey) {
-        console.log("Recpatcha site key not found!");
-        return;
-      }
-      const token = await grecaptcha.execute(siteKey, {
-        action: "geelyTestDriveForm",
-      });
-      if (!token) {
-        console.log("Recpatch failed");
-        return;
-      }
       if (!csrfToken) {
         console.log("CSRF token not found");
         return;
       }
 
-      const response = await saveOfferDetailForm(values, csrfToken, token, currentLocale);
+      const response = await saveOfferDetailForm(values, csrfToken, currentLocale);
       console.log(response);
       const responseData = response.data as KeyloopResponse;
       if (responseData.InboundEnquiryResponse.status === "1") {
@@ -206,10 +193,6 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
   });
   return (
     <>
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-        strategy="lazyOnload"
-      />
       <div className="offer-details__hero pt-[6rem] relative">
         
         <div className="relative">

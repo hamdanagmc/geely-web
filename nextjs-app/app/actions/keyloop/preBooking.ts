@@ -2,7 +2,6 @@
 
 import { CommonResponse } from "@/app/types/common";
 import { validateCsrfToken } from "@/app/utils/csrf";
-import verifyRecaptcha from "@/app/utils/recaptcha";
 import axios from 'axios';
 
 const API_KEY = process.env.KEYLOOP_API_KEY;

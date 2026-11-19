@@ -1,6 +1,5 @@
 "use client"
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions"
-import verifyRecaptcha from "@/app/utils/recaptcha"
 import type { PreBookForm } from "@/sanity.types"
 import axios from "axios"
 import { getCookie } from "cookies-next"
@@ -8,7 +7,6 @@ import { useFormik } from "formik"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import Script from "next/script"
 import { useEffect, useRef, useState } from "react"
 import * as Yup from "yup"
 import { useTestDrive } from "../../context/TestDriveContext"
@@ -165,31 +163,11 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
       console.log(values)
       setSubmitting(true);
 
-      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-      if (!siteKey) {
-        console.log("Recpatcha site key not found!");
-        return;
-      }
-      const token = await grecaptcha.execute(siteKey, {
-        action: "geelyTestDriveForm",
-      });
-      if (!token) {
-        console.log("Recpatch failed");
-        return;
-      }
       if (!csrfToken) {
         console.log("CSRF token not found");
         return;
       }
       //const formType = { name: 'preBook', title: "Pre Book Now" };
-
-      //verify recaptcha
-      const recaptchaResponse = await verifyRecaptcha(token);
-      if (!recaptchaResponse.status) {
-        console.log("Recaptcha verification failed");
-        setSubmitting(false);
-        return;
-      }
 
       const body = {
         fullName: values.fullName,
@@ -243,11 +221,6 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
 
   return (
     <>
-      <style>{`.grecaptcha-badge { visibility: hidden !important; }`}</style>
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-        strategy="lazyOnload"
-      />
 
       <div id="preBookNow" className={`w-full max-w-[1180px] mx-auto px-4 py-16`}>
         <div className="text-center mb-10">

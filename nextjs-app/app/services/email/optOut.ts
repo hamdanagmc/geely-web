@@ -1,23 +1,10 @@
 "use server"
 import { OptOutFormFields } from "@/app/types/email";
 import { validateCsrfToken } from "@/app/utils/csrf";
-import verifyRecaptcha from "@/app/utils/recaptcha";
 import { sendEmail } from "@/app/utils/sendgrid";
 
-export async function sendCRMOptOutEmail(props: OptOutFormFields, currentLocale: string, formType: string, pageUrl: string, recaptchaToken: string, csrfToken: string) {
+export async function sendCRMOptOutEmail(props: OptOutFormFields, currentLocale: string, formType: string, pageUrl: string, csrfToken: string) {
     console.log("==> sendCRMOptOutEmail() ", props, currentLocale, formType);
-
-    const recaptchaResponse = await verifyRecaptcha(recaptchaToken);
-    console.log(recaptchaResponse)
-    if (!recaptchaResponse.status) {
-        console.log("Recaptcha verification failed");
-        return {
-            status: false,
-            message: "Recaptcha verification failed",
-            data: null,
-        };
-    }
-    console.log("Recaptcha verified successfully");
 
     // Validate CSRF token
     if (!(await validateCsrfToken(csrfToken))) {
