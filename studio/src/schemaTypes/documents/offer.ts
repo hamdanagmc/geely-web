@@ -47,6 +47,29 @@ export const offer = defineType({
       group : 'basic',
     }),
     defineField({
+      name: 'offerType',
+      title: 'Offer Type',
+      description: 'Sent to WebEngage as offer_type. Set the same value on the English and Arabic offer.',
+      type: 'string',
+      options: {
+        // Value Dictionary (Geely Website Data Model). Add new types here as the dictionary grows.
+        list: [
+          { title: 'Launch', value: 'launch' },
+          { title: 'Leasing', value: 'leasing' },
+          { title: 'Service', value: 'service' },
+        ],
+        layout: 'dropdown',
+      },
+      group : 'basic',
+    }),
+    defineField({
+      name: 'endDate',
+      title: 'Offer End Date',
+      description: 'Last day of the offer (UAE time). Sent to WebEngage as offer_end_date. Set it on the English and Arabic offer.',
+      type: 'date',
+      group : 'basic',
+    }),
+    defineField({
       name: 'offerDetailLabel',
       title: 'Offer Details Button Label',
       type: 'string',

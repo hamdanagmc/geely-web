@@ -18395,6 +18395,34 @@
         },
         "optional": true
       },
+      "offerType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "launch"
+            },
+            {
+              "type": "string",
+              "value": "leasing"
+            },
+            {
+              "type": "string",
+              "value": "service"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "endDate": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "offerDetailLabel": {
         "type": "objectAttribute",
         "value": {

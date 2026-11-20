@@ -68,13 +68,6 @@ export const modelsIn = (text?: string | null) => {
   return ids.sort();
 };
 
-// Offer slug / title -> offer_type. ponytail: keyword guess until the Offer Reference lands.
-export const offerType = (text?: string | null) =>
-  /leas/i.test(text ?? "") ? "leasing"
-  : /service|maintenance/i.test(text ?? "") ? "service"
-  : /launch/i.test(text ?? "") ? "launch"
-  : undefined;
-
 // Contact / Care+ "type" dropdown (English or Arabic label) -> query_type.
 export const queryType = (label?: string | null) =>
   /complaint|شكوى/i.test(label ?? "") ? "complaint"

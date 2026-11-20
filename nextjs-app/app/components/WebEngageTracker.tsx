@@ -227,7 +227,7 @@ export default function WebEngageTracker() {
 
   // Page Engaged: 75% scroll or 60 s active time, whichever first, once per page view.
   useEffect(() => {
-    if (!["model", "offer", "innovation", "content"].includes(pageType(pathname))) return;
+    if (!["model", "offer_detail", "innovation", "content"].includes(pageType(pathname))) return;
 
     let seconds = 0;
     let done = false;

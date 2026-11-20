@@ -15,8 +15,8 @@ import * as Yup from "yup";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
 import ImageComp from "../CustomImage";
 import { saveLeads } from "@/app/actions/sanity/leads";
-import { identifyWebEngageUser, offerFromPath, setWebEngageAttributes, slugify, trackPageEvent, useWebEngageForm } from "@/app/lib/webengage";
-import { modelRef, modelsIn, offerType, showroomRef } from "@/app/lib/webengage-reference";
+import { identifyWebEngageUser, offerFromPath, setWebEngageAttributes, slugify, trackPageEvent, uaeDate, useWebEngageForm } from "@/app/lib/webengage";
+import { modelRef, modelsIn, showroomRef } from "@/app/lib/webengage-reference";
 import { getCookie } from "cookies-next";
 import DefaultTermsLabel from "./DefaultTermsLabel";
 import type {SettingsQueryResult } from "@/sanity.types"
@@ -87,9 +87,10 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
     setIsMounted(true);
   }, []);
 
-  // Offer Viewed (page event). offer_end_date is not in the CMS yet, so it is left out.
+  // Offer Viewed (page event). offer_type and the end date come from the offer in Sanity.
   const offer_id = offerFromPath(pathname);
-  const offer_type = offerType(`${offer_id} ${offer?.title}`);
+  const offer_type = offer?.offerType;
+  const offer_end_date = uaeDate(offer?.endDate && `${offer.endDate}T23:59:59`); // end of the last day, UAE time
   const eligibleModels = modelsIn(`${offer_id} ${offer?.title}`);
   useEffect(() => {
     trackPageEvent("Offer Viewed", {
@@ -98,6 +99,7 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
       offer_type,
       model_id: eligibleModels.length === 1 ? eligibleModels[0] : undefined,
       eligible_models: eligibleModels.join(","),
+      offer_end_date,
     });
   }, [offer_id]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -200,6 +202,7 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
         offer_type,
         model_id: modelRef(values.vehicle)?.id ?? slugify(values.vehicle),
         showroom_id: showroomRef(values.location)?.id,
+        offer_end_date,
         terms_accepted: values.privacyPolicy,
       });
 

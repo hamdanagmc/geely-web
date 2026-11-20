@@ -27,7 +27,7 @@ export function pageType(path: string) {
   const p = stripLocale(path);
   if (p === "/") return "home";
   if (/^\/(car\/|geely-m9)/.test(p)) return "model";
-  if (/^\/offers\/./.test(p)) return "offer";
+  if (/^\/offers\/./.test(p)) return "offer_detail";
   if (/^\/(innovation|more-on-ev)/.test(p)) return "innovation";
   if (/^\/(news|about-geely|our-vision|our-history|corporate-social-responsibility|geely-care|warranty)/.test(p)) return "content";
   if (/^\/(request-test-drive|request-a-quote|brochure-download|service-booking|contact-us|fleet-sales)/.test(p)) return "form";

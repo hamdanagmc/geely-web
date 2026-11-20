@@ -2927,6 +2927,8 @@ export type Offer = {
   title?: string;
   slug?: Slug;
   subTitle?: string;
+  offerType?: "launch" | "leasing" | "service";
+  endDate?: string;
   offerDetailLabel?: string;
   thumbnail?: CustomImage;
   mainImage?: CustomImage;
@@ -5505,6 +5507,8 @@ export type GetOfferDetailQueryResult = {
   title?: string;
   slug?: Slug;
   subTitle?: string;
+  offerType?: "launch" | "leasing" | "service";
+  endDate?: string;
   offerDetailLabel?: string;
   thumbnail?: CustomImage;
   mainImage?: CustomImage;
