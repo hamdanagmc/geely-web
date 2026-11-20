@@ -326,13 +326,13 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
                 />
 
                 {/* Terms and conditions */}
-                <p className="mx-1 text-sm font-medium text-gray-7 ">
+                <div className="mx-1 text-sm font-medium text-gray-7 ">
                   {block?.form?.termsAndConditionsLabel ? (
                    <SanityPortableText value={block.form.termsAndConditionsLabel} components={inlineComponents} />
                   ) : (
                     <DefaultTermsLabel currentLocale={currentLocale} />
                   )}
-                </p>
+                </div>
               </div>
               {formik.touched.agreed && formik.errors.agreed ? (
                 <div className="error-field" style={{ color: "red" }}>

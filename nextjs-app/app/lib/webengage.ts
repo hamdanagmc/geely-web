@@ -8,6 +8,16 @@ export type Attrs = Record<string, Value>;
 // Undefined until analytics consent starts the SDK (see the loader in app/[locale]/layout.tsx).
 const sdk = () => (window as any).webengage;
 
+// Tracking must never break the page: the SDK can throw (e.g. when its storage iframe has been
+// removed from the DOM), and our calls sit inside form submits and redirects.
+const safely = (fn: () => void) => {
+  try {
+    fn();
+  } catch (error) {
+    console.warn("WebEngage call failed:", error);
+  }
+};
+
 // Tracking wrapper rule: never send empty values (an attribute's type locks on its first value).
 const clean = (attrs: Attrs) =>
   Object.fromEntries(
@@ -49,28 +59,30 @@ export const uaeDate = (s?: string | null) =>
 // Custom event (https://docs.webengage.com/docs/web-tracking-events) with the
 // "Sent with every event" attributes from the Geely data model. UTMs come from the SDK.
 export function trackWebEngage(event: string, attrs: Attrs = {}) {
-  sdk()?.track(
-    event,
-    clean({
-      site: "geely_main",
-      page_language: document.documentElement.lang === "ar" ? "ar" : "en",
-      page_type: pageType(location.pathname),
-      ...attrs,
-    }),
+  safely(() =>
+    sdk()?.track(
+      event,
+      clean({
+        site: "geely_main",
+        page_language: document.documentElement.lang === "ar" ? "ar" : "en",
+        page_type: pageType(location.pathname),
+        ...attrs,
+      }),
+    ),
   );
 }
 
 // Custom user attributes (never we_-prefixed) and the we_ system ones, in one user_update.
 export function setWebEngageAttributes(attrs: Attrs) {
   const a = clean(attrs);
-  if (Object.keys(a).length) sdk()?.user.setAttribute(a);
+  if (Object.keys(a).length) safely(() => sdk()?.user.setAttribute(a));
 }
 
 // Identify a lead (https://docs.webengage.com/docs/web-tracking-users). Login first, then attributes.
 // ponytail: the user ID is the lowercased email until the MDM customer ID middleware exists.
 export function identifyWebEngageUser({ email, firstName, lastName, phone, companyName }: LeadProps) {
   if (!sdk() || !email) return;
-  sdk().user.login(email.trim().toLowerCase());
+  safely(() => sdk().user.login(email.trim().toLowerCase()));
   setWebEngageAttributes({
     we_email: email.trim(),
     we_first_name: firstName,
