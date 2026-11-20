@@ -58,26 +58,36 @@ export const offerFromPath = (path: string) => stripLocale(path).match(/^\/offer
 export const uaeDate = (s?: string | null) =>
   s ? new Date(/(z|[+-]\d\d:?\d\d)$/i.test(s) ? s : `${s.length === 10 ? `${s}T00:00:00` : s}+04:00`) : undefined;
 
+// QA aid: run `localStorage.we_debug = 1` in the console to print every event and attribute
+// update as a JSON snapshot (the SDK's own debug log empties its payload once sent).
+const debugLog = (label: string, data: object) => {
+  try {
+    if (localStorage.getItem("we_debug")) console.log(`WE ▶ ${label}`, JSON.stringify(data, null, 2));
+  } catch {
+    // storage blocked: no debug output
+  }
+};
+
 // Custom event (https://docs.webengage.com/docs/web-tracking-events) with the
 // "Sent with every event" attributes from the Geely data model. UTMs come from the SDK.
 export function trackWebEngage(event: string, attrs: Attrs = {}) {
-  safely(() =>
-    sdk()?.track(
-      event,
-      clean({
-        site: "geely_main",
-        page_language: document.documentElement.lang === "ar" ? "ar" : "en",
-        page_type: pageType(location.pathname),
-        ...attrs,
-      }),
-    ),
-  );
+  if (!sdk()) return;
+  const payload = clean({
+    site: "geely_main",
+    page_language: document.documentElement.lang === "ar" ? "ar" : "en",
+    page_type: pageType(location.pathname),
+    ...attrs,
+  });
+  debugLog(event, payload);
+  safely(() => sdk().track(event, payload));
 }
 
 // Custom user attributes (never we_-prefixed) and the we_ system ones, in one user_update.
 export function setWebEngageAttributes(attrs: Attrs) {
   const a = clean(attrs);
-  if (Object.keys(a).length) safely(() => sdk()?.user.setAttribute(a));
+  if (!sdk() || !Object.keys(a).length) return;
+  debugLog("user attributes", a);
+  safely(() => sdk().user.setAttribute(a));
 }
 
 // Identify a lead (https://docs.webengage.com/docs/web-tracking-users). Login first, then attributes.
