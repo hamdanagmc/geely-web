@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FooterQueryResult, SettingsQueryResult } from "@/sanity.types";
 import { urlForImage } from "@/sanity/lib/utils";
 import { StickyLinks } from "./StickyLinks";
+import { getTranslations } from "next-intl/server";
 
 type FooterProps = {
   locale: string;
@@ -10,7 +11,8 @@ type FooterProps = {
   siteSettingData: SettingsQueryResult
 };
 
-export default function Footer({ locale, fragment, siteSettingData }: FooterProps) {
+export default async function Footer({ locale, fragment, siteSettingData }: FooterProps) {
+  const t = await getTranslations({ locale, namespace: "cookieBanner" });
   const getLinkHref = (link: any) => {
     if (link?.linkType === "href") {
       return link.href ?? "#";
@@ -71,14 +73,16 @@ export default function Footer({ locale, fragment, siteSettingData }: FooterProp
                       >
                         {link.linkText}
                       </Link>
-                      {index <
-                        (fragment?.footer?.linkList?.links?.length || 0) - 1 && (
-                          <div className="w-px ltr:ml-2 rtl:mr-2 h-4 bg-white/20" />
-                        )}
+                      <div className="w-px ltr:ml-2 rtl:mr-2 h-4 bg-white/20" />
                     </li>
 
 
                   ))}
+                  <li className="flex justify-center items-center">
+                    <button type="button" data-cookie-settings className="hover:text-white transition-colors">
+                      {t("footerLink")}
+                    </button>
+                  </li>
                 </ul>
               </div>
               <div className="socialLinks">

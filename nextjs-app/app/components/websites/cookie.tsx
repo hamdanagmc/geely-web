@@ -11,6 +11,15 @@ export default function Cookie() {
   const [showConsent, setShowConsent] = useState(false);
   const t = useTranslations("cookieBanner");
 
+  // Footer "Cookie settings" link (a plain button in a server component) reopens the modal.
+  useEffect(() => {
+    const open = (e: MouseEvent) => {
+      if ((e.target as Element | null)?.closest?.("[data-cookie-settings]")) setShowConsent(true);
+    };
+    document.addEventListener("click", open);
+    return () => document.removeEventListener("click", open);
+  }, []);
+
   useEffect(() => {
     if (hasCookie("consent")) {
       setIsVisible(false);
@@ -50,7 +59,7 @@ export default function Cookie() {
         </div>
       )}
       {showConsent && (
-            <CookieConsent onClose={() => setShowConsent(false)} />
+            <CookieConsent reopen onClose={() => setShowConsent(false)} />
           )}
     </>
   );

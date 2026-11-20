@@ -90,6 +90,8 @@ interface CookieOption {
 
 interface CookieConsentProps {
   onClose?: () => void
+  // Opened from the footer "Cookie settings" link: show even when a choice is already saved.
+  reopen?: boolean
   style?: "banner" | "modal"
 }
 
@@ -103,7 +105,7 @@ const COOKIE_CONFIG = {
   domain: typeof window !== "undefined" && window.location.hostname.endsWith("geely.ae") ? ".geely.ae" : undefined,
 }
 
-export function CookieConsent({ onClose, style = "modal" }: CookieConsentProps = {}) {
+export function CookieConsent({ onClose, style = "modal", reopen = false }: CookieConsentProps = {}) {
   const [showConsent, setShowConsent] = useState(false)
   const [activeTab, setActiveTab] = useState("overview")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -130,10 +132,11 @@ export function CookieConsent({ onClose, style = "modal" }: CookieConsentProps =
     const checkConsent = () => {
       const consentCookie = getCookie("consent")
 
-      // Only show consent popup if no consent cookie exists
-      if (!consentCookie) {
+      // Only show consent popup if no consent cookie exists, or the visitor reopened it
+      if (!consentCookie || reopen) {
         setShowConsent(true)
-      } else {
+      }
+      if (consentCookie) {
         // Load saved preferences if they exist
         try {
           const savedPreferences = localStorage.getItem("cookiePreferences")
