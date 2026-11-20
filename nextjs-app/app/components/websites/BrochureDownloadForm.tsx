@@ -1,9 +1,5 @@
 "use client";
-import { saveBrochureForm } from "@/app/actions/keyloop/brochure";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
-import { sendContactCustomerEmail } from "@/app/services/email/contact";
-import { sendCRMBrochureEmail } from "@/app/services/email/crm";
-import { BrochureFormProps } from "@/app/types/email";
 import type { BrochureDownloadFormSection } from "@/sanity.types";
 import { urlForPDF } from "@/sanity/lib/utils";
 import axios from "axios";
@@ -185,77 +181,52 @@ export default function BrochureDownloadForm({
         console.log("CSRF token not found");
         return;
       }
-      const response = await saveBrochureForm(values, csrfToken, token, currentLocale);
-      console.log(response);
-      const responseData = response.data as KeyloopResponse;
-      if (responseData.InboundEnquiryResponse.status === "1") {
-        //email logic
-        await sendContactCustomerEmail(values.fname, values.email, currentLocale, "brochureForm");
-        const crmEmailProps = values as BrochureFormProps;
-        const pageUrl = window.location.href;
-        await sendCRMBrochureEmail(crmEmailProps, currentLocale, "Brochure Form", pageUrl);
+      const leadData = {
+        title: values.title || "",
+        firstName: values.fname || "",
+        lastName: values.lname || "",
+        email: values.email || "",
+        phone: `${values.countrymobileNoCode || ""} ${values.phone || ""}`,
+        fleetSize: "",
+        companyName: "",
+        comments: values.comments || "",
+        formType: "Brochure Download Form",
+        vehicleMake: "",
+        vehicleModel: values.brochure_check.join(", ") || "",
+        location: "",
+        modelYear: "",
+        serviceCenter: "",
+        type: "",
+        contactYou: values.contactYou || "",
+        pageUrl: window.location.href,
+        referring_url: values.referring_url || "",
+      };
+      const response = await saveLeads(leadData, csrfToken, token);
+      if (!response.status) {
+        console.log(response.message);
+        setSubmitting(false);
+        return;
+      }
+      identifyWebEngageUser(leadData);
 
-        // Handle form submission
-        const selectedFiles = downloadValues
-          .filter((item) => item.title && selectedValues.includes(item.title))
-          .map((item) => urlForPDF(item.brochureFile) || "");
-
-        console.log("Selected Values:", values);
-        console.log("PDF URLs:", selectedFiles);
-
-        // Trigger PDF downloads
-        selectedFiles.forEach((pdfUrl) => {
+      // Trigger PDF downloads
+      downloadValues
+        .filter((item) => item.title && selectedValues.includes(item.title))
+        .map((item) => urlForPDF(item.brochureFile) || "")
+        .forEach((pdfUrl) => {
           if (pdfUrl) {
             window.open(pdfUrl, "_blank");
           }
         });
 
-        // Reset form and selected values
-        resetForm();
-        setSelectedValues([]);
+      // Reset form and selected values
+      resetForm();
+      setSelectedValues([]);
 
-        // save Sanity lead data
-        const leadData = {
-          title: values.title || "",
-          firstName: values.fname || "",
-          lastName: values.lname || "",
-          email: values.email || "",
-          phone: `${values.countrymobileNoCode || ""} ${values.phone || ""}`,
-          fleetSize: "",
-          companyName: "",
-          comments: values.comments || "",
-          formType: "Brochure Download Form",
-          vehicleMake: "",
-          vehicleModel: values.brochure_check.join(", ") || "",
-          location: "",
-          modelYear: "",
-          serviceCenter: "",
-          type: "",
-          contactYou: values.contactYou || "",
-          pageUrl,
-          referring_url: values.referring_url || "",
-        };
-        await saveLeads(leadData);
-        identifyWebEngageUser(leadData);
-
-        //zapier logic
-        await fetch("/api/zap/send", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            formName: "Brochure Download Form",
-            vehicleModel: values.brochure_check.join(", ") || "",
-            utmUrl: pageUrl,
-            referring_url: values.referring_url || "",
-            ...values,
-          }),
-        });
-
-        //redirect to thankyou page
-        const slug = (block?.form?.link as any)?.slug || "";
-        window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
-        setSubmitting(false);
-      }
+      //redirect to thankyou page
+      const slug = (block?.form?.link as any)?.slug || "";
+      window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
+      setSubmitting(false);
 
     },
   });

@@ -1,9 +1,5 @@
 "use client";
-import { saveOfferDetailForm } from "@/app/actions/keyloop/offerDetail";
 import PortableText from "@/app/components/PortableText";
-import { sendContactCustomerEmail } from "@/app/services/email/contact";
-import { sendCRMOfferEmail } from "@/app/services/email/crm";
-import { OfferFormProps } from "@/app/types/email";
 import { Offer } from "@/sanity.types";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -151,55 +147,36 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
         return;
       }
 
-      const response = await saveOfferDetailForm(values, csrfToken, token, currentLocale);
-      console.log(response);
-      const responseData = response.data as KeyloopResponse;
-      if (responseData.InboundEnquiryResponse.status === "1") {
-        //email logic
-        await sendContactCustomerEmail(values.firstName, values.email, currentLocale, "offerBooking");
-        const crmEmailProps = values as OfferFormProps;
-        const pageUrl = window.location.href;
-        await sendCRMOfferEmail(crmEmailProps, currentLocale, "Offer Form", pageUrl);
-
-        // Save the lead data to Sanity
-        const leadData = {
-          title: values.title || "",
-          firstName: values.firstName || "",
-          lastName: values.lastName || "",
-          email: values.email || "",
-          phone: values.phoneNo || "",
-          fleetSize: "",
-          companyName: "",
-          comments: values.comment || "",
-          formType: "Offer Form",
-          vehicleMake: "",
-          vehicleModel: values.vehicle || "",
-          location: values.location || "",
-          modelYear: "",
-          serviceCenter: "",
-          type: "",
-          contactYou: "",
-          pageUrl,
-          referring_url: values.referring_url || "",
-        };
-        await saveLeads(leadData);
-        identifyWebEngageUser(leadData);
-
-        //zapier logic
-        await fetch("/api/zap/send", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            formName: "Offer Form",
-            utmUrl: pageUrl,
-            ...values,
-          }),
-        });
-
+      const leadData = {
+        title: values.title || "",
+        firstName: values.firstName || "",
+        lastName: values.lastName || "",
+        email: values.email || "",
+        phone: values.phoneNo || "",
+        fleetSize: "",
+        companyName: "",
+        comments: values.comment || "",
+        formType: "Offer Form",
+        vehicleMake: "",
+        vehicleModel: values.vehicle || "",
+        location: values.location || "",
+        modelYear: "",
+        serviceCenter: "",
+        type: "",
+        contactYou: "",
+        pageUrl: window.location.href,
+        referring_url: values.referring_url || "",
+      };
+      const response = await saveLeads(leadData, csrfToken, token);
+      if (!response.status) {
+        console.log(response.message);
         setSubmitting(false);
-        const slug = (offer?.link as any)?._ref || "";
-        window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
+        return;
       }
+      identifyWebEngageUser(leadData);
+
+      const slug = (offer?.link as any)?._ref || "";
+      window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
       setSubmitting(false);
       resetForm();
     },

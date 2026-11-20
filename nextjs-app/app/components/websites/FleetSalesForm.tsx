@@ -1,11 +1,7 @@
 "use client";
-import { saveFleetSalesForm } from "@/app/actions/keyloop/fleetSales";
 import { saveLeads } from "@/app/actions/sanity/leads";
 import { identifyWebEngageUser } from "@/app/lib/webengage";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
-import { sendContactCustomerEmail } from "@/app/services/email/contact";
-import { sendCRMFleetSalesEmail } from "@/app/services/email/crm";
-import { FleetSalesFormProps } from "@/app/types/email";
 import { FleetContactFormSection } from "@/sanity.types";
 import { PortableText as SanityPortableText } from "next-sanity";
 import ResolvedLink from "@/app/components/ResolvedLink";
@@ -177,55 +173,37 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
         console.log("CSRF token not found");
         return;
       }
-      const response = await saveFleetSalesForm(values, csrfToken, token, currentLocale);
-      console.log(response);
-      const responseData = response.data as KeyloopResponse;
-      if (responseData.InboundEnquiryResponse.status === "1") {
-        //email logic
-        await sendContactCustomerEmail(values.fname, values.email, currentLocale, "fleetSales");
-        const crmEmailProps = values as FleetSalesFormProps;
-        const pageUrl = window.location.href;
-        await sendCRMFleetSalesEmail(crmEmailProps, currentLocale, "Fleet Sales Form", pageUrl);
-        // Save the lead data to Sanity
-        const leadData = {
-          title: values.title,
-          firstName: values.fname,
-          lastName: values.lname,
-          email: values.email,
-          phone: `${values.countrymobileNoCode} ${values.phone}`,
-          fleetSize: values.fleetSize,
-          companyName: values.companyName,
-          comments: values.comments,
-          formType: "Fleet Sales Form",
-          vehicleMake: "",
-          vehicleModel: "",
-          location: "",
-          modelYear:"",
-          serviceCenter:  "",
-          type: "",
-          contactYou: "",
-          pageUrl,
-          referring_url: values.referring_url || "",
-        };
-        await saveLeads(leadData);
-        identifyWebEngageUser(leadData);
-
-        //zapier logic
-        await fetch("/api/zap/send", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            formName: "Fleet Sales Form",
-            utmUrl : pageUrl,
-            ...values,
-          }),
-        });
-        
+      const leadData = {
+        title: values.title,
+        firstName: values.fname,
+        lastName: values.lname,
+        email: values.email,
+        phone: `${values.countrymobileNoCode} ${values.phone}`,
+        fleetSize: values.fleetSize,
+        companyName: values.companyName,
+        comments: values.comments,
+        formType: "Fleet Sales Form",
+        vehicleMake: "",
+        vehicleModel: "",
+        location: "",
+        modelYear:"",
+        serviceCenter:  "",
+        type: "",
+        contactYou: "",
+        pageUrl: window.location.href,
+        referring_url: values.referring_url || "",
+      };
+      const response = await saveLeads(leadData, csrfToken, token);
+      if (!response.status) {
+        console.log(response.message);
         setSubmitting(false);
-        const slug = (block?.form?.link as any)?.slug || "";
-        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
+        return;
       }
+      identifyWebEngageUser(leadData);
 
+      setSubmitting(false);
+      const slug = (block?.form?.link as any)?.slug || "";
+      window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
       resetForm();
     },
   });

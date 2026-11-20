@@ -1,11 +1,7 @@
 "use client"
-import { saveRequestQuoteForm } from "@/app/actions/keyloop/requestQuote"
 import { saveLeads } from "@/app/actions/sanity/leads"
 import { identifyWebEngageUser } from "@/app/lib/webengage";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions"
-import { sendContactCustomerEmail } from "@/app/services/email/contact"
-import { sendCRMRequestQuoteEmail } from "@/app/services/email/crm"
-import { RequestQuoteProps } from "@/app/types/email"
 import type { RequestQuoteForm } from "@/sanity.types"
 import { PortableText } from "next-sanity"
 import ResolvedLink from "@/app/components/ResolvedLink"
@@ -211,57 +207,38 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
         console.log("CSRF token not found");
         return;
       }
-      const formType = pathname.includes("request-test-drive") ? { name: 'testDrive', title: "Test Drive" } : { name: 'requestQuote', title: "Request A Quote" };
-      const response = await saveRequestQuoteForm(values, csrfToken, token, currentLocale, formType.title);
-      console.log(response);
-      const responseData = response.data as KeyloopResponse;
-      if (responseData.InboundEnquiryResponse.status === "1") {
-        //email logic
-        await sendContactCustomerEmail(values.fname, values.email, currentLocale, formType.name);
-        const crmEmailProps = values as RequestQuoteProps;
-        const pageUrl = window.location.href;
-        await sendCRMRequestQuoteEmail(crmEmailProps, currentLocale, formType.title, pageUrl);
-
-        // Save the lead data to Sanity
-        const leadData = {
-          title: values.title || "",
-          firstName: values.fname || "",
-          lastName: values.lname || "",
-          email: values.email || "",
-          phone: `${values.countrymobileNoCode} ${values.phone}`,
-          fleetSize: "",
-          companyName: "",
-          comments: values.comments || "",
-          formType: formType.title,
-          vehicleMake: values.selectedFilter === "ALL" ? values.carTypes.toString() : values.selectedFilter,
-          vehicleModel: values.selectedModelTitle || "",
-          location: values.location || "",
-          modelYear: "",
-          serviceCenter: "",
-          type: "",
-          contactYou: "",
-          pageUrl,
-          referring_url: values.referring_url || "",
-        };
-        await saveLeads(leadData);
-        identifyWebEngageUser(leadData);
-
-        //zapier logic
-        await fetch("/api/zap/send", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            formName: formType.title,
-            utmUrl: pageUrl,
-            ...values,
-          }),
-        });
-
+      const formType = pathname.includes("request-test-drive") ? "Test Drive" : "Request A Quote";
+      const leadData = {
+        title: values.title || "",
+        firstName: values.fname || "",
+        lastName: values.lname || "",
+        email: values.email || "",
+        phone: `${values.countrymobileNoCode} ${values.phone}`,
+        fleetSize: "",
+        companyName: "",
+        comments: values.comments || "",
+        formType,
+        vehicleMake: values.selectedFilter === "ALL" ? values.carTypes.toString() : values.selectedFilter,
+        vehicleModel: values.selectedModelTitle || "",
+        location: values.location || "",
+        modelYear: "",
+        serviceCenter: "",
+        type: "",
+        contactYou: "",
+        pageUrl: window.location.href,
+        referring_url: values.referring_url || "",
+      };
+      const response = await saveLeads(leadData, csrfToken, token);
+      if (!response.status) {
+        console.log(response.message);
         setSubmitting(false);
-        const slug = (block?.link as any)?.slug || "";
-        window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
+        return;
       }
+      identifyWebEngageUser(leadData);
 
+      setSubmitting(false);
+      const slug = (block?.link as any)?.slug || "";
+      window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
       resetForm()
     },
   })

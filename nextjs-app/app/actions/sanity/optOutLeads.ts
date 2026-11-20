@@ -2,10 +2,18 @@
 import { client } from "@/sanity/lib/client";
 import { API_TOKEN } from "@/sanity/lib/token";
 import { CommonResponse, OptOutLeadProps } from "@/app/types/common";
+import { validateCsrfToken } from "@/app/utils/csrf";
+import verifyRecaptcha from "@/app/utils/recaptcha";
 
 const sanityClient = client.withConfig({ token: API_TOKEN })
 
-export async function saveOptOutLeads(props: OptOutLeadProps): Promise<CommonResponse> {
+export async function saveOptOutLeads(props: OptOutLeadProps, csrfToken: string, recaptchaToken: string): Promise<CommonResponse> {
+    if (!(await verifyRecaptcha(recaptchaToken)).status) {
+        return { status: false, message: "Recaptcha verification failed", data: null };
+    }
+    if (!(await validateCsrfToken(csrfToken))) {
+        return { status: false, message: "Invalid CSRF token", data: null };
+    }
     console.log("Saving Opt Out lead data to Sanity:", props);
     const mutations = [
         {

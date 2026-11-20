@@ -1,11 +1,7 @@
 "use client";
-import { saveServiceBookingForm } from "@/app/actions/keyloop/serviceBooking";
 import { saveLeads } from "@/app/actions/sanity/leads";
 import { identifyWebEngageUser } from "@/app/lib/webengage";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
-import { sendContactCustomerEmail } from "@/app/services/email/contact";
-import { sendCRMServideBookingEmail } from "@/app/services/email/crm";
-import { ServiceBookingProps } from "@/app/types/email";
 import type { ServiceBookingForm } from "@/sanity.types";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -133,56 +129,36 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
         console.log("CSRF token not found");
         return;
       }
-      const response = await saveServiceBookingForm(values, csrfToken, token, currentLocale);
-      console.log(response);
-      const responseData = response.data as KeyloopResponse;
-      if (responseData.InboundEnquiryResponse.status === "1") {
-        //email logic
-        await sendContactCustomerEmail(values.fname, values.email, currentLocale, "serviceBooking");
-        const crmEmailProps: ServiceBookingProps = {
-          fname: values.fname,
-          email: values.email,
-          phone: values.phone,
-          vehicleType: values.vehicleType,
-          serviceCenter: values.serviceCenter,
-          recommendedService: "",
-          dateAndTime: "",
-          timeSlot: "",
-          appointmentId: "",
-          country: "", 
-          mileage: "", 
-        };
-        const pageUrl = window.location.href;
-        await sendCRMServideBookingEmail(crmEmailProps, currentLocale, "Service Booking Form", pageUrl);
-
-        // Sanity lead data
-        const leadData = {
-          title: values.title || "",
-          firstName: values.fname || "",
-          lastName: values.lname || "",
-          email: values.email || "",
-          phone: `${values.countrymobileNoCode || ""} ${values.phone || ""}`,
-          fleetSize: "",
-          companyName: "",
-          comments:  "",
-          formType: "Service Booking Form",
-          vehicleMake:  "",
-          vehicleModel: values.vehicleType || "",
-          location: "",
-          modelYear: values.modelYear.toString() || "",
-          serviceCenter: values.serviceCenter || "",
-          type: "",
-          contactYou: "",
-          pageUrl,
-        };
-        await saveLeads(leadData);
-        identifyWebEngageUser(leadData);
-
+      const leadData = {
+        title: values.title || "",
+        firstName: values.fname || "",
+        lastName: values.lname || "",
+        email: values.email || "",
+        phone: `${values.countrymobileNoCode || ""} ${values.phone || ""}`,
+        fleetSize: "",
+        companyName: "",
+        comments:  "",
+        formType: "Service Booking Form",
+        vehicleMake:  "",
+        vehicleModel: values.vehicleType || "",
+        location: "",
+        modelYear: values.modelYear.toString() || "",
+        serviceCenter: values.serviceCenter || "",
+        type: "",
+        contactYou: "",
+        pageUrl: window.location.href,
+      };
+      const response = await saveLeads(leadData, csrfToken, token);
+      if (!response.status) {
+        console.log(response.message);
         setSubmitting(false);
-        const slug = (block?.link as any)?.slug || "";
-        window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
+        return;
       }
+      identifyWebEngageUser(leadData);
 
+      setSubmitting(false);
+      const slug = (block?.link as any)?.slug || "";
+      window.location.href = currentLocale == 'en' ?`/${currentLocale}/${slug}` : `/${slug}`;
       resetForm();
     },
   });

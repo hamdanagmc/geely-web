@@ -1,8 +1,6 @@
 "use client";
 import { saveOptOutLeads } from "@/app/actions/sanity/optOutLeads";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
-import { sendCRMOptOutEmail } from "@/app/services/email/optOut";
-import { OptOutFormFields } from "@/app/types/email";
 import { OptOutForm } from "@/sanity.types";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -131,23 +129,20 @@ export default function OptOutFormComp({ block }: OptOutFormProps) {
         return;
       }
 
-      //email logic
-      const crmEmailProps = values as OptOutFormFields;
-      const pageUrl = window.location.href;
-      const response = await sendCRMOptOutEmail(crmEmailProps, currentLocale, "Opt-Out Form", pageUrl, token, csrfToken);
+      const response = await saveOptOutLeads({
+        name: values.name,
+        email: values.email,
+        phone: values.countrymobileNoCode + values.phone,
+        stopMarketing: values.stopMarketing,
+      }, csrfToken, token);
+      setSubmitting(false);
       if (response.status) {
-        setSubmitting(false);
-        await saveOptOutLeads({
-          name: values.name,
-          email: values.email,
-          phone: values.countrymobileNoCode + values.phone,
-          stopMarketing: values.stopMarketing,
-        });
-
         const slug = (block?.link as any)?.slug || "";
         window.location.href = `/${currentLocale}/${slug}`;
         resetForm();
-      } 
+      } else {
+        console.log(response.message);
+      }
       
     },
   });
