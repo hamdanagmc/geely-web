@@ -120,7 +120,10 @@ function onClick(e: MouseEvent) {
   }
 
   if (el.hasAttribute("data-we-cta")) {
-    const cta_name = el.getAttribute("data-we-cta") || CTA_BY_PATH.find(([re]) => re.test(dest))?.[1] || destSlug(dest);
+    // React renders a bare `data-we-cta` as "true": that means "work the name out from the link".
+    const named = el.getAttribute("data-we-cta");
+    const cta_name =
+      (named !== "true" && named) || CTA_BY_PATH.find(([re]) => re.test(dest))?.[1] || destSlug(dest);
     return trackWebEngage("CTA Clicked", {
       cta_name,
       target_form: FORM_BY_CTA[cta_name],
