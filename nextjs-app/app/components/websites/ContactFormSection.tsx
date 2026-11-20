@@ -1,6 +1,7 @@
 "use client";
 import { saveLeads } from "@/app/actions/sanity/leads";
-import { identifyWebEngageUser } from "@/app/lib/webengage";
+import { identifyWebEngageUser, setWebEngageAttributes, useWebEngageForm } from "@/app/lib/webengage";
+import { queryType, showroomRef } from "@/app/lib/webengage-reference";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { ContactFormSection } from "@/sanity.types";
 import { PortableText as SanityPortableText } from "next-sanity";
@@ -198,10 +199,18 @@ export default function ContactFormSectionComp({
       const response = await saveLeads(leadData, csrfToken, token);
       if (!response.status) {
         console.log(response.message);
+        weForm.failed(response.message);
         setSubmitting(false);
         return;
       }
       identifyWebEngageUser(leadData);
+      const query_type = queryType(values.type);
+      if (query_type === "service_query" || query_type === "parts_query") setWebEngageAttributes({ is_geely_owner_web: true });
+      weForm.submitted("Contact Form Submitted", {
+        query_type,
+        showroom_id: showroomRef(values.location)?.id,
+        terms_accepted: values.agreed,
+      });
 
       const slug = (block?.form?.link as any)?.slug || "";
       window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
@@ -224,6 +233,7 @@ export default function ContactFormSectionComp({
     label: type,
   }));
 
+  const weForm = useWebEngageForm(formik, "contact");
   return (
     <>
       <Script
@@ -254,7 +264,7 @@ export default function ContactFormSectionComp({
           </div>
 
           {/* Contact Form */}
-          <form
+          <form {...weForm.startProps}
             onSubmit={formik.handleSubmit}
             className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-4 px-4 rounded-sm"
           >

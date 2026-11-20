@@ -1,6 +1,7 @@
 "use client";
 import { saveLeads } from "@/app/actions/sanity/leads";
-import { identifyWebEngageUser } from "@/app/lib/webengage";
+import { identifyWebEngageUser, setWebEngageAttributes, slugify, useWebEngageForm } from "@/app/lib/webengage";
+import { modelRef, showroomRef } from "@/app/lib/webengage-reference";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import type { ServiceBookingForm } from "@/sanity.types";
 import axios from "axios";
@@ -151,10 +152,17 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
       const response = await saveLeads(leadData, csrfToken, token);
       if (!response.status) {
         console.log(response.message);
+        weForm.failed(response.message);
         setSubmitting(false);
         return;
       }
       identifyWebEngageUser(leadData);
+      const model_id = modelRef(values.vehicleType)?.id ?? slugify(values.vehicleType);
+      setWebEngageAttributes({ is_geely_owner_web: true, owned_model_id: model_id, last_service_booking_date: new Date() });
+      weForm.submitted("Service Booking Requested", {
+        model_id,
+        showroom_id: showroomRef(values.serviceCenter)?.id,
+      });
 
       setSubmitting(false);
       const slug = (block?.link as any)?.slug || "";
@@ -170,6 +178,7 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
   const serviceCenterOptions = block?.serviceCenters?.map((option) => ({ value: option, label: option })) || [];
   const titleOptions = block?.formTitleTypes?.map((option) => ({ value: option, label: option })) || [];
 
+  const weForm = useWebEngageForm(formik, "service_booking");
   return (
     <>
       <Script
@@ -184,7 +193,7 @@ export default function ServiceBookingFormComp({ block }: ServiceBookingFormProp
           </p>
         </div>
 
-        <form onSubmit={formik.handleSubmit} className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-8 px-5 rounded-sm">
+        <form {...weForm.startProps} onSubmit={formik.handleSubmit} className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-8 px-5 rounded-sm">
           <div className="grid gap-6">
             {/* Title */}
             <div>

@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { setCookie, getCookie } from "cookies-next"
+import { trackWebEngage } from "@/app/lib/webengage"
 import { X, Menu } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
@@ -98,6 +99,8 @@ const COOKIE_CONFIG = {
   path: "/",
   sameSite: "lax" as const,
   secure: typeof window !== "undefined" && window.location.protocol === "https:",
+  // One answer for geely.ae, nev.geely.ae and shop.geely.ae (Tracking Rules: consent gate).
+  domain: typeof window !== "undefined" && window.location.hostname.endsWith("geely.ae") ? ".geely.ae" : undefined,
 }
 
 export function CookieConsent({ onClose, style = "modal" }: CookieConsentProps = {}) {
@@ -160,7 +163,7 @@ export function CookieConsent({ onClose, style = "modal" }: CookieConsentProps =
     )
   }
 
-  const saveConsentSettings = (consentValue: string, preferences: Record<string, boolean>) => {
+  const saveConsentSettings = (consentValue: string, preferences: Record<string, boolean>, banner_action = "save_settings") => {
     // Set the main consent cookie with proper configuration
     setCookie("consent", consentValue, COOKIE_CONFIG)
 
@@ -173,6 +176,10 @@ export function CookieConsent({ onClose, style = "modal" }: CookieConsentProps =
 
     // Trigger GTM script load if analytics is enabled
     if (preferences.analytics && typeof window !== "undefined") {
+      // Start WebEngage now that analytics is allowed, then record the choice.
+      (window as any).__weStart?.()
+      // ponytail: the banner has no separate marketing category yet, so marketing_cookies is false.
+      trackWebEngage("Cookie Preferences Saved", { analytics_cookies: true, marketing_cookies: !!preferences.marketing, banner_action })
       window.dispatchEvent(new Event("updateGTMConsent"))
     }
   }
@@ -183,7 +190,7 @@ export function CookieConsent({ onClose, style = "modal" }: CookieConsentProps =
 
     const preferences = updatedOptions.reduce((acc, option) => ({ ...acc, [option.id]: option.enabled }), {})
 
-    saveConsentSettings("all", preferences)
+    saveConsentSettings("all", preferences, "accept_all")
     setShowConsent(false)
     if (onClose) onClose()
   }
@@ -206,7 +213,7 @@ export function CookieConsent({ onClose, style = "modal" }: CookieConsentProps =
 
     const preferences = updatedOptions.reduce((acc, option) => ({ ...acc, [option.id]: option.enabled }), {})
 
-    saveConsentSettings("all", preferences)
+    saveConsentSettings("all", preferences, "accept_all")
     setShowConsent(false)
     if (onClose) onClose()
   }

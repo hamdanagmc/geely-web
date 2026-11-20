@@ -22,6 +22,8 @@ import Link from "next/link"
 import { sendContactCustomerEmail, sendServiceBookingCustomerEmail } from "@/app/services/email/contact";
 import { sendCRMServideBookingEmail } from "@/app/services/email/crm";
 import { ServiceBookingProps } from "@/app/types/email";
+import { identifyWebEngageUser, setWebEngageAttributes, slugify, uaeDate, useWebEngageForm } from "@/app/lib/webengage";
+import { modelRef, showroomRef } from "@/app/lib/webengage-reference";
 
 type customerDetailsProps = {
   block: CustomerDetails
@@ -230,6 +232,9 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
     },
   })
 
+  // Form Started was sent on the plate-lookup step, so this step only reports failures and success.
+  const weForm = useWebEngageForm(formik, "service_booking")
+
   useEffect(() => {
     const fetchServiceLocations = async () => {
       try {
@@ -390,6 +395,17 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
         console.log("Create Appointment Response: ", response)
         const referenceNumber = response?.data?.result?.data?.appointmentId.split("-").pop();
         if (response?.status && referenceNumber) {
+          // WebEngage: login > attributes > Service Booking Requested (data model: Service booking).
+          const model_id = modelRef(`${vehicleDetails?.vehicleMakeCode} ${vehicleDetails?.vehicleVariantCode}`)?.id
+          identifyWebEngageUser({ firstName: vehicleDetails?.givenName, email: vehicleDetails?.email, phone: vehicleDetails?.mobile })
+          setWebEngageAttributes({ is_geely_owner_web: true, owned_model_id: model_id, last_service_booking_date: new Date() })
+          weForm.submitted("Service Booking Requested", {
+            model_id,
+            // ponytail: service_type is the slug of the service name until AGMC confirms the values.
+            service_type: slugify(formRecommendedService),
+            showroom_id: showroomRef(formServiceCenter)?.id,
+            appointment_datetime: uaeDate(formik.values.startDateTime || formik.values.dateAndTime),
+          })
           dispatch(setAppointmentDetails({
             appointmentId: referenceNumber,
             serviceCenter: formServiceCenter,
@@ -430,11 +446,13 @@ export default function CustomerDetailsComp({ block }: customerDetailsProps) {
           window.location.href = `/${currentLocale}/appointment-booked`
         } else {
           /*window.location.href = `/${currentLocale}/appointment-not-found`;*/
+          weForm.failed(response?.message)
           setFormErrorMessegeStatus(true)
           setAppointmentErrorMessage(response?.message || "An error occurred while creating the appointment. Please try again later.");
         }
       } catch (error) {
         console.error("Error creating appointment: ", error)
+        weForm.failed()
       }
       finally {
         setSubmitting(false)

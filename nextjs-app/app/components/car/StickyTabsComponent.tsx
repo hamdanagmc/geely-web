@@ -5,6 +5,7 @@ import type { StickyTabsComponent } from "@/sanity.types"
 import { Download } from "lucide-react"
 import Link from "next/link"
 import { urlForPDF } from "@/sanity/lib/utils"
+import { firstThisPageView, modelFromPath, slugify, trackWebEngage } from "@/app/lib/webengage"
 
 type Tab = {
   _key: string
@@ -44,6 +45,15 @@ export default function StickyTabsComponentComp({ block }: StickyTabsComponentPr
     }
 
     if (tab.scrollToId) {
+      // Model Feature Explored, once per section per page view.
+      // ponytail: feature_section is the section's anchor id until the Model Section Map arrives.
+      if (firstThisPageView(`feature:${tab.scrollToId}`)) {
+        trackWebEngage("Model Feature Explored", {
+          model_id: modelFromPath(location.pathname),
+          feature_section: slugify(tab.scrollToId),
+          section_label: slugify(tab.label),
+        })
+      }
       setIsScrolling(true)
 
       const scrollToElement = () => {

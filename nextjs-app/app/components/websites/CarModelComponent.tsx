@@ -11,7 +11,7 @@ import type { PortableTextBlock } from "next-sanity"
 import PortableText from "@/app/components/PortableText"
 import { useTestDrive } from "../../context/TestDriveContext"
 import { useRouter } from "next/navigation"
-import { slugify } from "@/app/lib/webengage"
+import { slugify, trackPageEvent } from "@/app/lib/webengage"
 
 
 type CarModelComponentProps = {
@@ -29,6 +29,15 @@ export default function CarModelComp({ block }: CarModelComponentProps) {
       anchorPlacement: "center-bottom",
     })
   }, [])
+
+  // Vehicle Category Viewed: the vehicles list has no body-type tabs, so it is always "all".
+  useEffect(() => {
+    trackPageEvent("Vehicle Category Viewed", {
+      body_type: "all",
+      page_context: "vehicles_page",
+      models_shown_count: block?.carModels?.length,
+    })
+  }, [block?.carModels?.length])
 
   const pathname = usePathname()
   const pathSegments = pathname.split("/")

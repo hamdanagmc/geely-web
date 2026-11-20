@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react"
 import * as Yup from "yup"
 import { useTestDrive } from "../../context/TestDriveContext"
 import { getSiteSettingData } from "@/app/actions/common/sanityData"
-import { identifyWebEngageUser } from "@/app/lib/webengage"
+import { identifyWebEngageUser, useWebEngageForm } from "@/app/lib/webengage"
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
@@ -187,6 +187,7 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
       const recaptchaResponse = await verifyRecaptcha(token);
       if (!recaptchaResponse.status) {
         console.log("Recaptcha verification failed");
+        weForm.failed("recaptcha")
         setSubmitting(false);
         return;
       }
@@ -205,7 +206,7 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
 
       // Identify before the request: on success the page redirects straight to the payment gateway
       const [firstName, ...lastName] = (values.fullName || "").trim().split(/\s+/)
-      identifyWebEngageUser({ firstName, lastName: lastName.join(" "), email: values.email, phone: body.mobile })
+      identifyWebEngageUser({ firstName, lastName: lastName.join(" "), email: values.email, phone: `${values.countrymobileNoCode} ${values.phone}` })
 
       try {
         const createPaymentResponse = await fetch("/api/pre-booking/create", {
@@ -217,9 +218,12 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
         if (resData.success) {
           window.location.href = resData.paymentUrl;
 
+        } else {
+          weForm.failed()
         }
       } catch (error) {
         console.log(error);
+        weForm.failed()
       }
 
 
@@ -241,6 +245,8 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
     },
   })
 
+  // Funnel only: reservation and payment events come from their own data-model sheet.
+  const weForm = useWebEngageForm(formik, "m9_prebooking", { model_id: "m9" })
   return (
     <>
       <style>{`.grecaptcha-badge { visibility: hidden !important; }`}</style>
@@ -256,7 +262,7 @@ export default function PreBookFormCmp({ block }: PreBookFormProps) {
         </div>
 
         <div className="bg-[#F6F4F2] md:p-12 p-6 rounded-sm">
-          <form onSubmit={formik.handleSubmit} className="max-w-[1020px] mx-auto space-y-6">
+          <form {...weForm.startProps} onSubmit={formik.handleSubmit} className="max-w-[1020px] mx-auto space-y-6">
             <input type="hidden" name="referring_url" value={formik.values.referring_url} />
 
             {/* Full Name */}

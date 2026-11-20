@@ -15,7 +15,8 @@ import * as Yup from "yup";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
 import ImageComp from "../CustomImage";
 import { saveLeads } from "@/app/actions/sanity/leads";
-import { identifyWebEngageUser } from "@/app/lib/webengage";
+import { identifyWebEngageUser, offerFromPath, setWebEngageAttributes, slugify, trackPageEvent, useWebEngageForm } from "@/app/lib/webengage";
+import { modelRef, modelsIn, offerType, showroomRef } from "@/app/lib/webengage-reference";
 import { getCookie } from "cookies-next";
 import DefaultTermsLabel from "./DefaultTermsLabel";
 import type {SettingsQueryResult } from "@/sanity.types"
@@ -85,6 +86,20 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Offer Viewed (page event). offer_end_date is not in the CMS yet, so it is left out.
+  const offer_id = offerFromPath(pathname);
+  const offer_type = offerType(`${offer_id} ${offer?.title}`);
+  const eligibleModels = modelsIn(`${offer_id} ${offer?.title}`);
+  useEffect(() => {
+    trackPageEvent("Offer Viewed", {
+      offer_id,
+      offer_name: offer?.title,
+      offer_type,
+      model_id: eligibleModels.length === 1 ? eligibleModels[0] : undefined,
+      eligible_models: eligibleModels.join(","),
+    });
+  }, [offer_id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const vehicleTypeOptions = offer?.offerDetailForm?.vehicleDropdownValues?.map((option) => ({ value: option, label: option }));
   const titleOptions = offer?.offerDetailForm?.titleDropdownValues?.map((option) => ({ value: option, label: option })) || [];
@@ -170,10 +185,23 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
       const response = await saveLeads(leadData, csrfToken, token);
       if (!response.status) {
         console.log(response.message);
+        weForm.failed(response.message);
         setSubmitting(false);
         return;
       }
       identifyWebEngageUser(leadData);
+      // offer_type service marks an owner; leasing records the finance preference.
+      setWebEngageAttributes({
+        is_geely_owner_web: offer_type === "service" || undefined,
+        finance_preference: offer_type === "leasing" ? "leasing" : undefined,
+      });
+      weForm.submitted("Offer Enquiry Submitted", {
+        offer_id,
+        offer_type,
+        model_id: modelRef(values.vehicle)?.id ?? slugify(values.vehicle),
+        showroom_id: showroomRef(values.location)?.id,
+        terms_accepted: values.privacyPolicy,
+      });
 
       const slug = (offer?.link as any)?._ref || "";
       window.location.href = currentLocale == 'en' ? `/${currentLocale}/${slug}` : `/${slug}`;
@@ -181,6 +209,7 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
       resetForm();
     },
   });
+  const weForm = useWebEngageForm(formik, "offer_enquiry", { offer_id });
   return (
     <>
       <Script
@@ -241,7 +270,7 @@ export default function OfferDetail({ offer,siteSettingData }: OfferListProps) {
           {/* Right Column - Contact Form */}
           <div className="lg:sticky lg:top-8 self-start">
             <div className="bg-[#E9E9E9] p-[30px] rounded-sm">
-              <form onSubmit={formik.handleSubmit} className="space-y-6">
+              <form {...weForm.startProps} onSubmit={formik.handleSubmit} className="space-y-6">
                 {/* referring url hidden field */}
                 <input
                   type="hidden"

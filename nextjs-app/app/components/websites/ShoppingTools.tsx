@@ -13,7 +13,7 @@ type ShoppingToolsProps = {
 export default function ShoppingToolsComponent({ block }: ShoppingToolsProps) {
   const { currentLocale } = useDeviceDetection();
   return (
-    <section className={`md:py-20 py-12 px-4`} data-we-nav="shopping_tools" data-we-nav-cat={block?.title}>
+    <section className={`md:py-20 py-12 px-4`} data-we-nav="shopping_tools" data-we-nav-cat="shopping_tools">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-[32px] md:leading-[39px] font-bold geelyBold uppercase text-center mb-8">
           {block?.title}

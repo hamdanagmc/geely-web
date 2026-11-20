@@ -1,6 +1,7 @@
 "use client"
 import { saveLeads } from "@/app/actions/sanity/leads"
-import { identifyWebEngageUser } from "@/app/lib/webengage";
+import { identifyWebEngageUser, setWebEngageAttributes, slugify, trackWebEngage, useWebEngageForm } from "@/app/lib/webengage";
+import { modelRef, showroomRef } from "@/app/lib/webengage-reference";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions"
 import type { RequestQuoteForm } from "@/sanity.types"
 import { PortableText } from "next-sanity"
@@ -87,6 +88,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
   const [isSubmitting, setSubmitting] = useState(false);
 
   const pathname = usePathname();
+  const isTestDrive = pathname.includes("request-test-drive")
   const pathSegments = pathname.split("/");
   const currentLocale = pathSegments[1] || "en";
 
@@ -188,6 +190,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       // Handle form submission
+      weForm.step(3, "details_entered", { model_id: modelIdOf(values.selectedModelTitle) })
       console.log(values)
       setSubmitting(true);
 
@@ -231,10 +234,31 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
       const response = await saveLeads(leadData, csrfToken, token);
       if (!response.status) {
         console.log(response.message);
+        weForm.failed(response.message);
         setSubmitting(false);
         return;
       }
       identifyWebEngageUser(leadData);
+      const model_id = modelIdOf(values.selectedModelTitle)
+      if (isTestDrive) {
+        setWebEngageAttributes({ lifecycle_stage: "lead" })
+        weForm.submitted("Test Drive Requested", {
+          vehicle_category: "new",
+          model_id,
+          model_name: modelRef(model_id)?.name ?? values.selectedModelTitle,
+          body_type: block?.models?.find((m) => m._key === values.selectedModel)?.category,
+          showroom_id: showroomRef(values.location)?.id,
+          has_comments: !!values.comments.trim(),
+          terms_accepted: values.agreed,
+        })
+      } else {
+        weForm.submitted("Quote Requested", {
+          model_id,
+          model_name: modelRef(model_id)?.name ?? values.selectedModelTitle,
+          showroom_id: showroomRef(values.location)?.id,
+          terms_accepted: values.agreed,
+        })
+      }
 
       setSubmitting(false);
       const slug = (block?.link as any)?.slug || "";
@@ -242,6 +266,18 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
       resetForm()
     },
   })
+
+  // WebEngage form funnel (data model: Form funnel / Lead forms).
+  const modelIdOf = (title?: string) => modelRef(title)?.id ?? slugify(title)
+  const weForm = useWebEngageForm(formik, isTestDrive ? "test_drive" : "quote", { model_id: selectedTestDrive ? modelIdOf(selectedTestDrive) : undefined })
+  const pickBodyType = (body_type: "all" | "sedan" | "suv") => {
+    weForm.step(1, "body_type_selected", { body_type })
+    trackWebEngage("Vehicle Category Viewed", {
+      body_type,
+      page_context: isTestDrive ? "test_drive_form" : "quote_form",
+      models_shown_count: block?.models?.filter((m) => body_type === "all" || m.category === body_type).length,
+    })
+  }
 
   const locationOptions =
     block?.locationTypes?.map((location) => ({
@@ -273,7 +309,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
         src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
         strategy="lazyOnload"
       />
-      <div className={`w-full max-w-[1180px] reqTestForm mx-auto px-4 py-16`}>
+      <div className={`w-full max-w-[1180px] reqTestForm mx-auto px-4 py-16`} {...weForm.startProps}>
         {/* selectedTestDrive: {selectedTestDrive} */}
         {/* Step 1 */}
         <div className="bg-[#F5F2F0] p-8 flex">
@@ -292,6 +328,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
                     }`}
                   onClick={() => {
                     formik.setFieldValue("selectedFilter", "ALL")
+                    pickBodyType("all")
                     formik.setFieldValue("carTypes", ["SEDAN", "SUV"])
                   }}
                   type="button"
@@ -303,6 +340,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
                     }`}
                   onClick={() => {
                     formik.setFieldValue("selectedFilter", "SEDAN")
+                    pickBodyType("sedan")
                     formik.setFieldValue("carTypes", ["SEDAN"])
                   }}
                   type="button"
@@ -314,6 +352,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
                     }`}
                   onClick={() => {
                     formik.setFieldValue("selectedFilter", "SUV")
+                    pickBodyType("suv")
                     formik.setFieldValue("carTypes", ["SUV"])
                   }}
                   type="button"
@@ -369,6 +408,7 @@ export default function RequestQuoteFormCmp({ block }: RequestQuoteFormProps) {
                           onClick={() => {
                             formik.setFieldValue("selectedModel", model._key);
                             formik.setFieldValue("selectedModelTitle", model.title);
+                            weForm.step(2, "model_selected", { model_id: modelIdOf(model.title), body_type: model.category });
                           }}
                           className={`w-full h-[200px] bg-white rounded-sm transition-shadow hover:shadow-md relative ${formik.values.selectedModel === model._key ? "outline outline-2 outline-black" : ""
                             }`}

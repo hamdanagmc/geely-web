@@ -12,7 +12,8 @@ import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import ImageComp from "../CustomImage";
 import { saveLeads } from "@/app/actions/sanity/leads";
-import { identifyWebEngageUser } from "@/app/lib/webengage";
+import { identifyWebEngageUser, slugify, useWebEngageForm } from "@/app/lib/webengage";
+import { modelRef } from "@/app/lib/webengage-reference";
 import { getCookie } from "cookies-next";
 
 type BrochureDownloadFormSectionProps = {
@@ -204,10 +205,16 @@ export default function BrochureDownloadForm({
       const response = await saveLeads(leadData, csrfToken, token);
       if (!response.status) {
         console.log(response.message);
+        weForm.failed(response.message);
         setSubmitting(false);
         return;
       }
       identifyWebEngageUser(leadData);
+      weForm.submitted("Brochure Requested", {
+        model_id: modelRef(values.brochure_check[0])?.id ?? slugify(values.brochure_check[0]),
+        contact_requested: values.contactYou === "yes",
+        terms_accepted: values.agreed,
+      });
 
       // Trigger PDF downloads
       downloadValues
@@ -242,6 +249,7 @@ export default function BrochureDownloadForm({
     formik.setFieldValue("brochure_check", selectedValues);
   }, [selectedValues]);
 
+  const weForm = useWebEngageForm(formik, "brochure");
   return (
     <>
       <Script
@@ -323,7 +331,7 @@ export default function BrochureDownloadForm({
             </p>
 
             {/* Contact Form */}
-            <form
+            <form {...weForm.startProps}
               onSubmit={formik.handleSubmit}
               className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-4 rounded-sm"
             >

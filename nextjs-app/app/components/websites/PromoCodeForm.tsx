@@ -1,6 +1,7 @@
 "use client"
 import { saveLeads } from "@/app/actions/sanity/leads"
-import { identifyWebEngageUser } from "@/app/lib/webengage";
+import { identifyWebEngageUser, slugify, useWebEngageForm } from "@/app/lib/webengage";
+import { modelRef } from "@/app/lib/webengage-reference";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions"
 import type { PromoCodeForm, RequestQuoteForm } from "@/sanity.types"
 import { urlForImage } from "@/sanity/lib/utils"
@@ -193,6 +194,7 @@ export default function PromoCodeFormCmp({ block }: PrmoCodeFormProps) {
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       // Handle form submission
+      weForm.step(3, "details_entered", { model_id: modelIdOf(values.selectedModelTitle) })
       setSubmitting(true);
 
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
@@ -235,10 +237,12 @@ export default function PromoCodeFormCmp({ block }: PrmoCodeFormProps) {
       const response = await saveLeads(leadData, csrfToken, token);
       if (!response.status) {
         console.log(response.message);
+        weForm.failed(response.message);
         setSubmitting(false);
         return;
       }
       identifyWebEngageUser(leadData);
+      // ponytail: no lead event for the promo-code form in the data model yet; add one when it is defined.
 
       setSubmitting(false);
       const slug = (block?.link as any)?.slug || "";
@@ -247,6 +251,13 @@ export default function PromoCodeFormCmp({ block }: PrmoCodeFormProps) {
       resetForm()
     },
   })
+
+  // WebEngage form funnel (data model: Form funnel / Lead forms).
+  const modelIdOf = (title?: string) => modelRef(title)?.id ?? slugify(title)
+  const weForm = useWebEngageForm(formik, "book_now", { model_id: selectedTestDrive ? modelIdOf(selectedTestDrive) : undefined })
+  const pickBodyType = (body_type: "all" | "sedan" | "suv") => {
+    weForm.step(1, "body_type_selected", { body_type })
+  }
 
   const locationOptions =
     block?.locationTypes?.map((location) => ({
@@ -278,7 +289,7 @@ export default function PromoCodeFormCmp({ block }: PrmoCodeFormProps) {
         src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
         strategy="lazyOnload"
       />
-      <div className={`w-full max-w-[1180px] reqTestForm mx-auto px-4 py-16`}>
+      <div className={`w-full max-w-[1180px] reqTestForm mx-auto px-4 py-16`} {...weForm.startProps}>
         {/* selectedTestDrive: {selectedTestDrive} */}
         {/* Step 1 */}
         <div className="bg-[#F5F2F0] p-8 flex">
@@ -297,6 +308,7 @@ export default function PromoCodeFormCmp({ block }: PrmoCodeFormProps) {
                     }`}
                   onClick={() => {
                     formik.setFieldValue("selectedFilter", "ALL")
+                    pickBodyType("all")
                     formik.setFieldValue("carTypes", ["SEDAN", "SUV"])
                   }}
                   type="button"
@@ -308,6 +320,7 @@ export default function PromoCodeFormCmp({ block }: PrmoCodeFormProps) {
                     }`}
                   onClick={() => {
                     formik.setFieldValue("selectedFilter", "SEDAN")
+                    pickBodyType("sedan")
                     formik.setFieldValue("carTypes", ["SEDAN"])
                   }}
                   type="button"
@@ -319,6 +332,7 @@ export default function PromoCodeFormCmp({ block }: PrmoCodeFormProps) {
                     }`}
                   onClick={() => {
                     formik.setFieldValue("selectedFilter", "SUV")
+                    pickBodyType("suv")
                     formik.setFieldValue("carTypes", ["SUV"])
                   }}
                   type="button"
@@ -374,6 +388,7 @@ export default function PromoCodeFormCmp({ block }: PrmoCodeFormProps) {
                           onClick={() => {
                             formik.setFieldValue("selectedModel", model._key);
                             formik.setFieldValue("selectedModelTitle", model.title);
+                            weForm.step(2, "model_selected", { model_id: modelIdOf(model.title), body_type: model.category });
                           }}
                           className={`w-full h-[200px] bg-white rounded-sm transition-shadow hover:shadow-md relative ${formik.values.selectedModel === model._key ? "outline outline-2 outline-black" : ""
                             }`}

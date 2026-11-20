@@ -17,6 +17,8 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { customStyles } from "@/app/utils/customSelectStyles";
+import { setWebEngageAttributes, trackWebEngage, useWebEngageForm } from "@/app/lib/webengage";
+import { modelRef, PLATE_EMIRATES } from "@/app/lib/webengage-reference";
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
   loading: () => <p>Loading...</p>,
@@ -118,6 +120,21 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
     },
   })
 
+  const weForm = useWebEngageForm(formik, "service_booking")
+  // Service Vehicle Lookup (plate code and number are never sent). A found vehicle marks an owner.
+  const trackLookup = (found: boolean, vehicle?: any) => {
+    const model_id = found ? modelRef(`${vehicle?.vehicleMakeCode} ${vehicle?.vehicleVariantCode}`)?.id : undefined
+    trackWebEngage("Service Vehicle Lookup", {
+      plate_emirate: PLATE_EMIRATES[formik.values.source],
+      lookup_result: found ? "found" : "not_found",
+      model_id,
+    })
+    if (found) {
+      weForm.step(1, "plate_entered", { model_id })
+      setWebEngageAttributes({ is_geely_owner_web: true, owned_model_id: model_id })
+    }
+  }
+
   useEffect(() => {
     const fetchVehicleDetails = async () => {
       setSubmitting(true)
@@ -127,6 +144,7 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
           const vehicleDetails = await getVehicleDetailByVin(vinNo)
           console.log(vehicleDetails)
           if (vehicleDetails?.status) {
+            trackLookup(true, vehicleDetails?.data?.data)
             dispatch(setVehicleDetails(vehicleDetails?.data?.data))
             window.location.href = `/${currentLocale}/customer-details`
             /*const response = await findCustomerByPhone(vehicleDetails?.data?.data?.mobile);
@@ -136,6 +154,7 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
               window.location.href = `/${currentLocale}/customer-details`;
             }*/
           } else {
+            trackLookup(false)
             formik.setFieldError("formLevelCheck", vehicleDetails?.message)
             setFormErrorMessegeStatus(true)
             setShowVin(false);
@@ -145,6 +164,7 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
           const vehicleDetails = await getVehicleDetailByVehicleNumber(vehiclePlateNumber)
           console.log(vehicleDetails)
           if (vehicleDetails?.status) {
+            trackLookup(true, vehicleDetails?.data?.data)
             dispatch(setVehicleDetails(vehicleDetails?.data?.data))
             window.location.href = `/${currentLocale}/customer-details`
             /*const response = await findCustomerByPhone(vehicleDetails?.data?.data?.mobile);
@@ -154,6 +174,7 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
               window.location.href = `/${currentLocale}/customer-details`;
             }*/
           } else {
+            trackLookup(false)
             setVinAlert(true)
             setShowVin(true);
             // formik.setFieldError("formLevelCheck", vehicleDetails?.message)
@@ -185,7 +206,7 @@ export default function CustomerLookupComp({ block }: customerLookupProps) {
               />
             )}
           </div>
-          <form
+          <form {...weForm.startProps}
             onSubmit={formik.handleSubmit}
             className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-8 px-12 rounded-sm"
           >

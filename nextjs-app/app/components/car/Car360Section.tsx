@@ -6,6 +6,7 @@ import NextImage from "next/image"
 import type { Car360, ExteriorImage } from "../../types/car360"
 import dynamic from "next/dynamic"
 import { CustomImageTurntable } from "./CustomImageTurntable"
+import { firstThisPageView, modelFromPath, setWebEngageAttributes, slugify, trackWebEngage } from "@/app/lib/webengage"
 
 type Car360Props = {
   block: Car360
@@ -25,6 +26,19 @@ export default function Car360Comp({ block }: Car360Props) {
   const [error, setError] = useState<string | null>(null)
   const [isOpen, setIsOpen] = useState(false)
   const bgColor = "#EAE9E8" // Define background color once to ensure consistency
+
+  // Model 360 Interacted: "rotated" once per view per page view.
+  const track360 = (interaction: "opened" | "rotated" | "view_switched", view_type: "exterior" | "interior") => {
+    if (interaction === "rotated" && !firstThisPageView(`360_rotated:${view_type}`)) return
+    trackWebEngage("Model 360 Interacted", { model_id: modelFromPath(location.pathname), view_type, interaction })
+  }
+
+  // Colour Selected; also keeps last_colour_interest for creatives in that colour.
+  const trackColour = (colour_name: string) => {
+    const colour_id = slugify(colour_name)
+    trackWebEngage("Colour Selected", { model_id: modelFromPath(location.pathname), colour_type: "exterior", colour_id, colour_name })
+    setWebEngageAttributes({ last_colour_interest: colour_id })
+  }
 
   const colorOptions = useMemo(() => {
     return (
@@ -131,7 +145,7 @@ export default function Car360Comp({ block }: Car360Props) {
       {/* Modal for Panorama Viewer */}
       {isOpen && activeTab === "interior" && (
         <div className="fixed inset-0 panoramaViewer flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="relative panoramaViewerPopup max-h-[calc(screen-60px)] max-w-[80%] bg-white rounded-lg shadow-lg w-full p-6">
+          <div className="relative panoramaViewerPopup max-h-[calc(screen-60px)] max-w-[80%] bg-white rounded-lg shadow-lg w-full p-6" onPointerDownCapture={(e) => !(e.target as Element).closest("button") && track360("rotated", "interior")}>
             {/* Close Button */}
             <button
               onClick={() => {
@@ -200,6 +214,7 @@ export default function Car360Comp({ block }: Car360Props) {
               onClick={() => {
                 setActiveTab("interior")
                 setIsOpen(true)
+                track360("opened", "interior")
               }}
               className={`text-[22px] leading-8 font-medium px-4 py-1 text-gray-400`}
             >
@@ -216,7 +231,10 @@ export default function Car360Comp({ block }: Car360Props) {
             {colorOptions.map((option) => (
               <button
                 key={option.id}
-                onClick={() => setSelectedColor(option.id)}
+                onClick={() => {
+                  setSelectedColor(option.id)
+                  if (option.id !== selectedColor) trackColour(option.id)
+                }}
                 className={`w-9 h-9 rounded-full flex items-center justify-center border-2 ${
                   selectedColor === option.id ? "border-teal-600" : "border-gray-200"
                 }`}
@@ -235,7 +253,7 @@ export default function Car360Comp({ block }: Car360Props) {
           {activeTab === "exterior" && (
             <>
               {/* Car image turntable */}
-              <div className="flex justify-center pt-[34px] relative">
+              <div className="flex justify-center pt-[34px] relative" onPointerDownCapture={() => track360("rotated", "exterior")}>
                 {/* Current color images */}
                 <div
                   className="mix-blend-multiply"

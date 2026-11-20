@@ -7,7 +7,7 @@ import type { HeaderQueryResult, SideQuickQueryResult, SettingsQueryResult } fro
 import SidePanel from "./SidePanel"
 import ImageComp from "../CustomImage"
 import { usePathname, useRouter } from "next/navigation"
-import { trackWebEngage } from "@/app/lib/webengage"
+import { setWebEngageAttributes, trackWebEngage } from "@/app/lib/webengage"
 
 type FooterProps = {
   locale: string
@@ -32,8 +32,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
   const switchLanguage = (lang: string) => {
     if (lang != currentLocale) {
       trackWebEngage("Language Switched", { from_language: currentLocale, to_language: lang })
-      const we = (window as any).webengage
-      we?.user.setAttribute("preferred_language", lang)
+      setWebEngageAttributes({ preferred_language: lang })
       const newPath = `/${lang}${pathname.replace(`/${currentLocale}`, "")}`
       router.push(newPath)
     }
@@ -93,7 +92,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
                 <li
                   key={item._key}
                   className="relative"
-                  data-we-nav-cat={item.title}
+                  data-we-nav-cat={getLinkHref(item.link) !== "#" ? getLinkHref(item.link).split("/").pop() : item.title}
                   onMouseEnter={() => item.hasSubPages && setActiveSubMenu(item._key)}
                   onMouseLeave={() => setActiveSubMenu(null)}
                 >
@@ -261,7 +260,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
           </div>
           <ul className="flex flex-col items-center space-y-4 mt-8">
             {fragment?.header?.navigation?.navItems?.map((item) => (
-              <li key={item._key} className="relative w-full" data-we-nav-cat={item.title}>
+              <li key={item._key} className="relative w-full" data-we-nav-cat={getLinkHref(item.link) !== "#" ? getLinkHref(item.link).split("/").pop() : item.title}>
                 <div className="flex justify-between items-center w-full px-4">
                   <Link
                     href={getLinkHref(item.link)}
@@ -309,7 +308,7 @@ function Header({ locale, fragment, pageBg, sideQuickData,siteSettingData }: Foo
           {/* Content */}
           <div className="flex-1 mt-8 px-4">
             {/* Shopping Tools Section */}
-            <div className="mb-12" data-we-nav="shopping_tools" data-we-nav-cat={sideQuickData?.sideKickSection?.iconLinkList1?.title}>
+            <div className="mb-12" data-we-nav="shopping_tools" data-we-nav-cat="shopping_tools">
               <h2 className="text-[20px] text-white font-semibold mb-5">
                 {sideQuickData?.sideKickSection?.iconLinkList1?.title}
               </h2>

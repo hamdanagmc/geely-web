@@ -92,7 +92,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
           {/* Content */}
           <div className="flex-1 overflow-y-auto px-6">
             {/* Shopping Tools Section */}
-            <div className="mb-12" data-we-nav="shopping_tools" data-we-nav-cat={sideQuickData?.sideKickSection?.iconLinkList1?.title}>
+            <div className="mb-12" data-we-nav="shopping_tools" data-we-nav-cat="shopping_tools">
               <h2 className="text-[20px] font-semibold mb-5">
                 {sideQuickData?.sideKickSection?.iconLinkList1?.title}
               </h2>
@@ -121,7 +121,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
             </div>
 
             {/* Customer Care Section */}
-            <div className="mb-12" data-we-nav-cat={sideQuickData?.sideKickSection?.iconLinkList2?.title}>
+            <div className="mb-12" data-we-nav-cat="customer_care">
               <h2 className="text-[20px] font-semibold mb-5">
                 {sideQuickData?.sideKickSection?.iconLinkList2?.title}
               </h2>

@@ -6,6 +6,8 @@ import { useEffect, useState } from "react"
 import { ShowTableData } from "./ShowTableData"
 import Select from "react-select"
 import useDeviceDetection from "@/app/hooks/useDeviceDetection"
+import { slugify, trackWebEngage } from "@/app/lib/webengage"
+import { modelRef } from "@/app/lib/webengage-reference"
 
 type SpareModelProps = {
   block: SparePartsModel
@@ -167,7 +169,12 @@ export default function SpareModel({ block, data }: SpareModelProps) {
                   instanceId="model-select"
                   options={modelOptions}
                   value={modelOptions.find((o) => o.value === selectedModel) || null}
-                  onChange={(option) => setSelectedModel(option?.value ?? "")}
+                  onChange={(option) => {
+                    setSelectedModel(option?.value ?? "")
+                    if (option?.value) {
+                      trackWebEngage("Spare Parts Lookup", { model_id: modelRef(option.value)?.id ?? slugify(option.value) })
+                    }
+                  }}
                   placeholder={block?.selectModelPlaceholder || "Select Model"}
                   styles={customStyles}
                   isSearchable={false}

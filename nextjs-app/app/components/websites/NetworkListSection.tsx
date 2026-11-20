@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { urlForImage } from "@/sanity/lib/utils";
 import { type PortableTextBlock } from "next-sanity";
 import PortableText from "@/app/components/PortableText";
+import { locationType, showroomRef } from "@/app/lib/webengage-reference";
 
 type NetworkListSectionProps = {
   block: NetworkListSection;
@@ -49,6 +50,10 @@ export default function NetworkListSectionComp({
         {networks?.map((network, index) => (
           <div
             key={index}
+            // Location Interaction (directions / call) reads these.
+            data-we-showroom={showroomRef(network.title)?.id}
+            data-we-emirate={showroomRef(network.title)?.emirate}
+            data-we-location-type={locationType(network.title)}
             className={`bg-white rounded-lg overflow-hidden ${
               index !== networks.length - 1
                 ? "border-b border-gray-200 pb-8"

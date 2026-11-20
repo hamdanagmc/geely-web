@@ -1,6 +1,6 @@
 "use client";
 import { saveLeads } from "@/app/actions/sanity/leads";
-import { identifyWebEngageUser } from "@/app/lib/webengage";
+import { identifyWebEngageUser, slugify, useWebEngageForm } from "@/app/lib/webengage";
 import { countryCodeOptions } from "@/app/lib/constants/countryCodeOptions";
 import { FleetContactFormSection } from "@/sanity.types";
 import { PortableText as SanityPortableText } from "next-sanity";
@@ -196,10 +196,16 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
       const response = await saveLeads(leadData, csrfToken, token);
       if (!response.status) {
         console.log(response.message);
+        weForm.failed(response.message);
         setSubmitting(false);
         return;
       }
       identifyWebEngageUser(leadData);
+      // Company name goes to we_company (set by identify), not the event.
+      weForm.submitted("Fleet Enquiry Submitted", {
+        fleet_size_band: slugify(values.fleetSize),
+        terms_accepted: values.agreed,
+      });
 
       setSubmitting(false);
       const slug = (block?.form?.link as any)?.slug || "";
@@ -218,6 +224,7 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
     label: option,
   })) || [];
 
+  const weForm = useWebEngageForm(formik, "fleet");
   return (
     <>
       <Script
@@ -231,7 +238,7 @@ export default function FleetSalesForm({ block }: FleetContactFormSectionProps) 
           </h2>
 
           {/* Contact Form */}
-          <form
+          <form {...weForm.startProps}
             onSubmit={formik.handleSubmit}
             className="max-w-[1000px] mx-auto bg-[#f5f2f0] md:p-8 py-4 px-4 rounded-sm"
           >

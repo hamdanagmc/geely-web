@@ -9,6 +9,8 @@ import { urlForImage } from "@/sanity/lib/utils";
 import MuxVideo from "@mux/mux-video-react";
 import { ArrowLeft, ArrowRight, Share2 } from "lucide-react";
 import useDeviceDetection from "../../hooks/useDeviceDetection";
+import { firstThisPageView, slugify, trackWebEngage } from "@/app/lib/webengage";
+import { modelRef } from "@/app/lib/webengage-reference";
 
 const activeSlideStyles = `
   .swiper-slide {
@@ -79,8 +81,32 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
     }
   }, [activeVideoIndex, activeTab, currentModel?.videoListMux]);
 
+  // Media Viewed: a model's image gallery once per page view; each video at start and at 25/50/75/100%.
+  const mediaModelId = (m = currentModel) => modelRef(m?.name)?.id ?? slugify(m?.name);
+  const trackGallery = (m = currentModel) => {
+    if (m && firstThisPageView(`media:gallery:${m._key}`)) {
+      trackWebEngage("Media Viewed", { media_type: "image_gallery", model_id: mediaModelId(m), media_title: m.name });
+    }
+  };
+  const trackVideoProgress = (idx: number, video: HTMLVideoElement) => {
+    const item = currentModel?.videoListMux?.[idx] as any;
+    const pct = video.duration ? (video.currentTime / video.duration) * 100 : 0;
+    for (const milestone of [0, 25, 50, 75, 100]) {
+      // +3: timeupdate fires every ~250 ms, and looping videos never reach exactly 100%.
+      if (pct + 3 >= milestone && firstThisPageView(`media:video:${item?._key}:${milestone}`)) {
+        trackWebEngage("Media Viewed", {
+          media_type: "video",
+          model_id: mediaModelId(),
+          media_title: item?.asset?.filename?.replace(/\.[^.]+$/, "") || `${currentModel?.name} video ${idx + 1}`,
+          watch_milestone: milestone || undefined,
+        });
+      }
+    }
+  };
+
   const handleThumbClick = (index: number) => {
     setActiveModelIndex(index);
+    if (activeTab === "images") trackGallery(block?.modelGalleryList?.[index]);
   };
 
   return (
@@ -96,7 +122,10 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
             className={`px-10 py-3 text-sm uppercase font-medium transition-colors ${
               activeTab === "images" ? "bg-black text-white" : "bg-white text-black border border-black"
             }`}
-            onClick={() => setActiveTab("images")}
+            onClick={() => {
+              setActiveTab("images");
+              trackGallery();
+            }}
           >
             {block.imagesTabLabel || "IMAGES"}
           </button>
@@ -205,7 +234,10 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
                     nextEl: ".main-next-images",
                     prevEl: ".main-prev-images",
                   }}
-                  onSlideChange={(swiper) => setActiveImageIndex(swiper.activeIndex)}
+                  onSlideChange={(swiper) => {
+                    setActiveImageIndex(swiper.activeIndex);
+                    trackGallery();
+                  }}
                   className="h-full"
                   loop={true}
                   slideToClickedSlide={true}
@@ -317,6 +349,7 @@ export default function ImagesAndVideosSectionComp({ block }: ImagesAndVideosSec
                               controls={false}
                               preferPlayback="mse"
                               className="w-full h-[100%] static inset-0 object-cover"
+                              onTimeUpdate={(e) => trackVideoProgress(idx, e.currentTarget)}
                               onError={(error) => {
                                 console.error("Mux Video Player Error:", error);
                                 setVideoError(true);
