@@ -40,7 +40,9 @@ export function pageType(path: string) {
   if (/^\/offers\/./.test(p)) return "offer_detail";
   if (/^\/(innovation|more-on-ev)/.test(p)) return "innovation";
   if (/^\/(news|about-geely|our-vision|our-history|corporate-social-responsibility|geely-care|warranty)/.test(p)) return "content";
-  if (/^\/(request-test-drive|request-a-quote|brochure-download|service-booking|contact-us|fleet-sales)/.test(p)) return "form";
+  // Service booking flow: plate lookup, booking details and the result pages.
+  if (/^\/(service-booking|customer-details|appointment-booked|appointment-not-found)/.test(p)) return "service";
+  if (/^\/(request-test-drive|request-a-quote|brochure-download|contact-us|fleet-sales)/.test(p)) return "form";
   return p.split("/")[1].replace(/-/g, "_"); // vehicles, offers, geely_network, ...
 }
 
