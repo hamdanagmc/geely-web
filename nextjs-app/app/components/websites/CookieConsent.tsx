@@ -184,6 +184,9 @@ export function CookieConsent({ onClose, style = "modal", reopen = false }: Cook
       // ponytail: the banner has no separate marketing category yet, so marketing_cookies is false.
       trackWebEngage("Cookie Preferences Saved", { analytics_cookies: true, marketing_cookies: !!preferences.marketing, banner_action })
       window.dispatchEvent(new Event("updateGTMConsent"))
+    } else if (typeof window !== "undefined" && (window as any).webengage) {
+      // Analytics turned off while WebEngage is running: reload so the loader leaves it off.
+      window.location.reload()
     }
   }
 
